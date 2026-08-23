@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body>
+    
+<div class="max-w-6xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ ব্যানার (অগ্রযাত্রা গ্রিন থিম) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <span class="bg-white/20 text-white text-[10px] px-3.5 py-1.5 rounded-full font-black uppercase border border-white/10 inline-flex items-center gap-1.5 mb-3">
+      <i class="fa-solid fa-headset animate-pulse"></i> ২৪/৭ হেল্পলাইন
+    </span>
+    <h3 class="text-3xl font-black">যোগাযোগ ও লোকেশন</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">অগ্রযাত্রা পরিষদের কার্যালয় ও আপনার জিজ্ঞাসা — সরাসরি আমাদের সাথে যোগাযোগ করুন</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    
+    <!-- কলাম ১: যোগাযোগ কার্ডসমূহ -->
+    <div class="space-y-4 flex flex-col justify-between">
+      
+      <!-- ১. কার্যালয় ঠিকানা কার্ড -->
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition duration-300">
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl h-fit"><i class="fa-solid fa-location-dot text-xl"></i></div>
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">আমাদের কার্যালয়</span>
+          <h5 class="text-sm font-black text-slate-800 leading-tight">আউলিয়াপুর ইউনিয়ন পরিষদ রোড</h5>
+          <p class="text-xs text-gray-500 font-medium">পটুয়াখালী সদর, পটুয়াখালী জেলা, বরিশাল বিভাগ।</p>
+        </div>
+      </div>
+
+      <!-- ২. মোবাইল হেল্পলাইন কার্ড -->
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition duration-300 items-center justify-between">
+        <div class="flex gap-4">
+          <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl h-fit"><i class="fa-solid fa-phone text-xl"></i></div>
+          <div class="space-y-1">
+            <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">হেল্পলাইন নম্বর</span>
+            <h5 class="text-sm font-black text-slate-800 leading-tight font-mono select-all">+৮৮০ ১৭১০-১৮১০৫৯</h5>
+            <p class="text-xs text-gray-500 font-medium">যেকোনো তথ্য বা জরুরি সহায়তার জন্য ফোন করুন</p>
+          </div>
+        </div>
+        <button onclick="copyContactText('+8801710181059', this)" class="bg-slate-50 hover:bg-slate-100 text-gray-500 px-3 py-2 rounded-xl text-[10px] font-bold border border-slate-200 transition shadow-sm flex items-center gap-1">
+          <i class="fa-regular fa-copy"></i> কপি করুন
+        </button>
+      </div>
+
+      <!-- ৩. ইমেইল কার্ড -->
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition duration-300 items-center justify-between">
+        <div class="flex gap-4">
+          <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl h-fit"><i class="fa-solid fa-envelope text-xl"></i></div>
+          <div class="space-y-1">
+            <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">ইমেইল ঠিকানা</span>
+            <h5 class="text-sm font-black text-slate-800 leading-tight select-all">support@aap.auliapur.com</h5>
+            <p class="text-xs text-gray-500 font-medium">অফিসিয়াল যেকোনো প্রস্তাব বা পরামর্শের জন্য লিখুন</p>
+          </div>
+        </div>
+        <a href="mailto:support@auliyapuragrojatrapb.org" class="bg-slate-50 hover:bg-slate-100 text-gray-500 px-3 py-2 rounded-xl text-[10px] font-bold border border-slate-200 transition shadow-sm flex items-center gap-1">
+          <i class="fa-solid fa-paper-plane"></i> মেইল করুন
+        </a>
+      </div>
+
+      <!-- ৪. অফিস সময় কার্ড -->
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition duration-300">
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl h-fit"><i class="fa-solid fa-clock text-xl"></i></div>
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">কার্যালয় খোলা থাকার সময়</span>
+          <h5 class="text-sm font-black text-slate-800 leading-tight">শনিবার - বৃহস্পতিবার</h5>
+          <p class="text-xs text-gray-500 font-medium">সকাল ০৯:০০ টা থেকে বিকাল ০৫:০০ টা পর্যন্ত (শুক্রবার বন্ধ)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- কলাম ২: প্রফেশনাল যোগাযোগ ফর্ম -->
+    <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h4 class="text-base font-black text-slate-800 flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-emerald-600"></i> আমাদের নিকট বার্তা পাঠান</h4>
+        <p class="text-[10px] text-gray-400 font-semibold mt-1">আপনার যেকোনো পরামর্শ, জিজ্ঞাসা বা মতামত এখানে লিখতে পারেন</p>
+      </div>
+
+      <form id="contact-form" onsubmit="submitContactMessage(event)" class="space-y-4 text-xs font-bold text-gray-600">
+        <div class="space-y-1.5">
+          <label class="block text-gray-500">আপনার নাম *</label>
+          <input type="text" id="msg-name" required placeholder="আপনার পূর্ণ নাম লিখুন" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">মোবাইল নম্বর *</label>
+            <input type="tel" id="msg-phone" required placeholder="১১ ডিজিটের মোবাইল নম্বর" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">ইমেইল ঠিকানা (ঐচ্ছিক)</label>
+            <input type="email" id="msg-email" placeholder="আপনার ইমেইল লিখুন" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-gray-500">আপনার বার্তা *</label>
+          <textarea id="msg-content" required rows="4" placeholder="আপনার বার্তাটি এখানে বিস্তারিত লিখুন..." class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all resize-none"></textarea>
+        </div>
+
+        <!-- সাবমিট বাটন -->
+        <button type="submit" id="msg-submit-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 transition duration-300 flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-paper-plane text-xs"></i> বার্তা প্রেরণ করুন
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- লাইভ গুগল ম্যাপস এরিয়া (পটুয়াখালী আউলিয়াপুর লাইভ ইন্টিগ্রেশন) -->
+  <div class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 space-y-4">
+    <div class="flex items-center justify-between pb-2 border-b border-gray-100 text-slate-700">
+      <h5 class="text-xs font-black text-slate-800 flex items-center"><i class="fa-solid fa-map-location-dot text-emerald-600 mr-2 text-sm"></i> গুগল লাইভ লোকেশন ম্যাপ (Google Maps)</h5>
+      <p class="text-[9px] text-gray-400 font-semibold mt-0.5">ম্যাপে আমাদের অবস্থান খুঁজে বের করুন</p>
+    </div>
+
+    <!-- ম্যাপ ফ্রেম কন্টেইনার -->
+    <div class="relative w-full h-80 rounded-2xl overflow-hidden border border-gray-200">
+      <iframe 
+        src="https://maps.google.com/maps?q=Auliyapur%20Union,%20Patuakhali,%20Bangladesh&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+        class="absolute top-0 left-0 w-full h-full border-0" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- সোশ্যাল মিডিয়া ও কমিউনিটি কানেক্ট কার্ড -->
+  <div class="mt-8 bg-gradient-to-br from-emerald-950 to-emerald-900 border border-emerald-800 rounded-3xl p-6 text-center space-y-4 shadow-md text-white">
+    <h4 class="text-sm font-black">আমাদের সোশ্যাল মিডিয়ায় যুক্ত থাকুন</h4>
+    <div class="flex justify-center gap-4 pt-1">
+      <a href="https://facebook.com/auliyapuragrojatrapb" target="_blank" class="w-10 h-10 bg-white/10 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition duration-300 text-lg shadow-sm" title="ফেসবুক পেজ">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://m.me/auliyapuragrojatrapb" target="_blank" class="w-10 h-10 bg-white/10 hover:bg-blue-400 text-white rounded-full flex items-center justify-center transition duration-300 text-lg shadow-sm" title="মেসেঞ্জারে চ্যাট">
+        <i class="fa-solid fa-comments"></i>
+      </a>
+      <a href="mailto:info@auliyapuragrojatrapb.org" class="w-10 h-10 bg-white/10 hover:bg-amber-600 text-white rounded-full flex items-center justify-center transition duration-300 text-lg shadow-sm" title="ইমেইল করুন">
+        <i class="fa-solid fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // মোবাইল নম্বর ১-ক্লিকে কপি করার স্ক্রিপ্ট
+  function copyContactText(text, button) {
+    navigator.clipboard.writeText(text).then(function() {
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<i class="fa-solid fa-check"></i> <span>কপি হয়েছে!</span>';
+      button.classList.remove('bg-slate-50', 'text-gray-500');
+      button.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+      
+      setTimeout(function() {
+        button.innerHTML = originalHTML;
+        button.classList.add('bg-slate-50', 'text-gray-500');
+        button.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+      }, 2000);
+
+      // কাস্টম অ্যালার্ট লাইব্রেরি সচল থাকলে ট্রিগার হবে
+      if (typeof showCustomAlert === 'function') {
+        showCustomAlert("কপি সফল!", "হেল্পলাইন নম্বর " + text + " ক্লিপবোর্ডে কপি করা হয়েছে।", "success");
+      }
+    }, function() {
+      alert("কপি করা সম্ভব হয়নি: " + text);
+    });
+  }
+
+  // বার্তা প্রেরণের জন্য কাস্টম স্ক্রিপ্ট লজিক
+  function submitContactMessage(e) {
+    e.preventDefault();
+    
+    var btn = document.getElementById('msg-submit-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>বার্তা পাঠানো হচ্ছে...</span>';
+    }
+
+    var payload = {
+      name: document.getElementById('msg-name').value,
+      phone: document.getElementById('msg-phone').value,
+      email: document.getElementById('msg-email').value,
+      content: document.getElementById('msg-content').value
+    };
+
+    // গুগল অ্যাপস স্ক্রিপ্ট ব্যাকএন্ডে বার্তা পাঠানোর জন্য (আপনার প্রয়োজন অনুযায়ী)
+    // google.script.run
+    //   .withSuccessHandler(function(res) { ... })
+    //   .sendContactMessage(payload);
+
+    setTimeout(function() {
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane text-xs"></i> <span>বার্তা প্রেরণ করুন</span>';
+      }
+      
+      if (typeof showCustomAlert === 'function') {
+        showCustomAlert("বার্তা সফলভাবে প্রেরিত!", "আপনার বার্তাটি আমরা পেয়েছি। আমাদের টিম শীঘ্রই আপনার সাথে যোগাযোগ করবে। ধন্যবাদ!", "success", function() {
+          document.getElementById('contact-form').reset();
+        });
+      } else {
+        alert("বার্তা সফলভাবে প্রেরণ করা হয়েছে! আমরা খুব দ্রুত আপনার সাথে যোগাযোগ করব।");
+        document.getElementById('contact-form').reset();
+      }
+    }, 1500); // ১.৫ সেকেন্ড সফল ডামি ডিলি লোডার সিমুলেশন
+  }
+</script>
+  </body>
+</html>

@@ -1,0 +1,580 @@
+<div class="max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 py-8 select-none relative font-sans">
+  <!-- পোর্টাল হেডার -->
+  <div class="text-center mb-8 select-none">
+    <span class="bg-emerald-50 text-emerald-700 text-xs px-3.5 py-1.5 rounded-full font-black uppercase tracking-wider border border-emerald-100">
+      <i class="fa-solid fa-users-viewfinder mr-1"></i> সদস্য ডিরেক্টরি পোর্টাল
+    </span>
+    <h3 class="text-3xl font-black text-slate-800 mt-2.5">সদস্য অনুসন্ধান পোর্টাল</h3>
+    <p class="text-slate-500 text-xs sm:text-sm mt-1">আউলিয়াপুর অগ্রযাত্রা পরিষদের নিবন্ধিত সদস্য তালিকা ও সার্চ কন্ট্রোল</p>
+    <div class="w-16 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-3 rounded-full"></div>
+  </div>
+
+  <!-- ডাইনামিক ফিল্টার এবং সার্চ কন্ট্রোল প্যানেল --> 
+  <div class="bg-white p-5 sm:p-7 rounded-3xl shadow-lg mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 border border-slate-100 select-none">
+    <!-- ১. মোবাইল ও আইডি সার্চ ইনপুট -->
+    <div class="relative md:col-span-2">
+      <label class="block text-xs font-bold text-slate-600 mb-1.5">অনুসন্ধান করুন (মোবাইল নম্বর বা আইডি)</label>
+      <div class="relative">
+        <input type="text" id="search-input" oninput="filterMembers()" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-700 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition" placeholder="যেমন: AAP001 অথবা ০১৭০০০০০০০০...">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-4 text-slate-400 text-xs"></i>
+      </div>
+    </div>
+    
+    <!-- ২. ক্যাটাগরি ফিল্টার ড্রপডাউন -->
+    <div>
+      <label class="block text-xs font-bold text-slate-600 mb-1.5">সদস্যের ধরণ (ক্যাটাগরি)</label>
+      <select id="type-filter" onchange="filterMembers()" class="w-full px-4 py-3 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-700 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition">
+        <option value="">সকল সদস্য (All Category)</option>
+        <option value="সাধারণ সদস্য">সাধারণ সদস্য</option>
+        <option value="ফাউন্ডার মেম্বার">প্রতিষ্ঠাতা সদস্য (Founder)</option>
+        <option value="আজীবন সদস্য">আজীবন সদস্য</option>
+        <option value="দাতা সদস্য">দাতা সদস্য</option>
+        <option value="স্বেচ্ছাসেবী সদস্য">স্বেচ্ছাসেবী সদস্য (ভলান্টিয়ার)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- লোডার -->
+  <div id="loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-emerald-500 h-10 w-10 mx-auto mb-3 animate-spin"></div>
+    <p class="text-xs text-slate-400 font-bold">সদস্য তালিকা লোড হচ্ছে...</p>
+  </div>
+
+  <!-- রেসপন্সিভ মেম্বার গ্রিড (১টি -> ২টি -> ৩টি -> সর্বোচ্চ ৪টি কলাম) -->
+  <div id="members-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6"></div>
+
+  <!-- ডাইনামিক পেজিনেশন কন্ট্রোল প্যানেল (Page Navigation Bar) -->
+  <div id="pagination-container"></div>
+</div>
+
+<!-- সদস্য বিস্তারিত কেবল ব্যক্তিগত ও সাংগঠনিক তথ্য মডাল -->
+<div id="profile-detail-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none opacity-0 transition-opacity duration-300">
+  <div class="bg-white p-6 sm:p-8 rounded-[36px] shadow-2xl max-w-md w-full text-center relative transform scale-95 transition-all duration-300 border border-slate-100" id="detail-modal-card">
+    
+    <!-- ক্লোজ বাটন -->
+    <button onclick="closeDetailModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition shadow-sm">
+      <i class="fa-solid fa-xmark text-base"></i>
+    </button>
+    
+    <!-- প্রোফাইল কার্ড হেডার -->
+    <div class="relative inline-block mb-3 mt-2">
+      <img id="p-photo" class="w-28 h-28 rounded-3xl border-4 border-emerald-100 object-cover object-top bg-slate-100 shadow-xl mx-auto" src="" alt="Member">
+      <span id="p-bg-badge" class="absolute -bottom-2 -right-2 bg-rose-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow border-2 border-white animate-pulse">
+        ...
+      </span>
+    </div>
+
+    <h4 id="p-name" class="text-xl font-black text-slate-800 mb-1">...</h4>
+    <div class="flex items-center justify-center gap-2 mb-5">
+      <span id="p-id" class="bg-emerald-50 text-emerald-800 font-extrabold text-xs px-3 py-1 rounded-full border border-emerald-100">...</span>
+      <span id="p-desig-tag" class="bg-teal-50 text-teal-800 font-extrabold text-xs px-3 py-1 rounded-full border border-teal-100">...</span>
+    </div>
+    
+    <!-- বায়ো তথ্যাবলী (শুধুমাত্র ব্যক্তিগত ও সাংগঠনিক তথ্য) -->
+    <div class="text-left text-xs text-slate-600 space-y-2.5 max-h-[50vh] overflow-y-auto pr-1 select-text">
+      
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-award text-emerald-500"></i> পদবী:</span> 
+        <span id="p-desig" class="font-black text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-emerald-500"></i> সদস্যের ধরণ:</span> 
+        <span id="p-type" class="font-black text-emerald-600 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-user-check text-emerald-500"></i> পিতার নাম:</span> 
+        <span id="p-father" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-person-breastfeeding text-emerald-500"></i> মাতার নাম:</span> 
+        <span id="p-mother" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-venus-mars text-emerald-500"></i> লিঙ্গ (Gender):</span> 
+        <span id="p-gender" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-emerald-500"></i> শিক্ষাগত যোগ্যতা:</span> 
+        <span id="p-education" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-phone text-emerald-500"></i> মোবাইল নম্বর:</span> 
+        <span id="p-phone" class="font-black text-slate-800 text-right cursor-pointer hover:text-emerald-600 transition" onclick="openPhoneActionModalFromDetail()">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-regular fa-calendar-check text-emerald-500"></i> যোগদানের তারিখ:</span> 
+        <span id="p-joindate" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-envelope text-emerald-500"></i> ইমেইল এড্রেস:</span> 
+        <span id="p-email" class="font-extrabold text-slate-800 truncate max-w-[180px] text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-address-card text-emerald-500"></i> এনআইডি/জন্মনিবন্ধন:</span> 
+        <span id="p-nid" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-user-tie text-emerald-500"></i> পেশা:</span> 
+        <span id="p-profession" class="font-extrabold text-slate-800 text-right">...</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-solid fa-droplet text-rose-500"></i> মোট রক্তদান:</span> 
+        <span id="p-blood-count" class="font-black text-rose-600 text-right">... বার</span>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-b border-slate-100">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5"><i class="fa-brands fa-facebook text-blue-500"></i> ফেসবুক প্রোফাইল:</span> 
+        <a id="p-fb" href="#" target="_blank" class="font-extrabold text-blue-500 hover:underline text-right">প্রোফাইল লিংক</a>
+      </div>
+
+      <div class="flex justify-between py-2 border-b border-slate-100 flex-col">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-map-location-dot text-emerald-500"></i> স্থায়ী ও বর্তমান ঠিকানা:</span> 
+        <span id="p-address" class="font-extrabold text-slate-800 leading-relaxed text-left bg-slate-50 p-2.5 rounded-xl border border-slate-100">...</span>
+      </div>
+
+      <div class="flex justify-between py-2 flex-col">
+        <span class="text-slate-400 font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-comment-dots text-emerald-500"></i> সংগঠনের প্রতি মন্তব্য:</span> 
+        <span id="p-comments" class="font-bold text-slate-600 leading-relaxed text-left italic bg-slate-50 p-2.5 rounded-xl border border-slate-100">...</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- কাস্টম ফোন কল ও কপি পপআপ মডাল -->
+<div id="phone-action-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 select-none">
+  <div class="bg-white rounded-[32px] max-w-sm w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 p-6 text-center" id="phone-modal-card">
+    <div class="flex justify-between items-center mb-4 select-none">
+      <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-phone-flip text-emerald-500"></i> সদস্যের সাথে যোগাযোগ</h5>
+      <button type="button" onclick="closePhoneModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-xs"></i>
+      </button>
+    </div>
+    
+    <p id="phone-modal-member-name" class="font-black text-slate-800 text-base mb-0.5">...</p>
+    <p id="phone-modal-member-desig" class="text-xs text-emerald-600 font-bold mb-4">...</p>
+    
+    <!-- ফোন নম্বর প্রদর্শনী বক্স -->
+    <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-4 flex items-center justify-between gap-3 mb-6">
+      <span id="phone-modal-number" class="font-black text-slate-700 text-sm sm:text-base tracking-wider select-text">...</span>
+      <button type="button" onclick="copyPhoneNumber()" class="bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 text-slate-600 hover:text-emerald-600 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 shrink-0 shadow-sm" id="copy-btn">
+        <i class="fa-regular fa-copy"></i> কপি করুন
+      </button>
+    </div>
+    
+    <!-- অ্যাকশন বাটনসমূহ -->
+    <div class="flex gap-3">
+      <button type="button" onclick="closePhoneModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold py-3.5 px-4 rounded-xl transition">
+        ফিরে যান
+      </button>
+      <a id="phone-modal-dial-btn" href="tel:" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-phone-volume"></i> কল দিন
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  var allMembersList = [];
+  var filteredMembersList = [];
+  var lastSelectedMemberIndex = 0;
+
+  // পেজিনেশন কনফিগারেশন (৪টি কলাম × ৫টি শাড়ি = ২০টি মেম্বার প্রতি পেজে)
+  var currentPage = 1;
+  var itemsPerPage = 20; 
+
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('loader').classList.add('hidden');
+        if (!data || data.error) return;
+        
+        var rawLedgers = data.ledgers || [];
+        
+        // 🔴 ফিক্স: শুধুমাত্র "সক্রিয়" স্ট্যাটাসের অনুমোদিত সদস্যদের রাখা হবে (পেন্ডিং মেম্বার পুরোপুরি বাদ)
+        allMembersList = rawLedgers.filter(function(m) {
+          return m && (m.status === "সক্রিয়" || m.status === "অনুমোদিত");
+        });
+        
+        allMembersList.sort((a, b) => getDesignationRank(a.designation) - getDesignationRank(b.designation));
+        
+        filteredMembersList = [...allMembersList];
+        currentPage = 1;
+        renderList();
+      })
+      .getAuliyapurData();
+  })();
+
+  function getDesignationRank(desig) {
+    if (!desig) return 99;
+    var d = desig.toLowerCase();
+    if (d.includes("সভাপতি") && !d.includes("সহ")) return 1;
+    if (d.includes("সহ-সভাপতি") || d.includes("সহ সভাপতি")) return 2;
+    if (d.includes("সাধারণ সম্পাদক") || (d.includes("সম্পাদক") && !d.includes("যুগ্ম") && !d.includes("সাংগঠনিক"))) return 3;
+    if (d.includes("যুগ্ম")) return 4;
+    if (d.includes("সাংগঠনিক")) return 5;
+    if (d.includes("অর্থ") || d.includes("ক্যাশিয়ার") || d.includes("কোষাধ্যক্ষ")) return 6;
+    if (d.includes("উপদেষ্টা")) return 7;
+    if (d.includes("সদস্য") && d.includes("কার্যকরী")) return 8;
+    if (d.includes("স্বেচ্ছাসেবী") || d.includes("ভলান্টিয়ার") || d.includes("volunteer")) return 10;
+    return 9; 
+  }
+
+  function renderList() {
+    var grid = document.getElementById('members-grid');
+    grid.innerHTML = '';
+    
+    var totalItems = filteredMembersList.length;
+
+    if (totalItems === 0) {
+      grid.innerHTML = '<p class="col-span-full text-center text-xs text-slate-400 py-12 font-bold">কোনো সক্রিয় সদস্যের তথ্য পাওয়া যায়নি।</p>';
+      document.getElementById('pagination-container').innerHTML = '';
+      return;
+    }
+
+    // পেজিনেশনের ইনডেক্স গণনা
+    var startIdx = (currentPage - 1) * itemsPerPage;
+    var endIdx = Math.min(startIdx + itemsPerPage, totalItems);
+    var pageItems = filteredMembersList.slice(startIdx, endIdx);
+
+    pageItems.forEach((m) => {
+      var originalIndex = allMembersList.findIndex(x => x.id === m.id);
+      
+      var callNo = m.phone ? m.phone.replace(/[^0-9+]/g, '') : '';
+      var fbURL = m.fbLink && m.fbLink !== "#" && m.fbLink !== "" ? m.fbLink : "#";
+      var emailURL = m.email && m.email !== "N/A" && m.email !== "" ? `mailto:${m.email}` : "#";
+
+      var photoHTML = '';
+      if (m.photo && m.photo !== "" && m.photo !== "N/A" && !m.photo.includes("placeholder")) {
+        photoHTML = `<img class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]" src="${m.photo}" alt="${m.name}">`;
+      } else {
+        var firstLetter = m.name ? m.name.trim().charAt(0) : 'স';
+        photoHTML = `
+          <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 text-slate-500 font-black text-5xl flex items-center justify-center select-none">
+            ${firstLetter}
+          </div>`;
+      }
+
+      grid.innerHTML += `
+        <div class="bg-white rounded-[30px] shadow-sm hover:shadow-xl border border-slate-200/80 p-4 sm:p-5 overflow-hidden transition-all duration-300 flex flex-col justify-between group">
+          
+          <!-- ফটো ও নাম হেডার সেকশন -->
+          <div class="relative select-none text-left">
+            <div class="relative mb-3.5 overflow-hidden rounded-2xl bg-slate-100 w-full aspect-[4/5] sm:h-64 sm:aspect-auto">
+              ${photoHTML}
+
+              <!-- সদস্য আইডি ব্যাজ -->
+              <span class="absolute top-2.5 left-2.5 bg-slate-900/80 text-white text-[10px] px-2.5 py-1 rounded-full font-black uppercase backdrop-blur-md tracking-wider shadow-sm">
+                ${m.id}
+              </span>
+
+              <!-- রক্তের গ্রুপ ব্যাজ -->
+              <span class="absolute top-2.5 right-2.5 bg-rose-600/90 text-white font-extrabold px-2.5 py-1 rounded-full text-[10px] shadow-md uppercase backdrop-blur-md animate-pulse">
+                <i class="fa-solid fa-droplet text-[9px] mr-0.5"></i> ${m.bloodGroup || 'N/A'}
+              </span>
+            </div>
+
+            <!-- সদস্যের নাম ও পদবী -->
+            <h4 class="text-lg font-black text-slate-800 mb-1 tracking-tight truncate" title="${m.name}">${m.name}</h4>
+            <div class="mb-3">
+              <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 font-black text-[11px] px-3 py-0.5 rounded-full border border-emerald-100">
+                <i class="fa-solid fa-user-tag text-[9px] text-emerald-600"></i> ${m.designation || 'সাধারণ সদস্য'}
+              </span>
+            </div>
+          </div>
+
+          <!-- তথ্য তালিকা বডি সেকশন -->
+          <div class="flex-1 flex flex-col justify-between">
+            <div class="space-y-1.5 text-xs text-slate-500">
+              <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 transition duration-200">
+                <span class="flex items-center gap-1 font-bold text-[11px]"><i class="fa-solid fa-user-friends text-emerald-500 text-[9px]"></i> পিতার নাম:</span> 
+                <span class="font-extrabold text-slate-700 truncate max-w-[120px] text-right">${m.fatherName || 'N/A'}</span>
+              </div>
+              <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 transition duration-200">
+                <span class="flex items-center gap-1 font-bold text-[11px]"><i class="fa-solid fa-tags text-emerald-500 text-[9px]"></i> সদস্যের ধরণ:</span> 
+                <span class="font-extrabold text-emerald-600 truncate max-w-[120px] text-right">${m.memberType || 'N/A'}</span>
+              </div>
+              <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 transition duration-200">
+                <span class="flex items-center gap-1 font-bold text-[11px]"><i class="fa-solid fa-sack-dollar text-rose-500 text-[9px]"></i> মোট চাঁদা বকেয়া:</span> 
+                <span class="font-extrabold text-rose-600">৳ ${m.totalDue || '০'}</span>
+              </div>
+              <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 transition duration-200">
+                <span class="flex items-center gap-1 font-bold text-[11px]"><i class="fa-solid fa-droplet text-rose-500 text-[9px] animate-pulse"></i> মোট রক্তদান:</span> 
+                <span class="font-extrabold text-slate-700">${m.bloodDonationsCount || '০'} বার</span>
+              </div>
+            </div>
+            
+            <!-- কার্ড বটম অ্যাকশন বার -->
+            <div class="pt-3 border-t border-slate-100 mt-4 flex justify-between items-center select-none shrink-0">
+              <button onclick="openPhoneActionModal(${originalIndex})" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-[11px] font-extrabold px-3.5 py-2 rounded-xl transition flex items-center shrink-0 shadow-md shadow-emerald-600/20">
+                <i class="fa-solid fa-phone-volume mr-1"></i> কল দিন
+              </button>
+              
+              <div class="flex space-x-2 text-slate-400 items-center">
+                <button onclick="openPhoneActionModal(${originalIndex})" class="hover:text-emerald-600 transition text-xs" title="কল করুন"><i class="fa-solid fa-phone"></i></button>
+                <a href="${fbURL}" target="_blank" class="hover:text-blue-500 transition text-xs" title="ফেসবুক প্রোফাইল"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="${emailURL}" class="hover:text-amber-500 transition text-xs" title="ইমেইল করুন"><i class="fa-solid fa-envelope"></i></a>
+                <button onclick="openDetailModal('${m.id}', ${originalIndex})" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold transition shadow-sm">বিস্তারিত</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `;
+    });
+
+    // পেজিনেশন কন্ট্রোল রেন্ডার
+    renderPagination(totalItems, startIdx, endIdx);
+  }
+
+  function renderPagination(totalItems, startIdx, endIdx) {
+    var container = document.getElementById('pagination-container');
+    var totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    var displayStart = totalItems === 0 ? 0 : startIdx + 1;
+    var displayEnd = endIdx;
+
+    var paginationHTML = `
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 pb-2 border-t border-slate-200/80 mt-8 select-none">
+        
+        <div class="text-xs text-slate-500 font-bold">
+          সর্বমোট <span class="text-slate-800 font-black">${toBnDigits(totalItems)}</span> জন সদস্যের মধ্যে 
+          <span class="text-emerald-600 font-black">${toBnDigits(displayStart)} - ${toBnDigits(displayEnd)}</span> দেখানো হচ্ছে
+        </div>
+
+        <div class="inline-flex items-center gap-1.5 bg-white p-1.5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <button onclick="goToPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''} class="w-9 h-9 flex items-center justify-center rounded-xl text-xs font-bold transition ${currentPage <= 1 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}" title="পূর্ববর্তী পেজ">
+            <i class="fa-solid fa-chevron-left text-[10px]"></i>
+          </button>
+    `;
+
+    var pagesToShow = Math.max(1, totalPages);
+    for (var i = 1; i <= pagesToShow; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+        var isActive = (i === currentPage);
+        paginationHTML += `
+          <button onclick="goToPage(${i})" class="w-9 h-9 flex items-center justify-center rounded-xl text-xs font-black transition ${isActive ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/20' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}">
+            ${toBnDigits(i)}
+          </button>
+        `;
+      } else if (i === currentPage - 2 || i === currentPage + 2) {
+        paginationHTML += `<span class="w-5 text-center text-xs text-slate-400 font-bold">...</span>`;
+      }
+    }
+
+    paginationHTML += `
+          <button onclick="goToPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''} class="w-9 h-9 flex items-center justify-center rounded-xl text-xs font-bold transition ${currentPage >= totalPages ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}" title="পরবর্তী পেজ">
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </button>
+        </div>
+
+      </div>
+    `;
+
+    container.innerHTML = paginationHTML;
+  }
+
+  function goToPage(page) {
+    var totalPages = Math.ceil(filteredMembersList.length / itemsPerPage);
+    if (page < 1 || (totalPages > 0 && page > totalPages)) return;
+    
+    currentPage = page;
+    renderList();
+
+    var searchContainer = document.getElementById('search-input');
+    if (searchContainer) {
+      searchContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function filterMembers() {
+    var q = document.getElementById('search-input').value.toLowerCase().trim();
+    var filterType = document.getElementById('type-filter').value;
+    
+    filteredMembersList = allMembersList.filter(m => {
+      var cleanPhone = m.phone ? m.phone.replace(/[^0-9]/g, '') : '';
+      var cleanSearch = q.replace(/[^a-zA-Z0-9]/g, '');
+      
+      var matchSearch = (q === "") || 
+                        (m.id && m.id.toLowerCase().includes(q)) || 
+                        (m.name && m.name.toLowerCase().includes(q)) ||
+                        (cleanPhone.indexOf(cleanSearch) !== -1);
+
+      var matchType = (filterType === "") || (m.memberType === filterType) || 
+                      (filterType === "ফাউন্ডার মেম্বার" && m.memberType && m.memberType.includes("ফাউন্ডার")) ||
+                      (filterType === "ফাউন্ডার মেম্বার" && m.memberType && m.memberType.includes("প্রতিষ্ঠাতা"));
+      return matchSearch && matchType;
+    });
+
+    currentPage = 1;
+    renderList();
+  }
+
+  function openDetailModal(memberId, originalIndex) {
+    try {
+      var m = allMembersList.find(x => x.id === memberId);
+      if (!m) return;
+
+      lastSelectedMemberIndex = originalIndex;
+
+      setElementText('p-name', m.name);
+      setElementText('p-id', "আইডি: " + m.id);
+      setElementText('p-desig-tag', m.designation || "সাধারণ সদস্য");
+      setElementText('p-desig', m.designation || "সাধারণ সদস্য");
+      setElementText('p-father', m.fatherName || "N/A");
+      
+      setElementText('p-mother', m.motherName || "N/A");
+      setElementText('p-gender', m.gender || "N/A");
+      setElementText('p-education', m.education || "N/A");
+      
+      setElementText('p-type', m.memberType || "সাধারণ সদস্য");
+      setElementText('p-phone', m.phone || "N/A");
+      setElementText('p-joindate', m.joinDate || "N/A");
+      setElementText('p-email', (m.email && m.email !== "N/A") ? m.email : "সংযুক্ত নেই");
+      setElementText('p-nid', m.nid || "N/A");
+      setElementText('p-profession', m.profession || "N/A");
+      setElementText('p-blood-count', (m.bloodDonationsCount || "০"));
+      
+      setElementText('p-address', m.address || "N/A");
+      setElementText('p-comments', m.comments && m.comments !== "N/A" ? `"${m.comments}"` : "কোনো মন্তব্য নেই");
+
+      var bgBadge = document.getElementById('p-bg-badge');
+      if (bgBadge) bgBadge.innerText = m.bloodGroup || "N/A";
+
+      var fb = document.getElementById('p-fb');
+      if (fb) {
+        fb.href = (m.fbLink && m.fbLink !== "#" && m.fbLink !== "") ? m.fbLink : "#";
+      }
+
+      var photo = document.getElementById('p-photo');
+      if (photo) {
+        photo.src = (m.photo && m.photo !== "N/A" && m.photo !== "") ? m.photo : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150";
+      }
+
+      var modal = document.getElementById('profile-detail-modal');
+      var card = document.getElementById('detail-modal-card');
+      modal.classList.remove('hidden');
+      setTimeout(function() {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+      }, 50);
+    } catch (err) {
+      alert("বিস্তারিত প্রোফাইল লোড করতে সমস্যা: " + err.message);
+    }
+  }
+
+  function setElementText(id, text) {
+    var el = document.getElementById(id);
+    if (el) { el.innerText = text; }
+  }
+
+  function closeDetailModal() {
+    var modal = document.getElementById('profile-detail-modal');
+    var card = document.getElementById('detail-modal-card');
+    modal.classList.add('opacity-0');
+    card.classList.add('scale-95');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  function openPhoneActionModalFromDetail() {
+    openPhoneActionModal(lastSelectedMemberIndex);
+  }
+
+  function openPhoneActionModal(index) {
+    closeDetailModal();
+    
+    var m = allMembersList[index];
+    if (!m) return;
+
+    var name = sanitizeVal(m.name, "অজানা সদস্য");
+    var desig = sanitizeVal(m.designation, "পরিষদ সদস্য");
+    var phone = sanitizeVal(m.phone, "যোগাযোগ করা সম্ভব নয়");
+    var cleanPhoneNo = phone ? phone.replace(/[^0-9+]/g, '') : '';
+
+    document.getElementById('phone-modal-member-name').innerText = name;
+    document.getElementById('phone-modal-member-desig').innerText = desig;
+    document.getElementById('phone-modal-number').innerText = phone;
+
+    var dialBtn = document.getElementById('phone-modal-dial-btn');
+    if (cleanPhoneNo && phone !== "যোগাযোগ করা সম্ভব নয়") {
+      dialBtn.href = "tel:" + cleanPhoneNo;
+      dialBtn.style.display = "flex";
+    } else {
+      dialBtn.style.display = "none";
+    }
+
+    var copyBtn = document.getElementById('copy-btn');
+    copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> কপি করুন`;
+    copyBtn.className = "bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 text-slate-600 hover:text-emerald-600 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 shrink-0 shadow-sm";
+
+    var modal = document.getElementById('phone-action-modal');
+    var card = document.getElementById('phone-modal-card');
+    modal.classList.remove('hidden');
+    setTimeout(function() {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+    }, 50);
+  }
+
+  function closePhoneModal() {
+    var modal = document.getElementById('phone-action-modal');
+    var card = document.getElementById('phone-modal-card');
+    modal.classList.add('opacity-0');
+    card.classList.add('scale-95');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  function copyPhoneNumber() {
+    var numText = document.getElementById('phone-modal-number').innerText;
+    if (numText === "যোগাযোগ করা সম্ভব নয়") return;
+
+    navigator.clipboard.writeText(numText).then(function() {
+      var copyBtn = document.getElementById('copy-btn');
+      copyBtn.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> কপিড!`;
+      copyBtn.classList.add('bg-emerald-50', 'text-emerald-600', 'border-emerald-200');
+    }).catch(function(err) {
+      console.error("কপি ত্রুটি: ", err);
+    });
+  }
+
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  function sanitizeVal(val, fallback) {
+    if (val === undefined || val === null) return fallback;
+    var str = val.toString().trim();
+    if (str === "" || str.startsWith("#") || str.toUpperCase() === "N/A" || str === "-") {
+      return fallback;
+    }
+    return str;
+  }
+
+  window.onclick = function(event) {
+    var detailModal = document.getElementById('profile-detail-modal');
+    var phoneModal = document.getElementById('phone-action-modal');
+    if (event.target == detailModal) {
+      closeDetailModal();
+    }
+    if (event.target == phoneModal) {
+      closePhoneModal();
+    }
+  }
+</script>

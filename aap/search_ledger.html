@@ -1,0 +1,468 @@
+
+<div class="max-w-4xl mx-auto px-4 py-8 select-none font-sans">
+  
+  <!-- হেডার টাইটেল -->
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 text-xs px-4 py-1.5 rounded-full font-black uppercase tracking-wider border border-emerald-200 shadow-sm">
+      <i class="fa-solid fa-shield-halved text-emerald-600"></i> ডিজিটাল খতিয়ান ও মেম্বারশিপ পোর্টাল
+    </div>
+    <h3 class="text-3xl sm:text-4xl font-black text-slate-800 mt-3 tracking-tight">ব্যক্তিগত লেজার স্লিপ</h3>
+    <p class="text-slate-500 text-xs sm:text-sm mt-1.5 max-w-lg mx-auto">সদস্য আইডি বা মোবাইল নম্বর দিয়ে সম্পূর্ণ তথ্য ও হিসাব বিবরণী চেক করুন</p>
+    <div class="w-20 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-500 mx-auto mt-4 rounded-full"></div>
+  </div>
+
+  <!-- সার্চ বক্স -->
+  <div class="bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-100 text-center mb-10 transition-all hover:shadow-2xl hover:border-emerald-100">
+    <label class="block text-xs sm:text-sm font-bold text-slate-700 mb-3 text-left flex items-center gap-2">
+      <i class="fa-solid fa-magnifying-glass text-emerald-600"></i> সদস্য আইডি বা মোবাইল নম্বর লিখুন:
+    </label>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <div class="relative flex-grow">
+        <input type="text" id="ledger-id-input" class="w-full pl-11 pr-4 py-3.5 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-semibold shadow-inner" placeholder="যেমন: AAP001 অথবা 01710181059">
+        <i class="fa-solid fa-id-badge absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+      </div>
+      <button onclick="getLedgerSlip()" class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold px-8 py-3.5 rounded-2xl text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 shrink-0">
+        <i class="fa-solid fa-search"></i> অনুসন্ধান করুন
+      </button>
+    </div>
+  </div>
+
+  <!-- লোডার -->
+  <div id="slip-loader" class="hidden text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-emerald-500 h-11 w-11 mx-auto animate-spin shadow-md"></div>
+    <p class="text-xs sm:text-sm text-slate-500 mt-4 font-bold tracking-wide">ডাটাবেজ থেকে তথ্য সংগ্রহ করা হচ্ছে...</p>
+  </div>
+
+  <!-- সম্পূর্ণ গর্জিয়াস ডিজিটাল স্লিপ কার্ড -->
+  <div id="ledger-slip-card" class="hidden bg-slate-50/50 rounded-[36px] shadow-2xl border border-slate-200/80 overflow-hidden transition-all duration-300">
+    
+    <!-- কার্ড হেডার (আকর্ষণীয় প্রেমিয়াম গ্রেডিয়েন্ট ও প্রোফাইল প্রফেশনাল লুক) -->
+    <div class="bg-gradient-to-r from-slate-900 via-emerald-900 to-slate-900 text-white p-6 sm:p-10 text-center relative select-none overflow-hidden">
+      <!-- ব্যাকগ্রাউন্ড স্লাইট ডেকোরেশন -->
+      <div class="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl"></div>
+      <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-teal-500/10 rounded-full blur-2xl"></div>
+      
+      <div class="relative inline-block mb-4">
+        <img id="slip-photo" class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl border-4 border-white/90 object-cover bg-slate-800 shadow-2xl mx-auto ring-4 ring-emerald-500/30" src="" alt="Member Photo">
+        <span id="slip-bg-badge" class="absolute -bottom-2 -right-2 bg-gradient-to-r from-rose-600 to-red-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-lg border-2 border-white animate-pulse">
+          ...
+        </span>
+      </div>
+      
+      <h4 class="text-2xl sm:text-3xl font-black text-white tracking-wide drop-shadow-md">আউলিয়াপুর অগ্রযাত্রা পরিষদ</h4>
+      <p class="text-xs sm:text-sm text-emerald-300/90 font-medium tracking-wider mt-1">ডিজিটাল সদস্য চাঁদা ও ব্যক্তিগত তথ্য বিবরণী</p>
+      
+      <div class="mt-4 inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-emerald-200 text-xs sm:text-sm font-black px-5 py-2 rounded-full border border-white/15 shadow-inner">
+        <i class="fa-solid fa-id-card-clip text-emerald-400"></i> <span id="slip-id-display">সদস্য আইডি: ...</span>
+      </div>
+    </div>
+
+    <!-- মেইন কনটেন্ট বডি -->
+    <div class="p-5 sm:p-8 space-y-8">
+
+      <!-- ================= ১. ব্যক্তিগত তথ্য (PERSONAL INFO) ================= -->
+      <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+          <h5 class="text-base sm:text-lg font-black text-slate-800 flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-user-gear"></i></span>
+            ব্যক্তিগত তথ্যাবলী
+          </h5>
+          <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">Personal Info</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs sm:text-sm">
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-user text-indigo-500"></i> ১. সদস্যের নাম:</span>
+            <span id="slip-name" class="font-black text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-user-check text-indigo-500"></i> ২. পিতার নাম:</span>
+            <span id="slip-father" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-person-breastfeeding text-indigo-500"></i> ৩. মাতার নাম:</span>
+            <span id="slip-mother" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-venus-mars text-indigo-500"></i> ৪. লিঙ্গ (Gender):</span>
+            <span id="slip-gender" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> ৫. শিক্ষাগত যোগ্যতা:</span>
+            <span id="slip-education" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-user-tie text-indigo-500"></i> ৬. পেশা:</span>
+            <span id="slip-profession" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-address-card text-indigo-500"></i> ৭. এনআইডি/জন্মনিবন্ধন:</span>
+            <span id="slip-nid" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-phone text-indigo-500"></i> ৮. মোবাইল নম্বর:</span>
+            <span id="slip-phone" class="font-black text-indigo-600 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-envelope text-amber-500"></i> ৯. ইমেইল এড্রেস:</span>
+            <span id="slip-email" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-brands fa-facebook text-blue-600"></i> ১০. ফেসবুক প্রোফাইল:</span>
+            <a id="slip-fb" href="#" target="_blank" class="font-bold text-blue-600 hover:underline text-right flex items-center gap-1">
+              প্রোফাইল লিংক <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-droplet text-rose-600"></i> ১১. রক্তের গ্রুপ:</span>
+            <span id="slip-bg" class="font-black text-rose-600 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-heart-pulse text-rose-500"></i> ১২. মোট রক্তদান:</span>
+            <span id="slip-blood-count" class="font-extrabold text-slate-800 text-right">... বার</span>
+          </div>
+
+          <div class="md:col-span-2 flex justify-between items-start p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2 shrink-0"><i class="fa-solid fa-map-location-dot text-indigo-500"></i> ১৩. ঠিকানা (স্থায়ী/বর্তমান):</span>
+            <span id="slip-address" class="font-extrabold text-slate-800 text-right leading-relaxed pl-4">...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ২. সাংগঠনিক তথ্য (ORGANIZATIONAL INFO) ================= -->
+      <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+          <h5 class="text-base sm:text-lg font-black text-slate-800 flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-sitemap"></i></span>
+            সাংগঠনিক তথ্য বিবরণী
+          </h5>
+          <span class="text-[11px] font-bold text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-100">Organization Info</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs sm:text-sm">
+          <div class="flex justify-between items-center p-3.5 rounded-2xl bg-purple-50/50 border border-purple-100/60">
+            <span class="text-slate-600 font-bold flex items-center gap-2"><i class="fa-solid fa-award text-purple-600"></i> সংগঠনে পদবী:</span>
+            <span id="slip-designation" class="font-black text-purple-700 text-right text-sm">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3.5 rounded-2xl bg-purple-50/50 border border-purple-100/60">
+            <span class="text-slate-600 font-bold flex items-center gap-2"><i class="fa-solid fa-layer-group text-purple-600"></i> সদস্যের ধরণ:</span>
+            <span id="slip-member-type" class="font-black text-purple-700 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-regular fa-calendar-check text-purple-600"></i> যোগদানের তারিখ:</span>
+            <span id="slip-join-date" class="font-extrabold text-slate-800 text-right">...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-business-time text-purple-600"></i> অতিক্রান্ত সক্রিয় মাস:</span>
+            <span id="slip-months-count" class="font-extrabold text-slate-800 text-right">... মাস</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ৩. অর্থনৈতিক ও হিসাব তথ্য (FINANCIAL STATS) ================= -->
+      <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/70">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+          <h5 class="text-base sm:text-lg font-black text-slate-800 flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
+            অর্থনৈতিক ও হিসাব সংক্রান্ত বিবরণী
+          </h5>
+          <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">Financial Summary</span>
+        </div>
+
+        <!-- ড্যাশবোর্ড কি-পয়েন্ট উইজেট (Dynamic Stat Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          
+          <div class="bg-gradient-to-br from-emerald-50 to-teal-50/50 p-4 rounded-2xl border border-emerald-200/60 text-center relative overflow-hidden">
+            <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block mb-1">সর্বমোট ধার্য</span>
+            <span id="slip-total-accrued" class="text-2xl font-black text-emerald-700 block">৳ ...</span>
+            <span class="text-[10px] text-emerald-600/80 font-medium">চাঁদা + সদস্য ফরম ফি (৳৫০)</span>
+          </div>
+
+          <div class="bg-gradient-to-br from-teal-50 to-cyan-50/50 p-4 rounded-2xl border border-teal-200/60 text-center relative overflow-hidden">
+            <span class="text-[11px] font-bold text-teal-800 uppercase tracking-wider block mb-1">সর্বমোট প্রদান</span>
+            <span id="slip-grand-paid" class="text-2xl font-black text-teal-700 block">৳ ...</span>
+            <span class="text-[10px] text-teal-600/80 font-medium">চাঁদা + বিশেষ অনুদান</span>
+          </div>
+
+          <div class="bg-gradient-to-br from-rose-50 to-red-50/50 p-4 rounded-2xl border border-rose-200/60 text-center relative overflow-hidden">
+            <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wider block mb-1">বকেয়া পাওনা</span>
+            <span id="slip-due" class="text-2xl font-black text-rose-600 block">৳ ...</span>
+            <span class="text-[10px] text-rose-500/80 font-medium">অবশিষ্ট পরিশোধযোগ্য</span>
+          </div>
+
+        </div>
+
+        <!-- বিস্তারিত হিসাব তালিকা -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs sm:text-sm">
+          
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-money-bill-wave text-emerald-600"></i> মাসিক নির্ধারিত ফি:</span>
+            <span id="slip-monthly-fee" class="font-black text-emerald-600 text-right">৳ ...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-calculator text-emerald-600"></i> মোট চাঁদা ধার্য (এ পর্যন্ত):</span>
+            <span id="slip-sub" class="font-extrabold text-slate-800 text-right">৳ ...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-file-signature text-emerald-600"></i> সদস্য ফরম ফি ধার্য:</span>
+            <span class="font-extrabold text-slate-800 text-right">৳ ৫০</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i> মোট চাঁদা জমা দিয়েছেন:</span>
+            <span id="slip-paid" class="font-extrabold text-emerald-600 text-right">৳ ...</span>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 border border-slate-100 md:col-span-2">
+            <span class="text-slate-500 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-dollar-to-slot text-blue-600"></i> বিশেষ অনুদান ও পরিমাণ:</span>
+            <span id="slip-special" class="font-black text-blue-600 text-right">৳ ...</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- প্রিন্ট বোতাম -->
+    <div class="p-6 bg-slate-100/80 border-t border-slate-200 flex justify-center select-none">
+      <button onclick="printSingleLedger()" class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold py-3.5 px-10 rounded-2xl text-xs sm:text-sm shadow-xl shadow-emerald-600/20 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-print"></i> স্লিপ প্রিন্ট বা PDF সেভ করুন
+      </button>
+    </div>
+
+  </div>
+
+  <!-- এরর মেসেজ -->
+  <div id="ledger-error" class="hidden bg-rose-50/90 text-rose-700 text-center p-6 rounded-3xl text-xs sm:text-sm border border-rose-200 mt-6 shadow-md">
+    <i class="fa-solid fa-circle-exclamation text-lg mr-2 align-middle"></i> দুঃখিত, এই আইডি বা মোবাইল নম্বরটির কোনো বিবরণী ডাটাবেজে খুঁজে পাওয়া যায়নি!
+  </div>
+</div>
+
+<script>
+  function getLedgerSlip() {
+    var rawInput = document.getElementById('ledger-id-input').value.trim();
+    if(!rawInput) return;
+    
+    var idInput = rawInput.toLowerCase();
+    var cleanSearchNo = idInput.replace(/[^0-9]/g, '');
+
+    document.getElementById('slip-loader').classList.remove('hidden');
+    document.getElementById('ledger-slip-card').classList.add('hidden');
+    document.getElementById('ledger-error').classList.add('hidden');
+
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('slip-loader').classList.add('hidden');
+        if (!data || data.error || !data.ledgers) {
+          document.getElementById('ledger-error').classList.remove('hidden');
+          return;
+        }
+        
+        var match = data.ledgers.find(l => {
+          var cleanId = l.id ? l.id.toLowerCase().replace(/[^a-zA-Z0-9]/g, '') : '';
+          var cleanPhone = l.phone ? l.phone.replace(/[^0-9]/g, '') : '';
+          var cleanInput = idInput.replace(/[^a-zA-Z0-9]/g, '');
+          
+          return (cleanId === cleanInput) || 
+                 (cleanPhone !== '' && cleanSearchNo !== '' && cleanPhone.indexOf(cleanSearchNo) !== -1);
+        });
+
+        if (match) {
+          try {
+            document.getElementById('slip-id-display').innerText = "সদস্য আইডি: " + match.id;
+            document.getElementById('slip-name').innerText = match.name || "N/A";
+            document.getElementById('slip-father').innerText = match.fatherName || "N/A";
+            
+            // নতুন ক্ষেত্রসমূহ সেট করা
+            document.getElementById('slip-mother').innerText = match.motherName || "N/A";
+            document.getElementById('slip-gender').innerText = match.gender || "N/A";
+            document.getElementById('slip-education').innerText = match.education || "N/A";
+            document.getElementById('slip-designation').innerText = match.designation || "সাধারণ সদস্য";
+            document.getElementById('slip-member-type').innerText = match.memberType || "সাধারণ সদস্য";
+
+            document.getElementById('slip-address').innerText = match.address || "N/A";
+            document.getElementById('slip-phone').innerText = match.phone || "N/A";
+            document.getElementById('slip-monthly-fee').innerText = "৳ " + match.monthlyFee;
+            
+            document.getElementById('slip-join-date').innerText = formatDate(match.joinDate);
+            
+            var monthsPassed = parseFloat(toEnDigits(match.months)) || 0;
+            document.getElementById('slip-months-count').innerText = toBnDigits(monthsPassed) + " মাস";
+            
+            var monthlyFeeVal = parseFloat(toEnDigits(match.monthlyFee)) || 0;
+            var totalAccruedSubscription = monthlyFeeVal * monthsPassed;
+            var formFee = 50; 
+            var grandTotalAccrued = totalAccruedSubscription + formFee;
+            
+            document.getElementById('slip-sub').innerText = "৳ " + toBnDigits(totalAccruedSubscription);
+            document.getElementById('slip-total-accrued').innerText = "৳ " + toBnDigits(grandTotalAccrued);
+            
+            document.getElementById('slip-paid').innerText = "৳ " + match.totalPaid;
+            
+            var specialDonationVal = match.specialDonation || match.totalDonations || "০";
+            document.getElementById('slip-special').innerText = "৳ " + specialDonationVal;
+            
+            var grandPaidVal = match.grandTotalPaid || match.totalPaid;
+            document.getElementById('slip-grand-paid').innerText = "৳ " + grandPaidVal;
+            
+            document.getElementById('slip-due').innerText = "৳ " + match.totalDue;
+            
+            var bgVal = match.bloodGroup || "N/A";
+            document.getElementById('slip-bg').innerText = bgVal;
+            document.getElementById('slip-bg-badge').innerText = bgVal;
+            
+            var bloodDonationsVal = match.bloodDonationsCount || "০";
+            document.getElementById('slip-blood-count').innerText = bloodDonationsVal + " বার";
+            
+            document.getElementById('slip-nid').innerText = match.nid || "N/A";
+            document.getElementById('slip-profession').innerText = match.profession || "N/A";
+            document.getElementById('slip-email').innerText = (match.email && match.email !== "N/A") ? match.email : "সংযুক্ত নেই";
+
+            var fb = document.getElementById('slip-fb');
+            if (match.fbLink && match.fbLink !== "#" && match.fbLink !== "") {
+              fb.href = match.fbLink;
+              fb.classList.remove('hidden');
+            } else {
+              fb.classList.add('hidden');
+            }
+            
+            var photo = document.getElementById('slip-photo');
+            if (match.photo && match.photo !== "N/A" && match.photo !== "") {
+              photo.src = match.photo;
+            } else {
+              photo.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150";
+            }
+            
+            document.getElementById('ledger-slip-card').classList.remove('hidden');
+          } catch (err) {
+            alert("স্লিপ প্রদর্শন ত্রুটি: " + err.message);
+          }
+        } else {
+          document.getElementById('ledger-error').classList.remove('hidden');
+        }
+      })
+      .getAuliyapurData();
+  }
+
+  function printSingleLedger() {
+    var id = document.getElementById('slip-id-display').innerText;
+    var printContent = `
+      <html>
+      <head>
+        <title>আউলিয়াপুর অগ্রযাত্রা পরিষদ - সদস্য চাঁদা স্লিপ (${id})</title>
+        <style>
+          body { font-family: 'Hind Siliguri', sans-serif; padding: 20px; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+          .header { text-align: center; border-bottom: 2px solid #059669; padding-bottom: 12px; margin-bottom: 15px; }
+          .logo-placeholder { font-size: 24px; color: #059669; margin-bottom: 4px; }
+          h2 { text-align: center; color: #059669; margin: 0; font-size: 20px; font-weight: bold; }
+          h4 { text-align: center; color: #64748b; margin: 3px 0 0 0; font-size: 11px; }
+          .id-badge { display: inline-block; background-color: #ecfdf5; color: #065f46; font-weight: bold; font-size: 11px; padding: 3px 12px; border-radius: 9999px; margin-top: 8px; border: 1px solid #a7f3d0; }
+          
+          .section-title { font-size: 12px; font-weight: bold; color: #0f172a; background: #f8fafc; padding: 6px 10px; border-left: 3px solid #059669; margin-top: 12px; margin-bottom: 6px; }
+          .row { display: flex; justify-content: space-between; font-size: 11px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; }
+          
+          .font-bold { font-weight: bold; color: #0f172a; }
+          .text-emerald { color: #059669; font-weight: bold; }
+          .text-red { color: #e11d48; font-weight: bold; }
+          .text-blue { color: #2563eb; font-weight: bold; }
+          .footer { text-align: center; font-size: 10px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="logo-placeholder">👥</div>
+          <h2>আউলিয়াপুর অগ্রযাত্রা পরিষদ</h2>
+          <h4>সদস্য চাঁদা ও তথ্য বিবরণী স্লিপ</h4>
+          <div class="id-badge">${id}</div>
+        </div>
+
+        <div class="section-title">১. ব্যক্তিগত তথ্য</div>
+        <div class="row"><span>সদস্যের নাম:</span> <span class="font-bold">${document.getElementById('slip-name').innerText}</span></div>
+        <div class="row"><span>পিতার নাম:</span> <span class="font-bold">${document.getElementById('slip-father').innerText}</span></div>
+        <div class="row"><span>মাতার নাম:</span> <span class="font-bold">${document.getElementById('slip-mother').innerText}</span></div>
+        <div class="row"><span>লিঙ্গ (Gender):</span> <span class="font-bold">${document.getElementById('slip-gender').innerText}</span></div>
+        <div class="row"><span>শিক্ষাগত যোগ্যতা:</span> <span class="font-bold">${document.getElementById('slip-education').innerText}</span></div>
+        <div class="row"><span>পেশা:</span> <span class="font-bold">${document.getElementById('slip-profession').innerText}</span></div>
+        <div class="row"><span>এনআইডি/জন্মনিবন্ধন:</span> <span class="font-bold">${document.getElementById('slip-nid').innerText}</span></div>
+        <div class="row"><span>মোবাইল নম্বর:</span> <span class="font-bold">${document.getElementById('slip-phone').innerText}</span></div>
+        <div class="row"><span>ইমেইল:</span> <span class="font-bold">${document.getElementById('slip-email').innerText}</span></div>
+        <div class="row"><span>রক্তের গ্রুপ:</span> <span class="text-red">${document.getElementById('slip-bg').innerText}</span></div>
+        <div class="row"><span>মোট রক্তদান:</span> <span class="font-bold">${document.getElementById('slip-blood-count').innerText}</span></div>
+        <div class="row"><span>ঠিকানা:</span> <span class="font-bold">${document.getElementById('slip-address').innerText}</span></div>
+
+        <div class="section-title">২. সাংগঠনিক তথ্য</div>
+        <div class="row"><span>সংগঠনে পদবী:</span> <span class="font-bold">${document.getElementById('slip-designation').innerText}</span></div>
+        <div class="row"><span>সদস্যের ধরণ:</span> <span class="font-bold">${document.getElementById('slip-member-type').innerText}</span></div>
+        <div class="row"><span>যোগদানের তারিখ:</span> <span class="font-bold">${document.getElementById('slip-join-date').innerText}</span></div>
+        <div class="row"><span>অতিক্রান্ত সক্রিয় মাস:</span> <span class="font-bold">${document.getElementById('slip-months-count').innerText}</span></div>
+
+        <div class="section-title">৩. অর্থনৈতিক ও হিসাব বিবরণী</div>
+        <div class="row"><span>মাসিক নির্ধারিত ফি:</span> <span class="text-emerald">${document.getElementById('slip-monthly-fee').innerText}</span></div>
+        <div class="row"><span>মোট চাঁদা ধার্য:</span> <span class="font-bold">${document.getElementById('slip-sub').innerText}</span></div>
+        <div class="row"><span>সদস্য ফরম ফি:</span> <span class="font-bold">৳ ৫০</span></div>
+        <div class="row"><span>সর্বমোট ধার্য (ফরম ফিসহ):</span> <span class="text-emerald">${document.getElementById('slip-total-accrued').innerText}</span></div>
+        <div class="row"><span>মোট চাঁদা জমা:</span> <span class="text-emerald">${document.getElementById('slip-paid').innerText}</span></div>
+        <div class="row"><span>বিশেষ অনুদান:</span> <span class="text-blue">${document.getElementById('slip-special').innerText}</span></div>
+        <div class="row"><span>সর্বমোট প্রদান:</span> <span class="text-emerald" style="font-weight: 900; font-size: 12px;">${document.getElementById('slip-grand-paid').innerText}</span></div>
+        <div class="row"><span>বকেয়া পাওনা:</span> <span class="text-red" style="font-weight: 900; font-size: 12px;">${document.getElementById('slip-due').innerText}</span></div>
+
+        <div class="footer">
+          রিপোর্ট প্রস্তুতের তারিখ: ${new Date().toLocaleDateString('bn-BD')}<br>
+          *যেকোনো প্রকারের তথ্য সংশোধনের জন্য কেন্দ্রীয় কমিটির সাথে যোগাযোগ করুন।
+        </div>
+      </body>
+      </html>
+    `;
+    var win = window.open('', '', 'height=750,width=600');
+    win.document.write(printContent);
+    win.document.close();
+    win.focus();
+    setTimeout(function() {
+      win.print();
+    }, 500);
+  }
+
+  function formatDate(dateVal) {
+    if (!dateVal) return "N/A";
+    try {
+      var d = new Date(dateVal);
+      if (isNaN(d.getTime())) {
+        return dateVal;
+      }
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      return toBnDigits(day + "-" + month + "-" + year);
+    } catch (e) {
+      return dateVal;
+    }
+  }
+
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  function toEnDigits(str) {
+    if (str === undefined || str === null || str === "") return "0";
+    var enDigits = { "০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9" };
+    return str.toString().replace(/[০-৯]/g, function(w) { return enDigits[w]; });
+  }
+</script>

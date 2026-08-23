@@ -1,0 +1,353 @@
+<script>
+  // ১. সরাসরি ওপেন করা হলে সুন্দর লেআউটের জন্য মূল পেজে রিডাইরেক্ট করা হবে
+  if (window.location.pathname.includes('committee_advisors.html')) {
+  
+    window.location.href = './#committee_advisors';
+  }
+
+  // ২. ব্যাকআপ পলিফিল: যদি কোনো কারণে রিডাইরেক্ট না হয়, তবুও ডাটাবেজ ইরর আটকাবে
+  if (typeof google === 'undefined') {
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbyo1N9yzpPQdGN5UhOZO7gW2ScsQYRsCvA5cmjoCvZ4-Xy0YMDhKuAPwWVGKFiPvKVq-A/exec";
+    
+    function executeServerFunction(functionName, args, onSuccess, onFailure) {
+      fetch(webAppUrl, {
+        method: 'POST',
+        body: JSON.stringify({ action: functionName, arguments: args }),
+        headers: { 'Content-Type': 'text/plain' }
+      })
+      .then(res => res.json())
+      .then(res => res.status === 'success' ? (onSuccess && onSuccess(res.data)) : (onFailure && onFailure(res.message)))
+      .catch(err => onFailure && onFailure(err));
+    }
+
+    function createRunProxy(onSuccess, onFailure) {
+      return new Proxy({}, {
+        get: function(target, prop) {
+          if (prop === 'withSuccessHandler') return function(sc) { return createRunProxy(sc, onFailure); };
+          if (prop === 'withFailureHandler') return function(fc) { return createRunProxy(onSuccess, fc); };
+          return function(...args) { executeServerFunction(prop, args, onSuccess, onFailure); };
+        }
+      });
+    }
+    window.google = { script: { run: createRunProxy(null, null) } };
+  }
+</script>
+
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-10 select-none">
+    <span class="bg-emerald-50 text-emerald-700 text-xs px-4 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm border border-emerald-100">সম্মানিত পর্ষদ</span>
+    <h3 class="text-3xl font-black text-gray-800 mt-3">উপদেষ্টা মণ্ডলী</h3>
+    <p class="text-xs sm:text-sm text-gray-400 mt-2">আমাদের সম্মানিত উপদেষ্টাগণ যারা পথ দেখান ও অনুপ্রেরণা জোগান</p>
+    <div class="w-16 h-1 bg-emerald-500 mx-auto mt-3 rounded-full"></div>
+  </div>
+
+  <!-- প্রধান উপদেষ্টা প্যানেল (মডার্ন প্রিমিয়াম ডিজাইন!) -->
+  <div class="bg-white rounded-[32px] shadow-xl border border-gray-100 p-8 flex flex-col lg:flex-row gap-8 mb-16 hover:shadow-2xl transition-all duration-300" id="chief-advisor-card">
+    <div class="lg:w-1/3 flex flex-col items-center border-r border-gray-100 pr-0 lg:pr-8 text-center lg:text-left shrink-0">
+      <img id="chief-photo" class="w-40 h-40 rounded-full border-4 border-emerald-50 object-cover object-top shadow-lg mb-4 hover:scale-105 transition duration-300" src="" alt="Chief Advisor">
+      <h4 id="chief-name" class="text-2xl font-black text-gray-800 mb-1">...</h4>
+      <span class="text-xs bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full font-black uppercase tracking-wider mb-6">প্রধান উপদেষ্টা</span>
+      
+      <div class="space-y-3.5 text-xs sm:text-sm text-gray-500 w-full">
+        <!-- ফোন নম্বরে ক্লিক করলে পপআপ আসবে -->
+        <p onclick="openChiefCall()" class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition cursor-pointer font-semibold"><i class="fa-solid fa-phone text-emerald-500 w-6 shrink-0 text-sm"></i> <span id="chief-phone">...</span></p>
+        <p class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition"><i class="fa-solid fa-building text-emerald-500 w-6 shrink-0 text-sm"></i> <span id="chief-org">...</span></p>
+        <a id="chief-fb" href="#" target="_blank" class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition text-emerald-700 font-bold"><i class="fa-brands fa-facebook text-emerald-500 w-6 text-base shrink-0"></i> ফেসবুক প্রোফাইল</a>
+      </div>
+    </div>
+    <div class="lg:w-2/3 flex flex-col justify-between">
+      <div class="text-gray-600 text-sm leading-relaxed space-y-4 italic py-4">
+        <p id="chief-msg" class="text-base sm:text-lg font-semibold text-gray-700 mb-2 leading-relaxed">...</p>
+      </div>
+      <div class="mt-8 flex justify-end border-t border-gray-50 pt-4">
+        <div class="text-right">
+          <span id="chief-sign" class="font-extrabold text-gray-800 text-sm sm:text-base">...</span>
+          <p class="text-xs text-gray-400">প্রধান উপদেষ্টা</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- সাধারণ উপদেষ্টাবৃন্দ গ্রিড -->
+  <div>
+    <div class="text-center mb-10 select-none">
+      <span class="bg-amber-50 text-amber-700 text-xs px-4 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm border border-amber-100">উপদেষ্টাবৃন্দ</span>
+      <h3 class="text-2xl font-black text-gray-800 mt-3">আমাদের সম্মানিত উপদেষ্টাগণ</h3>
+      <div class="w-16 h-1 bg-amber-400 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <div id="advisors-list-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </div>
+
+  <div id="loader-advisors" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto"></div>
+  </div>
+</div>
+
+<!-- ==================== পপআপ মডাল সমূহ (কল করুন ও বিস্তারিত!) ==================== -->
+
+<!-- ১. ফোন নম্বর দেখার পপআপ মডাল -->
+<div id="call-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden transition-opacity duration-300">
+  <div class="bg-white rounded-[32px] max-w-sm w-full p-6 shadow-2xl relative border border-gray-100 transform scale-95 transition-transform duration-300">
+    <button onclick="closeModal('call-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+      <i class="fa-solid fa-circle-xmark text-xl"></i>
+    </button>
+    <div class="text-center">
+      <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+        <i class="fa-solid fa-phone-volume animate-pulse"></i>
+      </div>
+      <h4 id="call-modal-name" class="font-extrabold text-gray-800 text-lg mb-1">...</h4>
+      <p class="text-xs text-gray-400 mb-4">ফোন করার জন্য নিচে চাপুন অথবা কপি করুন</p>
+      
+      <div class="bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 flex items-center justify-between gap-2 mb-4">
+        <span id="call-modal-phone" class="font-bold text-gray-700 tracking-wider text-base">...</span>
+        <button onclick="copyPhoneNumber()" class="text-emerald-600 hover:text-emerald-700 text-xs font-bold transition flex items-center gap-1">
+          <i class="fa-regular fa-copy"></i> কপি
+        </button>
+      </div>
+      
+      <div class="flex gap-3">
+        <button onclick="closeModal('call-modal')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs transition">বন্ধ করুন</button>
+        <a id="call-modal-btn" href="#" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-emerald-200"><i class="fa-solid fa-phone"></i> কল করুন</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ২. বিস্তারিত পপআপ মডাল -->
+<div id="details-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden transition-opacity duration-300">
+  <div class="bg-white rounded-[32px] max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-gray-100 overflow-y-auto max-h-[90vh] transform scale-95 transition-transform duration-300">
+    <button onclick="closeModal('details-modal')" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 transition">
+      <i class="fa-solid fa-circle-xmark text-2xl"></i>
+    </button>
+    
+    <div class="flex flex-col items-center text-center">
+      <img id="details-modal-photo" class="w-28 h-28 rounded-full border-4 border-emerald-50 object-cover object-top shadow-md mb-4" src="" alt="Photo">
+      <h4 id="details-modal-name" class="font-black text-gray-800 text-xl mb-1">...</h4>
+      <span id="details-modal-desig" class="text-xs bg-amber-50 text-amber-700 px-3 py-1 rounded-full font-extrabold mb-6">...</span>
+      
+      <div class="w-full space-y-3.5 text-xs sm:text-sm text-gray-600 border-t border-b border-gray-50 py-5 my-2">
+        <div class="grid grid-cols-12 gap-y-3 gap-x-2 text-left">
+          <div class="col-span-4 text-gray-400 font-bold"><i class="fa-solid fa-briefcase mr-1.5 w-4 text-emerald-500"></i>পেশা:</div>
+          <div id="details-modal-profession" class="col-span-8 font-extrabold text-gray-700">...</div>
+          
+          <div class="col-span-4 text-gray-400 font-bold"><i class="fa-solid fa-graduation-cap mr-1.5 w-4 text-emerald-500"></i>যোগ্যতা:</div>
+          <div id="details-modal-education" class="col-span-8 font-extrabold text-gray-700">...</div>
+          
+          <div class="col-span-4 text-gray-400 font-bold"><i class="fa-solid fa-building mr-1.5 w-4 text-emerald-500"></i>कर्मस्थल:</div>
+          <div id="details-modal-org" class="col-span-8 font-extrabold text-gray-700">...</div>
+          
+          <div class="col-span-4 text-gray-400 font-bold"><i class="fa-solid fa-phone mr-1.5 w-4 text-emerald-500"></i>মোবাইল:</div>
+          <div id="details-modal-phone" class="col-span-8 font-extrabold text-gray-700">...</div>
+        </div>
+      </div>
+      
+      <div class="w-full text-left my-4">
+        <p class="text-xs text-gray-400 font-extrabold uppercase mb-2">বাণী / মন্তব্য</p>
+        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 text-gray-600 text-xs sm:text-sm italic leading-relaxed">
+          <p id="details-modal-message">...</p>
+        </div>
+      </div>
+      
+      <div class="flex gap-3 w-full mt-2">
+        <a id="details-modal-fb" href="#" target="_blank" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"><i class="fa-brands fa-facebook"></i> ফেসবুক প্রোফাইল</a>
+        <button onclick="closeModal('details-modal')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold text-xs sm:text-sm transition shadow-md shadow-emerald-200">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('loader-advisors').classList.add('hidden');
+        if (!data || data.length === 0) {
+          showEmptyPlaceholder();
+          return;
+        }
+
+        var advList = data.filter(m => m.type === "উপদেষ্টা মণ্ডলী");
+        window.advisorsList = advList; // গ্লোবাল ভ্যারিয়েবলে স্টোর করা হলো যেন পপআপে সহজে কল করা যায়
+        
+        var chief = advList.find(m => m.designation.includes("প্রধান"));
+        if (chief) {
+          // প্রধান উপদেষ্টার ড্রাইভ ছবি লিঙ্ক কনভার্টার
+          var chiefPhotoUrl = chief.photo;
+          if (chiefPhotoUrl) {
+            var match = chiefPhotoUrl.match(/(?:id=|folders\/|d\/|uc\?id=)([a-zA-Z0-9-_]{25,})/);
+            if (match && match[1]) {
+              chiefPhotoUrl = "https://lh3.googleusercontent.com/d/" + match[1];
+            }
+          }
+          
+          document.getElementById('chief-photo').src = chiefPhotoUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150";
+          document.getElementById('chief-name').innerText = chief.name;
+          document.getElementById('chief-phone').innerText = chief.phone;
+          document.getElementById('chief-org').innerText = chief.org;
+          document.getElementById('chief-fb').href = chief.fbLink || "#";
+          document.getElementById('chief-msg').innerText = '"' + (chief.message || 'অগ্রযাত্রা এগিয়ে যাক...') + '"';
+          document.getElementById('chief-sign').innerText = chief.name;
+        } else {
+          document.getElementById('chief-advisor-card').classList.add('hidden');
+        }
+
+        var grid = document.getElementById('advisors-list-grid');
+        grid.innerHTML = '';
+        
+        var colors = ["bg-amber-500", "bg-emerald-600", "bg-pink-600", "bg-purple-600", "bg-blue-600", "bg-sky-600"];
+        var cardIdx = 0;
+
+        advList.forEach((member, index) => {
+          if (chief && member.name === chief.name) return;
+
+          var imgHtml = "";
+          var photoUrl = member.photo;
+          if (photoUrl) {
+            // উপদেষ্টাবৃন্দের ড্রাইভ ছবি লিঙ্ক কনভার্টার
+            var match = photoUrl.match(/(?:id=|folders\/|d\/|uc\?id=)([a-zA-Z0-9-_]{25,})/);
+            if (match && match[1]) {
+              photoUrl = "https://lh3.googleusercontent.com/d/" + match[1];
+            }
+            imgHtml = `<img class="w-full aspect-square object-cover object-top hover:scale-105 transition duration-500" src="${photoUrl}" alt="${member.name}">`;
+          } else {
+            var letter = member.name ? member.name.trim().charAt(0) : "উ";
+            var bgCol = colors[cardIdx % colors.length];
+            cardIdx++;
+            imgHtml = `
+              <div class="w-full aspect-square ${bgCol} text-white flex items-center justify-center font-black text-5xl shadow-inner select-none">
+                ${letter}
+              </div>`;
+          }
+
+          grid.innerHTML += `
+            <div class="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden hover:border-emerald-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div class="overflow-hidden">
+                  ${imgHtml}
+                </div>
+                <div class="p-5 text-center">
+                  <h4 class="font-black text-gray-800 text-base sm:text-lg">${member.name}</h4>
+                  <p class="text-[10px] bg-amber-50 text-amber-700 px-3 py-1 rounded-full font-black uppercase tracking-wider inline-block mt-1 border border-amber-100">${member.designation}</p>
+                  
+                  <div class="mt-4 text-[11px] text-gray-500 space-y-1.5 text-left border-t border-gray-50 pt-4">
+                    <p class="truncate"><i class="fa-solid fa-briefcase text-emerald-500 mr-1.5 w-4"></i>পেশা: ${member.profession}</p>
+                    <p class="truncate"><i class="fa-solid fa-graduation-cap text-emerald-500 mr-1.5 w-4"></i>যোগ্যতা: ${member.education}</p>
+                    <p class="truncate"><i class="fa-solid fa-building text-emerald-500 mr-1.5 w-4"></i>कर्मस्थल: ${member.org}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- বাটন গ্রীড এরিয়া -->
+              <div class="px-5 pb-5 pt-3 border-t border-gray-50 flex items-center gap-2 select-none">
+                <!-- কল করুন বাটন পপআপ ওপেনার -->
+                <button onclick="openCallPopup('${member.name}', '${member.phone}')" class="flex-1 bg-emerald-50 text-emerald-700 py-2.5 px-2 rounded-xl text-xs font-black hover:bg-emerald-100 transition duration-200 flex items-center justify-center gap-1.5 border border-emerald-100">
+                  <i class="fa-solid fa-phone-volume"></i> কল করুন
+                </button>
+                
+                <!-- ফেসবুক প্রোফাইল লিঙ্ক -->
+                <a href="${member.fbLink || '#'}" target="_blank" class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition duration-200 flex items-center justify-center text-sm shrink-0 border border-blue-100" title="ফেসবুক প্রোফাইল">
+                  <i class="fa-brands fa-facebook"></i>
+                </a>
+                
+                <!-- বিস্তারিত দেখার বাটন পপআপ ওপেনার -->
+                <button onclick="openDetailsPopup(${index})" class="w-10 h-10 bg-amber-50 text-amber-700 rounded-xl hover:bg-amber-100 transition duration-200 flex items-center justify-center text-sm shrink-0 border border-amber-100" title="বিস্তারিত">
+                  <i class="fa-solid fa-circle-info"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+      })
+      .getCommitteeData();
+  })();
+
+  function showEmptyPlaceholder() {
+    document.getElementById('advisors-list-grid').innerHTML = '<p class="col-span-full text-center text-xs text-gray-400 py-12">কোনো উপদেষ্টার তথ্য পাওয়া যায়নি।</p>';
+  }
+
+  // ==================== পপআপ ফাংশনালিটি স্ক্রিপ্ট ====================
+
+  // প্রধান উপদেষ্টার কল পপআপ ট্রিগার
+  window.openChiefCall = function() {
+    var name = document.getElementById('chief-name').innerText;
+    var phone = document.getElementById('chief-phone').innerText;
+    openCallPopup(name, phone);
+  };
+
+  // কল মডাল ওপেন
+  window.openCallPopup = function(name, phone) {
+    document.getElementById('call-modal-name').innerText = name;
+    document.getElementById('call-modal-phone').innerText = phone;
+    document.getElementById('call-modal-btn').href = "tel:" + phone;
+    
+    var modal = document.getElementById('call-modal');
+    modal.classList.remove('hidden');
+    setTimeout(function() {
+      modal.querySelector('div').classList.remove('scale-95');
+    }, 10);
+  };
+
+  // ফোন নম্বর কপি করার সুবিধা
+  window.copyPhoneNumber = function() {
+    var phoneNum = document.getElementById('call-modal-phone').innerText;
+    navigator.clipboard.writeText(phoneNum).then(function() {
+      alert("মোবাইল নম্বরটি কপি করা হয়েছে!");
+    }, function(err) {
+      console.error('কপি করা সম্ভব হয়নি: ', err);
+    });
+  };
+
+  // বিস্তারিত মডাল ওপেন
+  window.openDetailsPopup = function(index) {
+    var member = window.advisorsList[index];
+    if (!member) return;
+    
+    // ছবির লিঙ্ক CDN এ কনভার্ট করা
+    var photoUrl = member.photo;
+    if (photoUrl) {
+      var match = photoUrl.match(/(?:id=|folders\/|d\/|uc\?id=)([a-zA-Z0-9-_]{25,})/);
+      if (match && match[1]) {
+        photoUrl = "https://lh3.googleusercontent.com/d/" + match[1];
+      }
+    } else {
+      photoUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150";
+    }
+    
+    document.getElementById('details-modal-photo').src = photoUrl;
+    document.getElementById('details-modal-name').innerText = member.name || "সম্মানিত উপদেষ্টা";
+    document.getElementById('details-modal-desig').innerText = member.designation || "উপদেষ্টা";
+    document.getElementById('details-modal-profession').innerText = member.profession || "উল্লেখ নেই";
+    document.getElementById('details-modal-education').innerText = member.education || "উল্লেখ নেই";
+    document.getElementById('details-modal-org').innerText = member.org || "উল্লেখ নেই";
+    document.getElementById('details-modal-phone').innerText = member.phone || "উল্লেখ নেই";
+    
+    var msg = member.message ? '"' + member.message + '"' : '"অগ্রযাত্রা এগিয়ে যাক..."';
+    document.getElementById('details-modal-message').innerText = msg;
+    
+    var fbBtn = document.getElementById('details-modal-fb');
+    if (member.fbLink && member.fbLink !== "#" && member.fbLink !== "") {
+      fbBtn.href = member.fbLink;
+      fbBtn.style.display = "flex";
+    } else {
+      fbBtn.style.display = "none";
+    }
+    
+    var modal = document.getElementById('details-modal');
+    modal.classList.remove('hidden');
+    setTimeout(function() {
+      modal.querySelector('div').classList.remove('scale-95');
+    }, 10);
+  };
+
+  // মডাল বন্ধ করার সুবিধা
+  window.closeModal = function(id) {
+    var modal = document.getElementById(id);
+    modal.querySelector('div').classList.add('scale-95');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+    }, 200);
+  };
+</script>

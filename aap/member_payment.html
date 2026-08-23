@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9; /* স্লিক অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+      }
+      /* গেটওয়ে ডিজিট ইনপুট বক্স স্টাইল */
+      .gateway-input-digit {
+        width: 32px;
+        height: 38px;
+        background-color: white;
+        color: #333;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    
+<div class="max-w-2xl mx-auto px-4 py-8 select-none">
+  <div class="w-full bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+    
+    <!-- টপ ব্যানার (ডাইনামিক থিম অনুযায়ী পরিবর্তিত হবে) -->
+    <div id="top-banner" class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6 sm:p-8 text-white text-center relative transition-all duration-500">
+      <div class="absolute top-4 right-4 bg-white/20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+        <i class="fa-solid fa-heart animate-pulse"></i> পেমেন্ট গেটওয়ে
+      </div>
+      <h3 class="text-2xl font-black">চাঁদা ও অনুদান পোর্টাল</h3>
+      <p class="text-xs text-emerald-100 mt-1.5 leading-relaxed">আউলিয়াপুর অগ্রযাত্রা পরিষদের ফান্ডে আপনার চাঁদা বা অনুদান নিরাপদে প্রেরণ করুন</p>
+    </div>
+
+    <!-- ৩টি ডায়নামিক ট্যাব বাটন (MFS, গেটওয়ে ও ব্যাংক) -->
+    <div class="grid grid-cols-3 bg-slate-100 p-1.5 gap-1 select-none border-b border-gray-200">
+      <button type="button" onclick="switchPaymentTab('mfs')" id="tab-btn-mfs" class="py-2.5 rounded-xl text-[11px] font-bold transition-all bg-white text-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-center gap-1">
+        <i class="fa-solid fa-mobile-screen-button text-xs"></i> <span>মোবাইল ব্যাংকিং</span>
+      </button>
+      <button type="button" onclick="switchPaymentTab('gateway')" id="tab-btn-gateway" class="py-2.5 rounded-xl text-[11px] font-bold transition-all text-gray-500 hover:text-gray-800 flex flex-col sm:flex-row items-center justify-center gap-1">
+        <i class="fa-solid fa-credit-card text-xs"></i> <span>অনলাইন গেটওয়ে</span>
+      </button>
+      <button type="button" onclick="switchPaymentTab('bank')" id="tab-btn-bank" class="py-2.5 rounded-xl text-[11px] font-bold transition-all text-gray-500 hover:text-gray-800 flex flex-col sm:flex-row items-center justify-center gap-1">
+        <i class="fa-solid fa-building-columns text-xs"></i> <span>ব্যাংক ট্রান্সফার</span>
+      </button>
+    </div>
+
+    <!-- চাঁদা ও অনুদান পরিশোধ ফর্ম (মাঝের অংশ সাদা) -->
+    <form id="pay-form" onsubmit="submitPayment(event)" class="p-6 sm:p-8 space-y-5 text-xs font-bold text-gray-600 bg-white">
+      
+      <!-- সাধারণ তথ্য (১ম ও ২য় ধাপ) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">১. সদস্য আইডি *</label>
+          <input type="text" id="pay-id" required onblur="lookupName()" placeholder="যেমন: AAP001" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-gray-700 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          <span class="text-[9px] text-gray-400 font-semibold block mt-1 leading-relaxed">*আইডি লিখে অন্য কোথাও ক্লিক করলে নাম অটো-লোড হবে।</span>
+        </div>
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">২. সদস্যের নাম (অটো-লোড)</label>
+          <input type="text" id="pay-name" readonly class="w-full px-4 py-2.5 border border-slate-200/40 rounded-xl bg-slate-100 text-gray-400 text-xs font-bold focus:outline-none">
+        </div>
+      </div>
+
+      <!-- ৩য় ও ৪র্থ ধাপ -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">৩. অর্থবছর নির্বাচন করুন *</label>
+          <select id="pay-fy" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-gray-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+            <option value="২০২৬-২০২৭">২০২৬-২০২৭</option>
+            <option value="২০২৭-২০২৮">২০২৭-২০২৮</option>
+            <option value="২০২৮-২০২৯">২০২৮-২০২৯</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">৪. মাসের নাম / বিবরণী *</label>
+          <select id="pay-month" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-gray-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+            <option value="অনুদান">ডোনেশন / অনুদান (এককালীন)</option>
+            <option value="ভর্তি ফরম ফি">ভর্তি ফরম ফি (৫০ টাকা)</option>
+            <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+            <option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option>
+            <option value="মে">মে</option><option value="জুন">জুন</option>
+            <option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option>
+            <option value="সেপ্টেম্বর">সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option>
+            <option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ৫ম ও ৬ষ্ঠ ধাপ -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">৫. টাকার পরিমাণ *</label>
+          <input type="number" id="pay-amount" oninput="syncAmountToGateway(this.value)" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-gray-700 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5">৬. মোবাইল নাম্বার *</label>
+          <input type="tel" id="pay-phone" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-gray-700 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- ==============================================
+           ট্যাব ১: মোবাইল ব্যাংকিং (ম্যানুয়াল) সেকশন 
+           ============================================== -->
+      <div id="tab-content-mfs" class="space-y-4 transition-all duration-300">
+        <div class="border border-slate-100 bg-slate-50 p-5 rounded-2xl space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-200/60 text-slate-700">
+            <h5 class="text-xs font-black text-emerald-600 flex items-center"><i class="fa-solid fa-wallet mr-2"></i> অনলাইন পেমেন্ট নির্দেশাবলী</h5>
+            <p class="text-[9px] text-gray-400 font-semibold mt-0.5">১-ক্লিকে নম্বর কপি করুন এবং কিউআর কোড স্ক্যান করে পেমেন্ট করুন</p>
+          </div>
+
+          <!-- ৩টি কিউআর কোড ও কপি নম্বর সেকশন (ডাইনামিক নম্বরসহ) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- ক) বিকাশ গেটওয়ে কার্ড -->
+            <div class="bg-white border border-pink-100 p-4 rounded-xl text-center flex flex-col items-center justify-between space-y-3">
+              <span class="bg-pink-100 text-pink-700 text-[9px] font-black px-3 py-1 rounded-full border border-pink-200/50">bKash (বিকাশ)</span>
+              <div class="bg-white p-1 rounded-xl border border-slate-100 shadow-sm">
+                <img id="bkash-qr-img" src="" alt="bKash QR" class="w-20 h-20">
+              </div>
+              <p id="bkash-number-text" class="text-[11px] font-extrabold text-pink-600 tracking-wide select-all"></p>
+              <button type="button" id="bkash-copy-btn" class="bg-pink-600 hover:bg-pink-700 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg w-full transition flex items-center justify-center gap-1">
+                <i class="fa-regular fa-copy"></i> কপি নম্বর
+              </button>
+            </div>
+
+            <!-- খ) নগদ গেটওয়ে কার্ড -->
+            <div class="bg-white border border-orange-100 p-4 rounded-xl text-center flex flex-col items-center justify-between space-y-3">
+              <span class="bg-orange-100 text-orange-700 text-[9px] font-black px-3 py-1 rounded-full border border-orange-200/50">Nagad (নগদ)</span>
+              <div class="bg-white p-1 rounded-xl border border-slate-100 shadow-sm">
+                <img id="nagad-qr-img" src="" alt="Nagad QR" class="w-20 h-20">
+              </div>
+              <p id="nagad-number-text" class="text-[11px] font-extrabold text-orange-600 tracking-wide select-all"></p>
+              <button type="button" id="nagad-copy-btn" class="bg-orange-500 hover:bg-orange-600 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg w-full transition flex items-center justify-center gap-1">
+                <i class="fa-regular fa-copy"></i> কপি নম্বর
+              </button>
+            </div>
+
+            <!-- গ) রকেট গেটওয়ে কার্ড -->
+            <div class="bg-white border border-purple-100 p-4 rounded-xl text-center flex flex-col items-center justify-between space-y-3">
+              <span class="bg-purple-100 text-purple-700 text-[9px] font-black px-3 py-1 rounded-full border border-purple-200/50">Rocket (রকেট)</span>
+              <div class="bg-white p-1 rounded-xl border border-slate-100 shadow-sm">
+                <img id="rocket-qr-img" src="" alt="Rocket QR" class="w-20 h-20">
+              </div>
+              <p id="rocket-number-text" class="text-[11px] font-extrabold text-purple-600 tracking-wide select-all"></p>
+              <button type="button" id="rocket-copy-btn" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg w-full transition flex items-center justify-center gap-1">
+                <i class="fa-regular fa-copy"></i> কপি নম্বর
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==============================================
+           ট্যাব ২: অনলাইন গেটওয়ে সিমুলেটর সেকশন (OTP & PIN সিমুলেশন) 
+           ============================================== -->
+      <div id="tab-content-gateway" class="hidden space-y-4 transition-all duration-300">
+        <!-- গেটওয়ে সিলেক্টর বাটন -->
+        <div class="grid grid-cols-2 gap-3 pb-2 select-none">
+          <button type="button" onclick="selectGatewayTheme('nagad')" id="btn-gw-nagad" class="py-3 px-4 border border-red-500 bg-red-50 text-red-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-building-columns"></i> নগদ গেটওয়ে (Nagad)
+          </button>
+          <button type="button" onclick="selectGatewayTheme('bkash')" id="btn-gw-bkash" class="py-3 px-4 border border-gray-200 bg-slate-50 text-gray-500 hover:text-pink-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-mobile"></i> বিকাশ গেটওয়ে (bKash)
+          </button>
+        </div>
+
+        <!-- ডায়নামিক গেটওয়ে ফ্রেম -->
+        <div id="gateway-frame" class="bg-gradient-to-b from-[#b31919] to-[#801010] p-6 rounded-2xl text-white text-center shadow-lg relative min-h-[380px] flex flex-col justify-between transition-all duration-500">
+          <div class="absolute top-4 right-4 flex gap-1 bg-white/10 px-2 py-0.5 rounded border border-white/20 select-none text-[8px] font-bold">
+            <span class="text-white/60">বাং</span><span class="border-l border-white/30 pl-1">Eng</span>
+          </div>
+
+          <!-- টপ লোগো -->
+          <div class="flex flex-col items-center pt-2">
+            <svg class="w-12 h-12 mb-1 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <h4 id="gateway-merchant-name" class="text-sm font-extrabold tracking-wide">Auliapur Agrojatra Payments</h4>
+          </div>
+
+          <!-- গেটওয়ে বিলিং ডাটা -->
+          <div class="text-left py-4 px-2 space-y-1 text-[11px] text-white/90">
+            <p>Invoice No: <span id="gw-invoice-no" class="font-mono text-white select-all font-semibold">Generating...</span></p>
+            <p>Total Amount: <span id="gw-total-amount" class="text-white font-extrabold text-xs">BDT 0.00</span></p>
+            <p>Charge: <span class="text-white">BDT 0</span></p>
+          </div>
+
+          <!-- ==============================================
+               গেটওয়ে স্টেট ১: ওয়ালেট নম্বর ইনপুট 
+               ============================================== -->
+          <div id="gw-state-number" class="space-y-2">
+            <label id="gw-account-label" class="block text-[10px] text-white/85 uppercase tracking-wide font-medium">Your Nagad Account Number</label>
+            <div class="flex items-center justify-center gap-1">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <span class="text-white/60 font-bold px-0.5">-</span>
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <span class="text-white/60 font-bold px-0.5">-</span>
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit" onkeyup="focusNextDigit(this, event)">
+            </div>
+            <p class="text-[8px] text-white/70 leading-relaxed px-4 pt-2 select-none">By clicking/tapping "Proceed" you are agreeing to our <span class="underline font-bold cursor-pointer">Terms and Conditions</span></p>
+            <!-- গেটওয়ে একশন বাটন ১ -->
+            <div class="grid grid-cols-2 gap-3 pt-3 select-none">
+              <button type="button" onclick="goToGatewayState('otp')" class="id-gw-btn-color py-2.5 bg-white text-[#b31919] hover:bg-slate-100 font-extrabold rounded-lg text-xs transition shadow-md">Proceed</button>
+              <button type="button" onclick="resetGatewayInputs()" class="py-2.5 bg-transparent border border-white/40 hover:bg-white/10 text-white font-bold rounded-lg text-xs transition">Close</button>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               গেটওয়ে স্টেট ২: ওটিপি (OTP) ইনপুট স্ক্রিন 
+               ============================================== -->
+          <div id="gw-state-otp" class="hidden space-y-3">
+            <label class="block text-[10px] text-white/85 uppercase tracking-wide font-medium">Enter 6-Digit OTP Sent to Your Mobile</label>
+            <div class="flex items-center justify-center gap-1.5">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+              <input type="text" maxlength="1" class="gateway-input-digit gw-otp-box" onkeyup="focusNextDigit(this, event)">
+            </div>
+            <p class="text-[10px] text-yellow-300 font-bold select-none"><i class="fa-regular fa-clock mr-1"></i> Time remaining: <span id="otp-timer">02:00</span></p>
+            <div class="grid grid-cols-2 gap-3 pt-2 select-none">
+              <button type="button" onclick="goToGatewayState('pin')" class="id-gw-btn-color py-2.5 bg-white text-[#b31919] hover:bg-slate-100 font-extrabold rounded-lg text-xs transition shadow-md">Verify OTP</button>
+              <button type="button" onclick="goToGatewayState('number')" class="py-2.5 bg-transparent border border-white/40 hover:bg-white/10 text-white font-bold rounded-lg text-xs transition">Back</button>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               গেটওয়ে স্টেট ৩: পিন (PIN) সিকিউর ইনপুট স্ক্রিন 
+               ============================================== -->
+          <div id="gw-state-pin" class="hidden space-y-3">
+            <label class="block text-[10px] text-white/85 uppercase tracking-wide font-medium">Enter Your Secured 5-Digit Wallet PIN</label>
+            <div class="flex items-center justify-center gap-2">
+              <input type="password" maxlength="1" class="gateway-input-digit gw-pin-box" onkeyup="focusNextDigit(this, event)">
+              <input type="password" maxlength="1" class="gateway-input-digit gw-pin-box" onkeyup="focusNextDigit(this, event)">
+              <input type="password" maxlength="1" class="gateway-input-digit gw-pin-box" onkeyup="focusNextDigit(this, event)">
+              <input type="password" maxlength="1" class="gateway-input-digit gw-pin-box" onkeyup="focusNextDigit(this, event)">
+              <input type="password" maxlength="1" class="gateway-input-digit gw-pin-box" onkeyup="focusNextDigit(this, event)">
+            </div>
+            <p class="text-[8px] text-white/70 select-none">Your PIN is encrypted with 256-bit SSL technology.</p>
+            <div class="grid grid-cols-2 gap-3 pt-2 select-none">
+              <button type="button" onclick="goToGatewayState('success')" class="id-gw-btn-color py-2.5 bg-white text-[#b31919] hover:bg-slate-100 font-extrabold rounded-lg text-xs transition shadow-md">Confirm Payment</button>
+              <button type="button" onclick="goToGatewayState('otp')" class="py-2.5 bg-transparent border border-white/40 hover:bg-white/10 text-white font-bold rounded-lg text-xs transition">Back</button>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               গেটওয়ে স্টেট ৪: পেমেন্ট প্রসেসিং ও সফলতার বার্তা 
+               ============================================== -->
+          <div id="gw-state-success" class="hidden space-y-4 py-6">
+            <div id="gw-loader" class="space-y-3">
+              <div class="animate-spin rounded-full border-4 border-t-4 border-white/20 border-t-white h-12 w-12 mx-auto"></div>
+              <p class="text-xs font-bold text-white select-none">Processing Payment...</p>
+            </div>
+            <div id="gw-success-msg" class="hidden space-y-3">
+              <div class="w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg border-2 border-white animate-bounce">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <h5 class="text-sm font-black text-white">Payment Successful!</h5>
+              <p class="text-[10px] text-white/95">Transaction ID: <span id="simulated-txn-text" class="font-mono font-bold text-yellow-300">GW-XXXXXXXX</span></p>
+              <p class="text-[9px] text-emerald-200 animate-pulse">স্বয়ংক্রিয়ভাবে তথ্য ক্যাশবুকে সাবমিট হচ্ছে...</p>
+            </div>
+          </div>
+
+          <!-- বটম লোগো -->
+          <div class="flex justify-center items-center gap-1 pt-4 text-[9px] text-white/85 select-none font-sans">
+            <i class="fa-solid fa-shield-halved text-xs"></i> Verified by AAP
+          </div>
+        </div>
+      </div>
+
+      <!-- ==============================================
+           ট্যাব ৩: ব্যাংক ট্রান্সফার সেকশন 
+           ============================================== -->
+      <div id="tab-content-bank" class="hidden space-y-4 transition-all duration-300">
+        <div class="border border-slate-200 bg-slate-50/50 p-5 rounded-2xl space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-200/60 text-slate-700">
+            <i class="fa-solid fa-building-columns text-emerald-600 text-sm"></i>
+            <span class="font-bold text-xs">ব্যাংক একাউন্ট বিবরণী</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-gray-600">
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+              <span class="text-gray-400">ব্যাংকের নাম:</span>
+              <span class="font-bold text-slate-800">Islami Bank Bangladesh PLC</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+              <span class="text-gray-400">অ্যাকাউন্টের নাম:</span>
+              <span class="font-bold text-slate-800">Auliyapur Agrojatra Porishod</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+              <span class="text-gray-400">অ্যাকাউন্ট নাম্বার:</span>
+              <div class="flex items-center gap-1.5 font-mono font-bold text-slate-800 select-all">
+                <span>২০২৬১৭৭০২০০৩৪৪৫০৫</span>
+                <button type="button" onclick="copyNumberDirect('২০২৬১৭৭০২০০৩৪৪৫০৫')" class="text-gray-400 hover:text-emerald-600 transition" title="কপি করুন"><i class="fa-regular fa-copy"></i></button>
+              </div>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+              <span class="text-gray-400">শাখা (Branch):</span>
+              <span class="font-bold text-slate-800">Patuakhali Branch</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-gray-400">রাউটিং নাম্বার:</span>
+              <div class="flex items-center gap-1.5 font-mono font-bold text-slate-800 select-all">
+                <span>১২৫১৫০৫৩৯</span>
+                <button type="button" onclick="copyNumberDirect('১২৫১৫০৫৩৯')" class="text-gray-400 hover:text-emerald-600 transition" title="কপি করুন"><i class="fa-regular fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ৭ এবং ৮ নম্বর পয়েন্ট (ডিপোজিট বিবরণী) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t border-slate-200">
+        <div>
+          <label class="block text-[10px] font-bold text-gray-500 mb-1.5">৭. পেমেন্ট মাধ্যম *</label>
+          <select id="pay-method" onchange="handlePaymentMethodChange()" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50 text-gray-700 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="bKash">bKash (বিকাশ)</option>
+            <option value="Nagad">Nagad (নগদ)</option>
+            <option value="Rocket">Rocket (রকেট)</option>
+            <option value="Cash">নগদ ক্যাশ প্রদান</option>
+            <option value="Bank">ব্যাংক ট্রান্সফার (Bank Wire)</option>
+          </select>
+        </div>
+        <div>
+          <label id="txn-id-label" class="block text-[10px] font-bold text-gray-500 mb-1.5">৮. ট্রানজেকশন আইডি (TxnID) *</label>
+          <input type="text" id="pay-txnid" required placeholder="যেমন: K7D8S9R2" class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50 text-gray-700 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <span id="txn-id-help" class="text-[9px] text-gray-400 block mt-1 font-medium leading-relaxed">
+            *টাকা পাঠানোর পর মেসেজ বা অ্যাপে পাওয়া ট্রানজেকশন আইডিটি এখানে দিন। এটি অ্যাডমিন প্যানেলে ভেরিফাই করার জন্য ব্যবহৃত হবে।
+          </span>
+        </div>
+      </div>
+
+      <!-- লোডিং ইন্ডিকেটর (পূর্বে এটি বডি স্ক্রিপ্টে ব্যবহৃত হতো) -->
+      <div id="loading" class="hidden text-center py-2">
+        <div class="animate-spin rounded-full border-2 border-t-2 border-slate-200 border-t-emerald-500 h-6 w-6 mx-auto"></div>
+      </div>
+
+      <!-- গর্জিয়াস গোল্ডেন-ইম্যারেল্ড সাবমিট বাটন (ডাইনামিক থিম অনুযায়ী ট্রানজিশন হবে) -->
+      <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold py-4 rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-xl transition-all duration-500 flex items-center justify-center gap-2 scale-100 hover:scale-[1.01] active:scale-[0.99] relative z-10">
+        <i class="fa-solid fa-credit-card text-sm"></i> পরিশোধ নিশ্চিত করুন
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // ==========================================
+  // ১. কিউআর কোড এবং মোবাইল নম্বর কনফিগারেশন
+  // ==========================================
+  // অনুগ্রহ করে নিচে আপনার কাঙ্ক্ষিত পেমেন্ট নম্বরগুলো সেট করুন।
+  // কোডের ভেতরের কিউআর কোড এবং নম্বরসমূহ স্বয়ংক্রিয়ভাবে পরিবর্তিত হয়ে যাবে।
+  const CONFIG = {
+    bKashNumber: "01760264893",
+    NagadNumber: "01760264893",
+    RocketNumber: "01710181059"
+  };
+
+  var otpTimerInterval = null;
+
+  // ব্রাউজার DOM সম্পূর্ণরূপে লোড হওয়ার সাথে সাথে লোড হওয়ার ব্যাকআপ মেকানিজম (GAS এর জন্য নিরাপদ)
+  document.addEventListener("DOMContentLoaded", function() {
+    generateRandomInvoice();
+    initializeQRCodes();
+  });
+
+  // অতিরিক্ত সেফটি কল (যদি DOMContentLoaded কোনো কারণে মিস হয়)
+  setTimeout(function() {
+    var checkEl = document.getElementById('bkash-number-text');
+    if (checkEl && checkEl.innerText === "") {
+      generateRandomInvoice();
+      initializeQRCodes();
+    }
+  }, 500);
+
+  // কিউআর কোডসমূহ কনফিগারেশন অনুযায়ী ডাইনামিক ফেইলওভার এপিআই দিয়ে অটো-লোড করার ফাংশন
+  function initializeQRCodes() {
+    var bkashImg = document.getElementById('bkash-qr-img');
+    var nagadImg = document.getElementById('nagad-qr-img');
+    var rocketImg = document.getElementById('rocket-qr-img');
+
+    // ক) বিকাশ কিউআর লোড (QuickChart ব্যবহার করে, ফেইলওভার হিসেবে QRServer)
+    if (bkashImg) {
+      bkashImg.src = "https://quickchart.io/qr?size=150&text=" + CONFIG.bKashNumber;
+      bkashImg.onerror = function() {
+        this.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + CONFIG.bKashNumber;
+      };
+    }
+    document.getElementById('bkash-number-text').innerText = formatPhoneNumber(CONFIG.bKashNumber);
+    document.getElementById('bkash-copy-btn').setAttribute('onclick', `copyNumber('${CONFIG.bKashNumber}', this)`);
+
+    // খ) নগদ কিউআর লোড
+    if (nagadImg) {
+      nagadImg.src = "https://quickchart.io/qr?size=150&text=" + CONFIG.NagadNumber;
+      nagadImg.onerror = function() {
+        this.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + CONFIG.NagadNumber;
+      };
+    }
+    document.getElementById('nagad-number-text').innerText = formatPhoneNumber(CONFIG.NagadNumber);
+    document.getElementById('nagad-copy-btn').setAttribute('onclick', `copyNumber('${CONFIG.NagadNumber}', this)`);
+
+    // গ) রকেট কিউআর লোড
+    if (rocketImg) {
+      rocketImg.src = "https://quickchart.io/qr?size=150&text=" + CONFIG.RocketNumber;
+      rocketImg.onerror = function() {
+        this.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + CONFIG.RocketNumber;
+      };
+    }
+    document.getElementById('rocket-number-text').innerText = formatPhoneNumber(CONFIG.RocketNumber);
+    document.getElementById('rocket-copy-btn').setAttribute('onclick', `copyNumber('${CONFIG.RocketNumber}', this)`);
+  }
+
+  // নম্বর ফরম্যাট পরিবর্তন (যেমন: "01710181059" -> "০১৭১০-১৮১০৫৯")
+  function formatPhoneNumber(num) {
+    const benDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    let formatted = "";
+    for (let i = 0; i < num.length; i++) {
+      let digit = num.charAt(i);
+      if (digit >= '0' && digit <= '9') {
+        formatted += benDigits[parseInt(digit)];
+      } else {
+        formatted += digit;
+      }
+      if (i === 4) formatted += "-";
+    }
+    return formatted;
+  }
+
+  // র্যান্ডম ইনভয়েস কোড জেনারেটর (গেটওয়েকে বাস্তবসম্মত করতে)
+  function generateRandomInvoice() {
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var result = "AAP-";
+    for (var i = 0; i < 16; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    var invEl = document.getElementById('gw-invoice-no');
+    if (invEl) invEl.innerText = result;
+  }
+
+  // অ্যামাউন্ট ইনপুট দিলে গেটওয়েতে রিয়েল-টাইমে টাকা সিঙ্ক করার ফাংশন
+  function syncAmountToGateway(value) {
+    var val = parseFloat(value) || 0;
+    var gwAmount = document.getElementById('gw-total-amount');
+    if (gwAmount) {
+      gwAmount.innerText = 'BDT ' + val.toFixed(2);
+    }
+  }
+
+  // ৩টি ডায়নামিক ট্যাব এবং পেজ থিম পরিবর্তনের স্ক্রিপ্ট
+  function switchPaymentTab(tabName) {
+    document.getElementById('tab-content-mfs').classList.add('hidden');
+    document.getElementById('tab-content-gateway').classList.add('hidden');
+    document.getElementById('tab-content-bank').classList.add('hidden');
+
+    const tabButtons = ['mfs', 'gateway', 'bank'];
+    tabButtons.forEach(btnId => {
+      const btn = document.getElementById('tab-btn-' + btnId);
+      btn.className = "py-2.5 rounded-xl text-[11px] font-bold transition-all text-gray-500 hover:text-gray-800 flex flex-col sm:flex-row items-center justify-center gap-1";
+    });
+
+    document.getElementById('tab-content-' + tabName).classList.remove('hidden');
+
+    const activeBtn = document.getElementById('tab-btn-' + tabName);
+    activeBtn.className = "py-2.5 rounded-xl text-[11px] font-bold transition-all bg-white text-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-center gap-1";
+
+    const topBanner = document.getElementById('top-banner');
+    const submitBtn = document.getElementById('submit-btn');
+    const payMethod = document.getElementById('pay-method');
+
+    // ট্যাব পরিবর্তনের সাথে পেজের মূল কালার স্কিম ও মেথড সিঙ্ক হবে
+    if (tabName === 'mfs') {
+      topBanner.className = "bg-gradient-to-r from-emerald-600 to-teal-600 p-6 sm:p-8 text-white text-center relative transition-all duration-500";
+      submitBtn.className = "w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold py-4 rounded-xl shadow-lg transition duration-500 flex items-center justify-center gap-2 relative z-10 scale-100 hover:scale-[1.01] active:scale-[0.99]";
+      if (payMethod) payMethod.value = "bKash";
+    } else if (tabName === 'gateway') {
+      selectGatewayTheme('nagad'); // ডিফল্টভাবে নগদে সেট হবে
+    } else if (tabName === 'bank') {
+      topBanner.className = "bg-gradient-to-r from-blue-700 to-indigo-800 p-6 sm:p-8 text-white text-center relative transition-all duration-500";
+      submitBtn.className = "w-full bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-800 hover:to-indigo-900 text-white font-extrabold py-4 rounded-xl shadow-lg transition duration-500 flex items-center justify-center gap-2 relative z-10 scale-100 hover:scale-[1.01] active:scale-[0.99]";
+      if (payMethod) payMethod.value = "Bank";
+    }
+    handlePaymentMethodChange();
+  }
+
+  // গেটওয়ে থিম (নগদ ও বিকাশ) এবং পেজ থিম সিঙ্ক
+  function selectGatewayTheme(theme) {
+    const gwFrame = document.getElementById('gateway-frame');
+    const btnNagad = document.getElementById('btn-gw-nagad');
+    const btnBkash = document.getElementById('btn-gw-bkash');
+    const gwLabel = document.getElementById('gw-account-label');
+    const gwMerchant = document.getElementById('gateway-merchant-name');
+    const topBanner = document.getElementById('top-banner');
+    const submitBtn = document.getElementById('submit-btn');
+    const payMethod = document.getElementById('pay-method');
+
+    if (!gwFrame) return;
+
+    if (theme === 'nagad') {
+      // নগদ লাল থিম ট্রানজিশন
+      gwFrame.className = "bg-gradient-to-b from-[#b31919] to-[#801010] p-6 rounded-2xl text-white text-center shadow-lg relative min-h-[380px] flex flex-col justify-between transition-all duration-500";
+      gwLabel.innerText = "Your Nagad Account Number";
+      gwMerchant.innerText = "Auliapur Agrojatra Payments";
+      btnNagad.className = "py-3 px-4 border border-red-500 bg-red-50 text-red-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2";
+      btnBkash.className = "py-3 px-4 border border-gray-200 bg-slate-50 text-gray-500 hover:text-pink-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2";
+      
+      topBanner.className = "bg-gradient-to-r from-[#b31919] to-[#801010] p-6 sm:p-8 text-white text-center relative transition-all duration-500";
+      submitBtn.className = "w-full bg-gradient-to-r from-[#b31919] to-[#801010] hover:from-[#d12424] hover:to-[#941313] text-white font-extrabold py-4 rounded-xl shadow-lg transition duration-500 flex items-center justify-center gap-2 relative z-10 scale-100 hover:scale-[1.01] active:scale-[0.99]";
+      
+      document.querySelectorAll('.id-gw-btn-color').forEach(btn => btn.style.color = '#b31919');
+
+      if (payMethod) payMethod.value = "Nagad";
+    } else {
+      // বিকাশ পিঙ্ক থিম ট্রানজিশন
+      gwFrame.className = "bg-gradient-to-b from-[#e2125c] to-[#9c0b3e] p-6 rounded-2xl text-white text-center shadow-lg relative min-h-[380px] flex flex-col justify-between transition-all duration-500";
+      gwLabel.innerText = "Your bKash Account Number";
+      gwMerchant.innerText = "Auliapur Agrojatra Payments";
+      btnBkash.className = "py-3 px-4 border border-pink-500 bg-pink-50 text-pink-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2";
+      btnNagad.className = "py-3 px-4 border border-gray-200 bg-slate-50 text-gray-500 hover:text-red-600 rounded-xl font-black text-xs transition flex items-center justify-center gap-2";
+      
+      topBanner.className = "bg-gradient-to-r from-[#e2125c] to-[#9c0b3e] p-6 sm:p-8 text-white text-center relative transition-all duration-500";
+      submitBtn.className = "w-full bg-gradient-to-r from-[#e2125c] to-[#9c0b3e] hover:from-[#f51f6c] hover:to-[#b3124a] text-white font-extrabold py-4 rounded-xl shadow-lg transition duration-500 flex items-center justify-center gap-2 relative z-10 scale-100 hover:scale-[1.01] active:scale-[0.99]";
+      
+      document.querySelectorAll('.id-gw-btn-color').forEach(btn => btn.style.color = '#e2125c');
+
+      if (payMethod) payMethod.value = "bKash";
+    }
+    handlePaymentMethodChange();
+    resetGatewayInputs();
+    goToGatewayState('number');
+  }
+
+  // গেটওয়ে মাল্টি-স্টেট সিমুলেটর (OTP, PIN ও ভেরিফিকেশন)
+  function goToGatewayState(state) {
+    document.getElementById('gw-state-number').classList.add('hidden');
+    document.getElementById('gw-state-otp').classList.add('hidden');
+    document.getElementById('gw-state-pin').classList.add('hidden');
+    document.getElementById('gw-state-success').classList.add('hidden');
+
+    if (state === 'number') {
+      document.getElementById('gw-state-number').classList.remove('hidden');
+      clearInterval(otpTimerInterval);
+    } 
+    else if (state === 'otp') {
+      // ওয়ালেট নম্বর চেক
+      var digits = document.querySelectorAll('.gateway-input-digit:not(.gw-otp-box):not(.gw-pin-box)');
+      var walletNum = '';
+      digits.forEach(input => walletNum += input.value);
+
+      if (walletNum.length < 11) {
+        alert("অনুগ্রহ করে আপনার সঠিক ১১ ডিজিটের পেমেন্ট মোবাইল নম্বরটি দিন।");
+        document.getElementById('gw-state-number').classList.remove('hidden');
+        return;
+      }
+      
+      // টাকার পরিমাণ ইনপুট আছে কিনা যাচাই
+      var amountVal = document.getElementById('pay-amount').value;
+      if (!amountVal || parseFloat(amountVal) <= 0) {
+        alert("পেমেন্ট গেটওয়ে চালু করার আগে সঠিক টাকার পরিমাণটি ইনপুট করুন।");
+        switchPaymentTab('mfs');
+        document.getElementById('pay-amount').focus();
+        return;
+      }
+
+      document.getElementById('gw-state-otp').classList.remove('hidden');
+      startOTPTimer(); // লাইভ ওটিপি টাইমার চালু
+      setTimeout(() => alert("আমরা একটি পরীক্ষামূলক গেটওয়ে ওটিপি কোড পাঠিয়েছি। ওটিপি বক্সে যেকোনো ৬টি সংখ্যা অথবা '123456' টাইপ করুন।"), 400);
+      
+      var otpBoxes = document.querySelectorAll('.gw-otp-box');
+      otpBoxes.forEach(box => box.value = '');
+      if (otpBoxes[0]) otpBoxes[0].focus();
+    } 
+    else if (state === 'pin') {
+      // ওটিপি যাচাই
+      var otpBoxes = document.querySelectorAll('.gw-otp-box');
+      var otpVal = '';
+      otpBoxes.forEach(box => otpVal += box.value);
+
+      if (otpVal.length < 6) {
+        alert("অনুগ্রহ করে ৬ ডিজিটের ওটিপি ভেরিফিকেশন কোডটি পূরণ করুন।");
+        document.getElementById('gw-state-otp').classList.remove('hidden');
+        return;
+      }
+
+      document.getElementById('gw-state-pin').classList.remove('hidden');
+      clearInterval(otpTimerInterval);
+      
+      var pinBoxes = document.querySelectorAll('.gw-pin-box');
+      pinBoxes.forEach(box => box.value = '');
+      if (pinBoxes[0]) pinBoxes[0].focus();
+    } 
+    else if (state === 'success') {
+      // পিন নম্বর যাচাই
+      var pinBoxes = document.querySelectorAll('.gw-pin-box');
+      var pinVal = '';
+      pinBoxes.forEach(box => pinVal += box.value);
+
+      if (pinVal.length < 5) {
+        alert("অনুগ্রহ করে আপনার ৫ ডিজিটের সুরক্ষিত পিন নম্বরটি দিন।");
+        document.getElementById('gw-state-pin').classList.remove('hidden');
+        return;
+      }
+
+      document.getElementById('gw-state-success').classList.remove('hidden');
+      simulatePaymentSuccess();
+    }
+  }
+
+  // লাইভ ওটিপি কাউন্টডাউন টাইমার (২ মিনিট)
+  function startOTPTimer() {
+    clearInterval(otpTimerInterval);
+    var timerEl = document.getElementById('otp-timer');
+    var totalSeconds = 120;
+
+    otpTimerInterval = setInterval(function() {
+      var minutes = Math.floor(totalSeconds / 60);
+      var seconds = totalSeconds % 60;
+      if (seconds < 10) seconds = '0' + seconds;
+      timerEl.innerText = '0' + minutes + ':' + seconds;
+
+      if (totalSeconds <= 0) {
+        clearInterval(otpTimerInterval);
+        alert("OTP কোডের মেয়াদ শেষ হয়ে গেছে। অনুগ্রহ করে আবার চেষ্টা করুন।");
+        goToGatewayState('number');
+      }
+      totalSeconds--;
+    }, 1000);
+  }
+
+  // পেমেন্ট সাকসেস সিমুলেশন এবং মূল ফর্ম অটো-সাবমিশন
+  function simulatePaymentSuccess() {
+    var loader = document.getElementById('gw-loader');
+    var successMsg = document.getElementById('gw-success-msg');
+    
+    loader.classList.remove('hidden');
+    successMsg.classList.add('hidden');
+
+    setTimeout(function() {
+      loader.classList.add('hidden');
+      successMsg.classList.remove('hidden');
+
+      // ওয়ালেট নম্বর সংগ্রহ
+      var digits = document.querySelectorAll('.gateway-input-digit:not(.gw-otp-box):not(.gw-pin-box)');
+      var walletNum = '';
+      digits.forEach(input => walletNum += input.value);
+      
+      // মূল ফর্মের পেমেন্ট তথ্য অটো-ফিল করা
+      document.getElementById('pay-phone').value = walletNum;
+
+      // র্যান্ডম ভেরিফাইড ট্রানজেকশন জেনারেশন
+      var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      var simulatedTxn = "GW-";
+      for (var i = 0; i < 8; i++) {
+        simulatedTxn += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById('pay-txnid').value = simulatedTxn;
+      document.getElementById('simulated-txn-text').innerText = simulatedTxn;
+
+      // সফল পেমেন্ট অ্যানিমেশন দেখিয়ে সরাসরি ফর্ম গুগল শিটে সাবমিট
+      setTimeout(function() {
+        alert("অনলাইন গেটওয়ে ট্রানজেকশন সফল হয়েছে এবং ক্যাশবুকে যুক্ত করা হচ্ছে!");
+        document.getElementById('pay-form').requestSubmit(); // ফর্ম অটো-সাবমিট
+      }, 1500);
+
+    }, 2000); // ২ সেকেন্ড ব্যাংক প্রসেসিং অ্যানিমেশন
+  }
+
+  // গেটওয়ে ডিজিট ইনপুট অটো-ফোকাস স্ক্রিপ্ট
+  function focusNextDigit(current, event) {
+    if (event.keyCode === 8) { // Backspace
+      if (current.previousElementSibling && current.previousElementSibling.classList.contains('gateway-input-digit')) {
+        current.previousElementSibling.focus();
+      }
+    } else if (current.value.length >= current.maxLength) {
+      if (current.nextElementSibling && current.nextElementSibling.classList.contains('gateway-input-digit')) {
+        current.nextElementSibling.focus();
+      } else if (current.nextElementSibling && current.nextElementSibling.nextElementSibling && current.nextElementSibling.nextElementSibling.classList.contains('gateway-input-digit')) {
+        current.nextElementSibling.nextElementSibling.focus();
+      }
+    }
+  }
+
+  function resetGatewayInputs() {
+    var inputs = document.querySelectorAll('.gateway-input-digit');
+    inputs.forEach(function(input) {
+      input.value = '';
+    });
+    if (inputs[0]) inputs[0].focus();
+    goToGatewayState('number');
+  }
+
+  // নগদ ক্যাশ ও ব্যাংক পেমেন্টের ক্ষেত্রে ট্রানজেকশন আইডির বিবরণী পরিবর্তন
+  function handlePaymentMethodChange() {
+    var method = document.getElementById('pay-method').value;
+    var txnIdLabel = document.getElementById('txn-id-label');
+    var txnIdInput = document.getElementById('pay-txnid');
+    var txnIdHelp = document.getElementById('txn-id-help');
+
+    if (method === "Cash") {
+      txnIdLabel.innerHTML = 'যার কাছে প্রদান করেছেন তার নাম এবং মন্তব্য *';
+      txnIdInput.placeholder = 'যেমন: কোষাধ্যক্ষ মোঃ সবুজ সাহেবের নিকট সরাসরি প্রদানকৃত';
+      txnIdHelp.innerHTML = '* সরাসরি ক্যাশ টাকা দেওয়ার ক্ষেত্রে কার নিকট টাকা প্রদান করেছেন এবং তার বিবরণ এখানে বিস্তারিত লিখুন।';
+    } else if (method === "Bank") {
+      txnIdLabel.innerHTML = 'ব্যাংক রেফারেন্স নাম্বার / বিবরণ *';
+      txnIdInput.placeholder = 'যেমন: TXN1234567 বা ব্যাংক ট্রান্সফার রেফারেন্স';
+      txnIdHelp.innerHTML = '* ব্যাংক ট্র্যান্সফার সম্পন্ন করার পর ব্যাংক রশিদ অথবা ট্রানজেকশন আইডি এখানে ইনপুট করুন।';
+    } else {
+      txnIdLabel.innerHTML = 'ট্রানজেকশন আইডি (TxnID) *';
+      txnIdInput.placeholder = 'যেমন: K7D8S9R2';
+      txnIdHelp.innerHTML = '*টাকা পাঠানোর পর মেসেজ বা অ্যাপে পাওয়া ট্রানজেকশন আইডিটি এখানে দিন। এটি অ্যাডমিন প্যানেলে ভেরিফাই করার জন্য ব্যবহৃত হবে।';
+    }
+  }
+
+  // ১-ক্লিক মোবাইল কপি স্ক্রিপ্ট (কপি বাটন ইন্ডিকেটর পরিবর্তন সহ)
+  function copyNumber(num, button) {
+    navigator.clipboard.writeText(num).then(function() {
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<i class="fa-solid fa-check"></i> <span>কপি হয়েছে!</span>';
+      button.classList.remove('bg-pink-600', 'bg-orange-500', 'bg-purple-600', 'hover:bg-pink-700', 'hover:bg-orange-600', 'hover:bg-purple-700');
+      button.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+      
+      setTimeout(function() {
+        button.innerHTML = originalHTML;
+        button.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+        // আগের ব্র্যান্ড কালারে ফিরে যাওয়া
+        if (originalHTML.includes('bKash') || button.closest('.border-pink-100')) {
+          button.classList.add('bg-pink-600', 'hover:bg-pink-700');
+        } else if (originalHTML.includes('Nagad') || button.closest('.border-orange-100')) {
+          button.classList.add('bg-orange-500', 'hover:bg-orange-600');
+        } else {
+          button.classList.add('bg-purple-600', 'hover:bg-purple-700');
+        }
+      }, 2000);
+
+      if (typeof showCustomAlert === 'function') {
+        showCustomAlert("কপি সফল!", "পেমেন্ট নম্বর " + num + " সফলভাবে ক্লিপবোর্ডে কপি করা হয়েছে।", "success");
+      }
+    }, function() {
+      alert("কপি করতে সমস্যা হয়েছে, অনুগ্রহ করে দেখে টাইপ করুন: " + num);
+    });
+  }
+
+  // সাধারণ কপি ফাংশন (আইকন কপির জন্য)
+  function copyNumberDirect(num) {
+    navigator.clipboard.writeText(num).then(function() {
+      if (typeof showCustomAlert === 'function') {
+        showCustomAlert("কপি সফল!", "নম্বর " + num + " সফলভাবে কপি করা হয়েছে।", "success");
+      } else {
+        alert("কপি হয়েছে: " + num);
+      }
+    });
+  }
+
+  // মেম্বার তথ্য লাইভ খোঁজ
+  function lookupName() {
+    var id = document.getElementById('pay-id').value.trim();
+    if (!id) return;
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (res.success) {
+          document.getElementById('pay-name').value = res.name;
+          document.getElementById('pay-phone').value = res.phone;
+          document.getElementById('pay-amount').value = res.monthlyFee;
+          syncAmountToGateway(res.monthlyFee);
+        } else {
+          document.getElementById('pay-name').value = "সদস্য তথ্য পাওয়া যায়নি!";
+        }
+      })
+      .getMemberInfoById(id);
+  }
+
+  // পেমেন্ট সাবমিট
+  function submitPayment(e) {
+    e.preventDefault();
+    document.getElementById('loading').classList.remove('hidden');
+
+    var payload = {
+      memberId: document.getElementById('pay-id').value,
+      name: document.getElementById('pay-name').value,
+      fiscalYear: document.getElementById('pay-fy').value,
+      month: document.getElementById('pay-month').value,
+      amount: document.getElementById('pay-amount').value,
+      phone: document.getElementById('pay-phone').value,
+      method: document.getElementById('pay-method').value,
+      txnId: document.getElementById('pay-txnid').value
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('loading').classList.add('hidden');
+        if (res.success) {
+          if (typeof showCustomAlert === 'function') {
+            showCustomAlert("পরিশোধ সফল!", "চাঁদা স্লিপটি সফলভাবে সাবমিট হয়েছে এবং ক্যাশবুকে যুক্ত হয়েছে।", "success", function() {
+              document.getElementById('pay-form').reset();
+              generateRandomInvoice();
+              navigateTo('home');
+            });
+          } else {
+            alert("পরিশোধ সফল হয়েছে! চাঁদা ক্যাশবুকে যুক্ত হয়েছে।");
+            document.getElementById('pay-form').reset();
+            generateRandomInvoice();
+          }
+        } else {
+          if (typeof showCustomAlert === 'function') {
+            showCustomAlert("ব্যর্থ হয়েছে!", "সমস্যা: " + res.error, "error");
+          } else {
+            alert("ব্যর্থ হয়েছে: " + res.error);
+          }
+        }
+      })
+      .submitMemberPayment(payload);
+  }
+</script>
+  </body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <!-- press_release.html -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  
+  <!-- ১. টপ ব্যানার (ছবির মতো রিয়েল টাইটেল সমৃদ্ধ) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">পত্রিকায় সংবাদ</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">আমাদের সংগঠনের কার্যক্রম নিয়ে বিভিন্ন জাতীয় ও স্থানীয় পত্রিকায় প্রকাশিত সংবাদ</p>
+  </div>
+
+  <!-- ২. ডাইনামিক ক্যাটাগরি ফিল্টারিং বাটনস -->
+  <div class="flex flex-wrap justify-center gap-2 mb-10" id="press-category-filters">
+    <button onclick="filterPress('ALL')" id="btn-press-all" class="px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300">সকল সংবাদ</button>
+    <button onclick="filterPress('অনুষ্ঠান')" id="btn-press-অনুষ্ঠান" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">অনুষ্ঠান</button>
+    <button onclick="filterPress('শিক্ষা')" id="btn-press-শিক্ষা" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">শিক্ষা</button>
+    <button onclick="filterPress('পরিবেশ')" id="btn-press-পরিবেশ" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">পরিবেশ</button>
+    <button onclick="filterPress('স্বাস্থ্য')" id="btn-press-স্বাস্থ্য" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">স্বাস্থ্য</button>
+    <button onclick="filterPress('সচেতনতা')" id="btn-press-সচেতনতা" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">সচেতনতা</button>
+    <button onclick="filterPress('সম্প্রীতি')" id="btn-press-সম্প্রীতি" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">সম্প্রীতি</button>
+    <button onclick="filterPress('ত্রাণ সহায়তা')" id="btn-press-ত্রাণ-সহায়তা" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">ত্রাণ সহায়তা</button>
+  </div>
+
+  <!-- ৩. ডাইনামিক গ্রিড লেআউট (প্রধান সংবাদসহ) -->
+  <div id="press-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- ডাইনামিক প্রেস নিউজ রেন্ডার হবে -->
+  </div>
+
+  <div id="press-loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto mb-4"></div>
+  </div>
+
+  <!-- ৪. সংবাদ প্রকাশ যোগাযোগ ব্যানার (ছবির মতো পেজের নিচে) -->
+  <div class="mt-16 bg-emerald-50/50 border border-emerald-100 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-3xl mx-auto shadow-sm">
+    <div class="bg-emerald-100 text-emerald-800 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-lg shadow-inner">
+      <i class="fa-regular fa-newspaper"></i>
+    </div>
+    <h4 class="text-base sm:text-lg font-black text-gray-800">সংবাদ প্রকাশের জন্য যোগাযোগ করুন</h4>
+    <p class="text-xs text-gray-500 max-w-xl mx-auto leading-relaxed font-semibold">
+      আমাদের সংগঠনের কার্যক্রম সম্পর্কে সংবাদ প্রকাশ বা সাক্ষাৎকারের জন্য প্রচার সম্পাদকের সাথে যোগাযোগ করুন। আমরা সাংবাদিকদের সর্বোচ্চ সহযোগিতা প্রদান করব।
+    </p>
+    <div class="flex flex-wrap justify-center gap-2.5 pt-2">
+      <a href="mailto:info@pbtsbd.org" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-6 py-3 rounded-2xl text-xs shadow-md transition">
+        ইমেইল করুন
+      </a>
+      <a href="tel:01712345678" class="border border-emerald-200 hover:bg-emerald-50 text-emerald-700 font-black px-6 py-3 rounded-2xl text-xs transition">
+        ফোন করুন
+      </a>
+    </div>
+  </div>
+
+  <!-- ক্লিপিং জুম পপআপ মডাল -->
+  <div id="press-clipping-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/90 backdrop-blur-sm transition-opacity duration-300">
+    <button onclick="closePressClipping()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition text-2xl">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="max-w-2xl w-full mx-4 max-h-[85vh] overflow-y-auto rounded-2xl bg-white p-4">
+      <img id="clipping-img" class="w-full h-auto rounded-lg" src="" alt="">
+      <h4 id="clipping-title" class="text-gray-800 font-black text-sm sm:text-base mt-3 leading-tight">নিউজ শিরোনাম</h4>
+    </div>
+  </div>
+</div>
+
+<script>
+  var rawPressList = []; 
+  var filteredPressList = [];
+  var activeCategory = "ALL";
+
+  window.openPressClipping = function(imageUrl, title) {
+    document.getElementById('clipping-img').src = imageUrl;
+    document.getElementById('clipping-title').innerText = title;
+    document.getElementById('press-clipping-modal').classList.remove('hidden');
+  }
+
+  window.closePressClipping = function() {
+    document.getElementById('press-clipping-modal').classList.add('hidden');
+  }
+
+  // ইনডেক্স ভিত্তিক ক্লিক হ্যান্ডলার (এটি সব ধরণের কোটেশন এরর মুক্ত রাখে)
+  window.openPressIndex = function(idx) {
+    var item = filteredPressList[idx];
+    if (!item) return;
+    openPressClipping(item.imageUrl, item.title);
+  }
+
+  // ইংরেজি তারিখকে নান্দনিক বাংলা তারিখ ফরম্যাটে রূপান্তর করার সুরক্ষিত হেল্পার
+  function formatBengaliDate(dateVal) {
+    if (!dateVal) return "১২ মার্চ ২০২৩";
+    var dateStr = dateVal.toString().trim();
+    if (dateStr === "") return "১২ মার্চ ২০২৩";
+    
+    var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    var cleanDate = dateStr.split("T")[0];
+    var parts = cleanDate.split("-");
+    if (parts.length !== 3) {
+      var slashParts = cleanDate.split("/");
+      if (slashParts.length === 3) parts = slashParts;
+    }
+    if (parts.length === 3) {
+      var day, month, year;
+      if (parts[0].length === 4) { // YYYY-MM-DD
+        year = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        day = parseInt(parts[2], 10);
+      } else { // DD-MM-YYYY
+        day = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        year = parseInt(parts[2], 10);
+      }
+      if (year < 100) year += 2000;
+      return toBnDigits(day) + " " + bnMonths[month - 1] + " " + toBnDigits(year);
+    }
+    return toBnDigits(dateStr);
+  }
+
+  // সংখ্যা রূপান্তরকারী ফাংশন
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  // কিওয়ার্ড ভিত্তিক স্মার্ট ক্যাটাগরি ম্যাপিং জেনারেটর (অটোমেটিক ফিল্টার বাটন কাজ করবে)
+  function getPressCategory(title, excerpt) {
+    var text = (title + " " + (excerpt || "")).toLowerCase();
+    if (text.includes("শিক্ষা") || text.includes("মেধাবী") || text.includes("পরীক্ষা") || text.includes("ছাত্র")) {
+      return "শিক্ষা";
+    } else if (text.includes("বৃক্ষ") || text.includes("গাছ") || text.includes("পরিবেশ") || text.includes("পরিচ্ছন্নতা")) {
+      return "পরিবেশ";
+    } else if (text.includes("শীত") || text.includes("কম্বল") || text.includes("শীতার্ত") || text.includes("ঠাণ্ডা")) {
+      return "শীতবস্ত্র বিতরণ"; // সম্পন্ন
+    } else if (text.includes("রক্ত") || text.includes("ব্লাড") || text.includes("গ্রুপ") || text.includes("স্বাস্থ্য")) {
+      return "স্বাস্থ্য";
+    } else if (text.includes("মাদক") || text.includes("সচেতনতা") || text.includes("র‍্যালি") || text.includes("র‌্যালি")) {
+      return "সচেতনতা";
+    } else if (text.includes("ত্রাণ") || text.includes("কোভিড") || text.includes("সাহায্য") || text.includes("দুর্যোগ")) {
+      return "ত্রাণ সহায়তা";
+    } else if (text.includes("ইফতার") || text.includes("রমজান") || text.includes("দোয়া") || text.includes("মাহফিল")) {
+      return "সম্প্রীতি";
+    }
+    return "অনুষ্ঠান";
+  }
+
+  // ক্যাটাগরি ভিত্তিক ব্যাজ কালার থিম
+  function getCategoryBadgeStyle(cat) {
+    var colors = {
+      "শিক্ষা": "bg-amber-50 text-amber-700 border-amber-100",
+      "পরিবেশ": "bg-emerald-50 text-emerald-700 border-emerald-100",
+      "শীতবস্ত্র বিতরণ": "bg-blue-50 text-blue-700 border-blue-100",
+      "স্বাস্থ্য": "bg-red-50 text-red-700 border-red-100",
+      "সচেতনতা": "bg-purple-50 text-purple-700 border-purple-100",
+      "ত্রাণ সহায়তা": "bg-cyan-50 text-cyan-700 border-cyan-100",
+      "সম্প্রীতি": "bg-pink-50 text-pink-700 border-pink-100",
+      "অনুষ্ঠান": "bg-teal-50 text-teal-700 border-teal-100"
+    };
+    return colors[cat] || "bg-slate-50 text-slate-700 border-slate-100";
+  }
+
+  // ফিল্টারিং অ্যাকশন
+  window.filterPress = function(category) {
+    activeCategory = category;
+    
+    // বাটনের কালার রিসেট
+    document.querySelectorAll('#press-category-filters button').forEach(btn => {
+      btn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300";
+    });
+
+    var activeBtnId = (category === "ALL") ? "btn-press-all" : "btn-press-" + category.replace(/\s+/g, '-');
+    var activeBtn = document.getElementById(activeBtnId);
+    if (activeBtn) {
+      activeBtn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300";
+    }
+
+    if (category === "ALL") {
+      filteredPressList = rawPressList;
+    } else {
+      filteredPressList = rawPressList.filter(item => {
+        var cat = getPressCategory(item.title, item.excerpt);
+        return cat === category;
+      });
+    }
+    renderPressGrid(filteredPressList);
+  }
+
+  // প্রেস রিলিজের সুরক্ষাপূর্ণ গ্রিড রেন্ডারার
+  function renderPressGrid(list) {
+    var grid = document.getElementById('press-grid');
+    grid.innerHTML = '';
+
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400 bg-white border rounded-3xl p-6 font-bold">কোনো প্রকাশিত সংবাদ পাওয়া যায়নি।</div>';
+      return;
+    }
+
+    var colorClasses = [
+      "bg-blue-600", "bg-amber-600", "bg-emerald-600", "bg-rose-700", "bg-red-500", "bg-purple-600", "bg-teal-600"
+    ];
+
+    list.forEach((item, idx) => {
+      var showBnDate = formatBengaliDate(item.date);
+      var cat = getPressCategory(item.title, item.excerpt);
+      var badgeStyle = getCategoryBadgeStyle(cat);
+      var headerBg = colorClasses[idx % colorClasses.length];
+
+      // ছবির মতো সবচেয়ে প্রথম সংবাদটি 'প্রধান সংবাদ' হিসেবে ডাবল সাইজের কার্ড হবে (Asymmetric Grid)
+      if (idx === 0 && activeCategory === "ALL") {
+        grid.innerHTML += `
+          <div class="col-span-1 md:col-span-2 bg-gradient-to-br from-emerald-800 to-teal-950 text-white rounded-3xl p-6 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between overflow-hidden relative">
+            <div class="absolute -right-12 -bottom-12 text-white/5 text-9xl pointer-events-none">
+              <i class="fa-regular fa-newspaper"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md text-[9px] font-black bg-white/20 text-white border border-white/10 uppercase tracking-wider">${cat}</span>
+                <span class="px-2.5 py-0.5 rounded-md text-[9px] font-black bg-white/20 text-white border border-white/10 uppercase tracking-wider"><i class="fa-solid fa-star text-amber-300 mr-1 animate-pulse"></i> প্রধান সংবাদ</span>
+              </div>
+              <h4 onclick="openPressIndex(${idx})" class="text-lg sm:text-2xl font-black leading-tight mt-4 cursor-pointer hover:text-emerald-200 transition">${item.title}</h4>
+              
+              <div class="flex flex-wrap items-center gap-4 text-[10px] font-bold text-emerald-100 mt-3 pb-4 border-b border-white/10">
+                <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar text-emerald-300"></i> ${showBnDate}</span>
+                <span class="flex items-center gap-1.5"><i class="fa-regular fa-newspaper text-emerald-300"></i> ${item.source || 'গণমাধ্যম'}</span>
+              </div>
+              
+              <p class="text-xs sm:text-sm text-emerald-100/90 font-medium leading-relaxed mt-4 line-clamp-3">${item.excerpt || ''}</p>
+            </div>
+            <div class="mt-6 flex justify-between items-center pt-4 border-t border-white/10">
+              <button onclick="openPressIndex(${idx})" class="text-xs font-black text-amber-300 hover:text-amber-400 transition cursor-pointer">বিস্তারিত পড়ুন ></button>
+              <a href="${item.newsUrl || '#'}" target="_blank" class="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      } else {
+        // অন্যান্য সাধারণ কার্ডগুলো (ছবির মতো ওপরে ওয়াটারমার্ক ডকুমেন্ট আইকনসহ)
+        grid.innerHTML += `
+          <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
+            <div>
+              <!-- ছবির মতো ওয়াটারমার্ক নিউজ আইকনসহ রঙিন কার্ড হেডার -->
+              <div onclick="openPressIndex(${idx})" class="h-32 ${headerBg} flex items-center justify-center overflow-hidden relative cursor-pointer group">
+                <div class="text-white/25 text-5xl transform transition duration-500 ease-out group-hover:scale-110 group-hover:rotate-3">
+                  <i class="fa-regular fa-newspaper"></i>
+                </div>
+              </div>
+              <div class="p-6 pb-0">
+                <span class="inline-block px-2.5 py-0.5 rounded-lg text-[9px] font-black border uppercase tracking-wider ${badgeStyle}">
+                  ${cat}
+                </span>
+                <h4 onclick="openPressIndex(${idx})" class="text-sm sm:text-base font-extrabold text-gray-800 mt-3 leading-snug hover:text-emerald-600 transition cursor-pointer line-clamp-2">${item.title}</h4>
+                <p class="text-xs text-gray-400 leading-relaxed mt-2 font-medium line-clamp-2">${item.excerpt || ''}</p>
+              </div>
+            </div>
+            
+            <div class="p-6 pt-0">
+              <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between text-[10px] text-gray-400 font-bold">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span class="flex items-center gap-1"><i class="fa-solid fa-calendar text-slate-300"></i> ${showBnDate}</span>
+                  <span class="flex items-center gap-1"><i class="fa-solid fa-newspaper text-slate-300"></i> ${item.source || 'গণমাধ্যম'}</span>
+                </div>
+                <a href="${item.newsUrl || '#'}" target="_blank" class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-100 transition shadow-inner">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
+
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('press-loader').classList.add('hidden');
+        rawPressList = data || [];
+        filteredPressList = rawPressList;
+        renderPressGrid(filteredPressList);
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('press-loader').classList.add('hidden');
+        console.error("ডাটা লোড ত্রুটি: " + err.message);
+      })
+      .getPressReleaseData();
+  })();
+</script>
+  </body>
+</html>

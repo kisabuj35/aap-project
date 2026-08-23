@@ -1,0 +1,482 @@
+<!-- donor_registration.html (ডাইনামিক ও উন্নত সংস্করণ) -->
+<div class="max-w-6xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ ব্যানার (অগ্রযাত্রা ডাইনামিক গ্রিন থিম) -->
+  <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <span class="bg-white/20 text-white text-[10px] px-3.5 py-1.5 rounded-full font-black uppercase border border-white/10 inline-flex items-center gap-1.5 mb-2">
+      <i class="fa-solid fa-ribbon text-xs animate-pulse"></i> রক্তদান মহৎ দান
+    </span>
+    <h3 class="text-3xl font-black">ডোনার নিবন্ধন</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">রক্তদাতা হিসেবে নিবন্ধন করুন — একটু রক্তই বাঁচাতে পারে একটি প্রাণ</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- ক) বাম পাশের ইনফরমেশন কার্ড প্যানেল (মডার্ন উইজেটস) -->
+    <div class="lg:col-span-1 space-y-6">
+      <div class="bg-gradient-to-br from-red-500 to-rose-600 p-6 rounded-3xl text-white text-center shadow-md space-y-4 hover:scale-[1.01] transition duration-300">
+        <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto shadow-inner text-2xl">
+          <i class="fa-solid fa-heart-pulse animate-pulse"></i>
+        </div>
+        <h4 class="text-base font-extrabold">রক্তদান কেন গুরুত্বপূর্ণ?</h4>
+        <p class="text-xs text-red-50 leading-relaxed font-medium">
+          প্রতি ২ সেকেন্ডে একজন মানুষের রক্তের প্রয়োজন হয়। আপনার এক ব্যাগ রক্ত তিনজনের জীবন বাঁচাতে পারে। রক্তদান স্বাস্থ্যের জন্যও অনেক উপকারী!
+        </p>
+      </div>
+
+      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+        <div class="bg-emerald-50 text-emerald-600 p-3 rounded-2xl text-base shrink-0"><i class="fa-solid fa-shield-virus"></i></div>
+        <div>
+          <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">নিরাপদ প্রক্রিয়া</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">সম্পূর্ণ স্বাস্থ্যকর পরিবেশে রক্তদান করা হয়। সমস্ত সূচ ও সিরিঞ্জ কেবল একবারই ব্যবহার করা হয়।</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+        <div class="bg-blue-50 text-blue-600 p-3 rounded-2xl text-base shrink-0"><i class="fa-solid fa-stopwatch"></i></div>
+        <div>
+          <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">মাত্র ১৫ মিনিট</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">রক্তদানে মাত্র ১৫-২০ মিনিট সময় লাগে। দাতার শরীর দ্রুত রক্ত পুনরায় তৈরি করে নেয়।</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+        <div class="bg-amber-50 text-amber-500 p-3 rounded-2xl text-base shrink-0"><i class="fa-solid fa-user-check"></i></div>
+        <div>
+          <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">নিবন্ধন যোগ্যতা</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">১৮-৬০ বছর বয়সী, সুস্থ এবং ৫০ কেজির বেশি ওজনের যেকোনো ব্যক্তি রক্তদান করতে পারবেন।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- খ) ডান পাশের মূল তথ্য ফর্ম প্যানেল (মাঝের অংশ সাদা) -->
+    <div class="lg:col-span-2 bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-gray-100 space-y-6">
+      <div class="border-b pb-3 mb-2 flex justify-between items-center">
+        <h4 class="text-base font-black text-gray-800 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> রক্তদাতা নিবন্ধন ফর্ম</h4>
+        <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">রক্তদাতা সদস্য</span>
+      </div>
+
+      <form id="reg-form" onsubmit="submitDonorReg(event)" class="space-y-4 text-xs font-bold text-gray-600 bg-white">
+        
+        <!-- ১. ছবি আপলোড ও লাইভ প্রিভিউ উইজেট (ছবি মাথা কাটবে না) -->
+        <div class="flex flex-col sm:flex-row items-center gap-5 p-5 bg-slate-50/80 border border-slate-200/60 rounded-2xl max-w-md mx-auto">
+          <div class="relative shrink-0">
+            <img id="photo-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150" class="w-16 h-16 rounded-2xl border-2 border-white object-cover object-top shadow-md bg-slate-200" alt="Donor Preview">
+            <div class="absolute -bottom-1 -right-1 bg-emerald-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow border border-white">
+              <i class="fa-solid fa-camera"></i>
+            </div>
+            <!-- কন্টেইনার সামঞ্জস্যতা বজায় রাখার জন্য হিডেন আইকন -->
+            <i id="preview-icon" class="fa-solid fa-camera text-xl hidden"></i>
+          </div>
+          <div class="space-y-1.5 w-full">
+            <label class="block text-xs font-bold text-gray-700">রক্তদাতার ছবি আপলোড করুন <span class="text-gray-400 font-medium">(ঐচ্ছিক)</span></label>
+            <input type="file" id="reg-photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition duration-200 cursor-pointer">
+          </div>
+        </div>
+
+        <!-- ডোনারের ধরণ এবং সদস্য আইডি (কন্ডিশনাল টগল প্যানেল) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-emerald-50/20 p-4 rounded-2xl border border-emerald-100">
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">আপনার ডোনার ধরণ নির্বাচন করুন *</label>
+            <select id="reg-donor-type" onchange="toggleRegDonorType()" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+              <option value="সাধারণ">সাধারণ রক্তদাতা</option>
+              <option value="সদস্য">সংগঠনের সদস্য ডোনার</option>
+            </select>
+          </div>
+          <div id="reg-donor-id-box" class="opacity-40 pointer-events-none space-y-1.5 transition-all duration-300">
+            <label class="block text-gray-500">সদস্য আইডি নাম্বার *</label>
+            <input type="text" id="reg-donor-id" disabled onblur="lookupRegMember()" placeholder="ডোনারদের জন্য প্রযোজ্য নয়" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+          </div>
+        </div>
+
+        <!-- ২. পুরো নাম ও মোবাইল নম্বর -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">আপনার পুরো নাম *</label>
+            <input type="text" id="reg-name" required placeholder="দাতার পূর্ণ নাম লিখুন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">মোবাইল নম্বর *</label>
+            <input type="tel" id="reg-phone" required placeholder="১১ ডিজিটের মোবাইল নম্বর" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <!-- ৩. লিঙ্গ ও জন্ম তারিখ -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">লিঙ্গ *</label>
+            <select id="reg-gender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+              <option value="">নির্বাচন করুন</option>
+              <option value="পুরুষ">পুরুষ</option>
+              <option value="মহিলা">মহিলা</option>
+              <option value="অন্যান্য">অন্যান্য</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">জন্ম তারিখ *</label>
+            <input type="date" id="reg-dob" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <!-- ৪. রক্তের গ্রুপ, শেষ রক্তদানের তারিখ ও ওজন -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">রক্তের গ্রুপ *</label>
+            <select id="reg-blood" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+              <option value="">নির্বাচন করুন</option>
+              <option value="A+">A+</option><option value="A-">A-</option>
+              <option value="B+">B+</option><option value="B-">B-</option>
+              <option value="AB+">AB+</option><option value="AB-">AB-</option>
+              <option value="O+">O+</option><option value="O-">O-</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">শেষ রক্তদানের তারিখ</label>
+            <input type="date" id="reg-last-donation" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-gray-500">ওজন (কেজি) *</label>
+            <input type="number" id="reg-weight" required placeholder="ওজন কেজি-তে" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <!-- ৫. ঠিকানা তথ্য -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-gray-100 space-y-4">
+          <div class="text-xs font-black text-gray-700 flex items-center"><i class="fa-solid fa-map-location-dot mr-1.5 text-emerald-600"></i> বর্তমান ঠিকানা</div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="space-y-1">
+              <label class="block mb-1 text-gray-500">বিভাগ *</label>
+              <select id="reg-division" onchange="loadDistricts()" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400"></select>
+            </div>
+            <div class="space-y-1">
+              <label class="block mb-1 text-gray-500">জেলা *</label>
+              <select id="reg-district" onchange="loadUpazilas()" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                <option value="">প্রথমে বিভাগ নির্বাচন করুন</option>
+              </select>
+            </div>
+            <div class="space-y-1">
+              <label class="block mb-1 text-gray-500">উপজেলা *</label>
+              <select id="reg-upazila" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                <option value="">প্রথমে জেলা নির্বাচন করুন</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block mb-1 text-gray-500">ইউনিয়ন / গ্রাম / এলাকা *</label>
+            <input type="text" id="reg-village" required placeholder="যেমন: আউলিয়াপুর গ্রাম, ৫ নং ওয়ার্ড" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+          </div>
+        </div>
+
+        <!-- ৬. নিবন্ধন শর্তাবলী ও সম্মতি কোলাপসিবল বক্স (accordion স্টাইল) -->
+        <div class="border border-amber-200 rounded-2xl bg-amber-50/15 overflow-hidden">
+          <div class="p-4 bg-amber-50/50 border-b border-amber-200/50 flex justify-between items-center cursor-pointer select-none" onclick="toggleTerms()">
+            <span class="text-amber-800 font-extrabold flex items-center text-xs"><i class="fa-solid fa-triangle-exclamation mr-1.5 animate-pulse"></i> ডোনার নিবন্ধন শর্তাবলী (গুরুত্বপূর্ণ)</span>
+            <i id="terms-chevron" class="fa-solid fa-chevron-up text-amber-600 text-xs transition duration-200"></i>
+          </div>
+          <div id="terms-content" class="p-4 text-[10px] sm:text-xs text-gray-500 space-y-3 font-medium leading-relaxed max-h-52 overflow-y-auto">
+            <p>১. আমি এতদ্বারা ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সত্য এবং নির্ভুল। কোনো তথ্য গোপন করা হয়নি।</p>
+            <p>২. আমি অবগত আছি যে রক্তদান একটি সম্পূর্ণ সামাজিক ও স্বেচ্ছাসেবী কাজ, যার জন্য কোনো আর্থিক দাবি করা যাবে না।</p>
+            <p>৩. আমি আউলিয়াপুর অগ্রযাত্রা পরিষদের রক্তের প্রয়োজনে আমার এই তথ্য তাদের সিস্টেমে সংরক্ষণ করতে অনুমতি দিচ্ছি।</p>
+            <p>৪. রক্তদানের সময় আমার বয়স ন্যূনতম ১৮ বছর বা তদূর্ধ্ব এবং আমি শারীরিকভাবে সুস্থ আছি।</p>
+            <p>৫. গর্ভবতী বা জটিল রোগে আক্রান্ত থাকলে রক্তদানে অংশ নেওয়া যাবে না।</p>
+          </div>
+        </div>
+
+        <!-- সম্মতি চেকবক্স -->
+        <div class="flex items-start gap-2.5 py-2">
+          <input type="checkbox" id="reg-agreement" onchange="handleAgreementToggle()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+          <label for="reg-agreement" class="text-[11px] text-gray-500 font-semibold cursor-pointer select-none leading-relaxed">
+            আমি উপরোক্ত সকল শর্তাবলী মনোযোগ দিয়ে পড়েছি এবং ডোনার হিসেবে আউলিয়াপুর অগ্রযাত্রা পরিষদে রক্তদানে সম্মতি দিচ্ছি।
+          </label>
+        </div>
+
+        <!-- লোডার ইন্ডিকেটর -->
+        <div id="reg-form-loader" class="hidden text-center py-2">
+          <div class="animate-spin rounded-full border-2 border-t-2 border-slate-200 border-t-emerald-500 h-6 w-6 mx-auto"></div>
+        </div>
+
+        <!-- ডাইনামিক আনলকিং সাবমিট বাটন -->
+        <button type="submit" id="reg-submit-btn" disabled class="w-full bg-slate-200 text-slate-400 font-black py-4 rounded-xl shadow transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed">
+          <i class="fa-solid fa-lock text-xs"></i> প্রথমে শর্তাবলীতে সম্মতি দিন
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var regPhotoBase64 = "";
+
+  // বাংলাদেশের সম্পূর্ণ ৮টি বিভাগের অধীনস্থ ৬৪টি জেলা ও উপজেলার কাস্টম ডাটাবেজ
+  const locationData = {
+    "বরিশাল বিভাগ": {
+      "পটুয়াখালী": ["পটুয়াখালী সদর", "গলাচিপা", "বাউফল", "কলাপাড়া", "মির্জাগঞ্জ", "দুমকি", "দশমিনা", "রঙ্গাবালী"],
+      "বরিশাল": ["বরিশাল সদর", "বাকেরগঞ্জ", "বাবুগঞ্জ", "উজিরপুর", "বানারীপাড়া", "গৌরনদী", "মুলাদী", "মেহেন্দিগঞ্জ", "হিজলা"],
+      "বরগুনা": ["বরগুনা সদর", "আমতলী", "তালতলী", "পাথরঘাটা", "বেতাগী", "বামনা"],
+      "ভোলা": ["ভোলা সদর", "চরফ্যাশন", "লালমোহন", "তজুমদ্দিন", "মনপুরা", "বোরহানউদ্দিন", "দৌলতখান"],
+      "ঝালকাঠি": ["ঝালকাঠি সদর", "নলছিটি", "রাজাপুর", "কাঠালিয়া"],
+      "পিরোজপুর": ["পিরোজপুর সদর", "ভান্ডারিয়া", "مঠবাড়িয়া", "কাউখালী", "নেছারাবাদ", "নাজিরপুর", "ইন্দুরকানী"]
+    },
+    "ঢাকা বিভাগ": {
+      "ঢাকা": ["ঢাকা সদর", "সাভার", "ধামরাই", "কেরানীগঞ্জ", "দোহার", "নবাবগঞ্জ", "মিরপুর", "ধানমন্ডি", "গুলশান", "উত্তরা"],
+      "গাজীপুর": ["গাজীপুর সদর", "কালিয়াকৈর", "কালীগঞ্জ", "শ্রীপুর", "কাপাসিয়া"],
+      "নারায়ণগঞ্জ": ["নারায়ণগঞ্জ সদর", "রূপগঞ্জ", "আড়াইহাজার", "সোনারগাঁও", "বন্দর"],
+      "टाঙ্গাইল": ["टाঙ্গাইল সদর", "মির্জাপুর", "কালিহাতী", "ঘাটাইল", "সখিপুর", "বাসাইল", "নাগরপুর", "দেলদুয়ার"],
+      "ফরিদপুর": ["ফরিদপুর সদর", "ভাঙ্গা", "বোয়ালমারী", "মধুখালী", "সদরপুর", "চরভদ্রাসন", "নগরকান্দা"],
+      "নরসিংদী": ["নরসিংদী সদর", "পলাশ", "শিবপুর", "মনোহরদী", "বেলাবো", "রায়পুরা"],
+      "গোপালগঞ্জ": ["গোপালগঞ্জ সদর", "টুঙ্গিপাড়া", "কোটালীপাড়া", "কাশিয়ানী", "মুকসুদপুর"],
+      "মাদারীপুর": ["মাদারীপুর সদর", "শিবচর", "কালকিনি", "রাজৈর"],
+      "রাজবাড়ী": ["রাজবাড়ী সদর", "পাংশা", "বালিয়াকান্দি", "গোয়ালন্দ", "কালুখালী"],
+      "শরীয়তপুর": ["শরীয়তপুর সদর", "নড়িয়া", "জাজিরা", "ভেদরগঞ্জ", "ডামুড্যা", "গোসাইরহাট"],
+      "মানিকগঞ্জ": ["মানিকগঞ্জ সদর", "সিংগাইর", "শিবালয়", "ঘিওর", "হরিরামপুর", "সাটুরিয়া", "দৌলতপুর"]
+    },
+    "চট্টগ্রাম বিভাগ": {
+      "চট্টগ্রাম": ["চট্টগ্রাম সদর", "হাটহাজারী", "পটিয়া", "রাউজান", "ফটিকছড়ি", "সন্দীপ", "বোয়ালখালী", "রাঙ্গুনিয়া", "আনোয়ারা", "চন্দনাইশ", "বাঁশখালী", "মিরসরাই", "সীতাকুন্ড", "লোহাগাড়া"],
+      "কক্সবাজার": ["কক্সবাজার সদর", "উখিয়া", "টেকনাফ", "রামু", "চকরিয়া", "মহেশখালী", "পেকুয়া", "কুতুবদিয়া"],
+      "কুমিল্লা": ["কুমিল্লা সদর", "চৌদ্দগ্রাম", "লাকসাম", "বরুড়া", "দাউদকান্দি", "দেবিদ্বার", "মুরাদনগর", "হোমনা", "লাঙ্গলকোট", "ব্রাহ্মণপাড়া", "বুড়িচং", "চান্দিনা"],
+      "ফেনী": ["ফেনী সদর", "দাগনভূঞা", "ছাগলনাইয়া", "পরশুরাম", "ফুলগাজী", "সোনাগাজী"],
+      "নোয়াখালী": ["নোয়াখালী সদর", "বেগমগঞ্জ", "সেনবাগ", "হাতিয়া", "কোম্পানীগঞ্জ", "চাটখিল", "সোনাইমুড়ী", "সুবর্ণচর", "কবিরহাট"],
+      "লক্ষ্মীপুর": ["লক্ষ্মীপুর সদর", "রায়পুর", "রামগঞ্জ", "রামগতি", "কমলনগর"],
+      "চাঁদপুর": ["চাঁদপুর সদর", "হাজীগঞ্জ", "শাহরাস্তি", "মতলব উত্তর", "মতলব দক্ষিণ", "ফরিদগঞ্জ", "কচুয়া", "হাইমচর"],
+      "ব্রাহ্মণবাড়িয়া": ["ব্রাহ্মণবাড়িয়া সদর", "আশুগঞ্জ", "সরাইল", "নাসিরনগর", "নবীনগর", "কসবা", "বাঞ্ছারামপুর", "আখাউড়া"],
+      "রাঙ্গামাটি": ["রাঙ্গামাটি সদর", "কাপ্তাই", "কাউখালী", "বাঘাইছড়ি", "লংগদু", "নানিয়ারচর", "রাজস্থলী", "জুরাছড়ি", "বিলাইছড়ি"],
+      "খাগড়াছড়ি": ["খাগড়াছড়ি সদর", "দীঘিনালা", "পানছড়ি", "রামগড়", "মাটিরাঙ্গা", "মহালছড়ি", "মানিকছড়ি", "লক্ষ্মীছড়ি"],
+      "বান্দরবান": ["বান্দরবান সদর", "রুমা", "থানচি", "লামা", "আলীকদম", "নাইক্ষ্যংছড়ি", "রোয়াংছড়ি"]
+    },
+    "খুলনা বিভাগ": {
+      "খুলনা": ["খুলনা সদর", "দাকোপ", "বটিয়াঘাটা", "রূপসা", "তেরখাদা", "দিঘলিয়া", "ফুলতলা", "ডুমুরিয়া", "পাইকগাছা"],
+      "যশোর": ["যশোর সদর", "অভয়নগর", "বাঘেরপাড়া", "চৌগাছা", "ঝিকরগাছা", "কেশবপুর", "মণিরামপুর", "শার্শা"],
+      "বাগেরহাট": ["বাগেরহাট সদর", "মোংলা", "চিতলমারী", "ফকিরহাট", "কচুয়া", "মোল্লাহাট", "মোড়লগঞ্জ", "রামপাল", "শরণখোলা"],
+      "সাতক্ষيرة": ["সাতক্ষীরা সদর", "কলারোয়া", "তালা", "দেবহাটা", "কালীগঞ্জ", "আশাশুনি", "শ্যামনগর"],
+      "কুষ্টিয়া": ["কুষ্টিয়া সদর", "কুমারখালী", "খোকসা", "মিরপুর", "ভেড়ামারা", "দৌলতপুর"],
+      "ঝিনাইদহ": ["ঝিনাইদহ সদর", "শৈলকুপা", "হরিণাকুণ্ডু", "কালীগঞ্জ", "কোটচাঁদপুর", "মহেশপুর"],
+      "মাগুরা": ["মাগুরা সদর", "শ্রীপুর", "শালিখা", "মহম্মদপুর"],
+      "নড়াইল": ["নড়াইল সদর", "লোহাগড়া", "কালিয়া"],
+      "মেহেরপুর": ["মেহেরপুর সদর", "গাংনী", "মুজিবনগর"],
+      "চুয়াডাঙ্গা": ["চুয়াডাঙ্গা সদর", "আলমডাঙ্গা", "দামুড়হুদা", "जीवनনগর"]
+    },
+    "রাজশাহী বিভাগ": {
+      "রাজশাহী": ["বোয়ালিয়া", "মতিহার", "রাজপাড়া", "শাহ মখদুম", "পবা", "গোদাগাড়ী", "তানোর", "মোহনপুর", "বাগমারা", "দুর্গাপুর", "পুঠিয়া", "চারঘাট", "বাঘা"],
+      "বগুড়া": ["বগুড়া সদর", "শেরপুর", "শিবগঞ্জ", "আদমদীঘি", "দুপচাঁচিয়া", "কাহালু", "নন্দীগ্রাম", "গাবতলী", "সারিয়াকান্দি", "সোনাতলা", "ধুনট"],
+      "পাবনা": ["পাবনা সদর", "ঈশ্বরদী", "চাটমোহর", "ভাঙ্গুড়া", "ফরিদপুর", "সুজানগর", "বেড়া", "আটঘরিয়া", "সাথিয়া"],
+      "সিরাজগঞ্জ": ["সিরাজগঞ্জ সদর", "শাহজাদপুর", "উল্লাপাড়া", "বেলকুচি", "তাড়াশ", "রায়গঞ্জ", "কামারখন্দ", "কাজীপুর", "চৌহালী"],
+      "নাটোর": ["নাটোর সদর", "সিংড়া", "বড়াইগ্রাম", "লালপুর", "বাগাতিপাড়া", "গুরুদাসপুর", "নলডাঙ্গা"],
+      "নওগাঁ": ["নওগাঁ সদর", "মহাদেবপুর", "পত্নীতলা", "ধামইরহাট", "সাপাহার", "পোরশা", "নিয়ামতপুর", "মান্দা", "আত্রাই", "রানীনগর", "বدلগাছী"],
+      "চাঁপাইনবাবগঞ্জ": ["চাঁপাইনবাবগঞ্জ সদর", "শিবগঞ্জ", "গোমস্তাপুর", "নাচোল", "ভোলাহাট"],
+      "জয়পুরহাট": ["জয়পুরহাট সদর", "পাঁচবিবি", "আক্কেলপুর", "ক্ষেতলাল", "কালাই"]
+    },
+    "রংপুর বিভাগ": {
+      "রংপুর": ["রংপুর সদর", "মিঠাপুকুর", "পীরগঞ্জ", "কাউনিয়া", "গঙ্গাচড়া", "তারাগঞ্জ", "বদরগঞ্জ", "পীরগাছা"],
+      "দিনাজপুর": ["দিনাজপুর সদর", "বিরল", "বোচাগঞ্জ", "কাহারোল", "বীরগঞ্জ", "চিরিরবন্দর", "পার্বতীপুর", "ফুলবাড়ী", "বিরামপুর", "নবাবগঞ্জ", "ঘোড়াঘাট", "হাকিমপুর", "খানসামা"],
+      "গাইবান্ধা": ["গাইবান্ধা সদর", "গোবিন্দগঞ্জ", "পলাশবাড়ী", "সাদুল্লাপুর", "সুন্দরগঞ্জ", "সাঘাটা", "ফুলছড়ি"],
+      "কুড়িগ্রাম": ["কুড়িগ্রাম সদর", "উলিপুর", "চিলমারী", "রউমারী", "চর রাজিবপুর", "নাগেশ্বরী", "ভুরুঙ্গামারী", "ফুলবাড়ী", "রাজারহাট"],
+      "নীলফামারী": ["নীলফামারী সদর", "সৈয়দপুর", "ডোমার", "ডিমলা", "জলঢাকা", "কিশোরগঞ্জ"],
+      "লালমনিরহাট": ["লালমনিরহাট সদর", "কালীগঞ্জ", "আদিতমারী", "হাতীবান্ধা", "পাটগ্রাম"],
+      "ঠাকুরগাঁও": ["ঠাকুরগাঁও সদর", "পীরগঞ্জ", "বاليةাডাঙ্গী", "হরিপুর", "রাণীশংকৈল"],
+      "পঞ্চগড়": ["পঞ্চগড় সদর", "তেঁতুলিয়া", "দেবীগঞ্জ", "বোদা", "আটোয়ারী"]
+    },
+    "সিলেট বিভাগ": {
+      "সিলেট": ["সিলেট সদর", "বিয়ানীবাজার", "গোলাপগঞ্জ", "ফেঞ্চুগঞ্জ", "বালাগঞ্জ", "বিশ্বনাথ", "জকিগঞ্জ", "কানাইঘাট", "জৈন্তাপুর", "গোয়াইনঘাট", "কোম্পানীগঞ্জ", "দক্ষিণ সুরমা"],
+      "সুনামগঞ্জ": ["সুনামগঞ্জ সদর", "ছাতক", "জগন্নাথপুর", "দিরাই", "শাল্লা", "ধর্মপাশা", "তাহিরপুর", "বিশ্বম্ভরপুর", "দোয়ারাবাজার", "জামালগঞ্জ"],
+      "হবিগঞ্জ": ["হবিগঞ্জ সদর", "নবীগঞ্জ", "বাহুবল", "মাধবপুর", "চুনারুঘাট", "লাখাই", "আজমিরীগঞ্জ", "বানিয়াচং"],
+      "মৌলভীবাজার": ["মৌলভীবাজার সদর", "শ্রীমঙ্গল", "কুলাউড়া", "রাজনগর", "কমলগঞ্জ", "জুড়ী", "বড়লেখা"]
+    },
+    "ময়মনসিংহ বিভাগ": {
+      "ময়মনসিংহ": ["ময়মনসিংহ সদর", "মুক্তাগাছা", "ফুলবাড়িয়া", "ত্রিশাল", "ভালুকা", "গফরগাঁও", "ঈশ্বরগঞ্জ", "নান্দাইল", "গৌরীপুর", "ফুলপুর", "তারাকান্দা", "হালুয়াঘাট", "ধোবাউড়া"],
+      "জামালপুর": ["জামালপুর সদর", "সরিষাবাড়ী", "মেলান্দহ", "মাদারগঞ্জ", "ইসলামপুর", "দেওয়ানগঞ্জ", "বকশীগঞ্জ"],
+      "নেত্রকোণা": ["নেত্রকোণা সদর", "বারহাট্টা", "কলমাকান্দা", "দুর্গাপুর", "পূর্বধলা", "কেন্দুয়া", "মদন", "খালিয়াজুরী", "মোহনগঞ্জ", "আটপাড়া"],
+      "শেরপুর": ["শেরপুর সদর", "নালিতাবাড়ী", "নকলা", "ঝিনাইগাতী", "শ্রীবরদী"]
+    }
+  };
+
+  // বিভাগ ডাইনামিক লোড ইনিশিয়ালাইজেশন
+  (function() {
+    var divSelect = document.getElementById('reg-division');
+    if (divSelect) {
+      divSelect.innerHTML = '<option value="">বিভাগ নির্বাচন করুন</option>';
+      for (var div in locationData) {
+        divSelect.innerHTML += `<option value="${div}">${div}</option>`;
+      }
+    }
+  })();
+
+  function loadDistricts() {
+    var division = document.getElementById('reg-division').value;
+    var distSelect = document.getElementById('reg-district');
+    var upaSelect = document.getElementById('reg-upazila');
+    
+    distSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+    upaSelect.innerHTML = '<option value="">প্রথমে জেলা নির্বাচন করুন</option>';
+    
+    if (division && locationData[division]) {
+      for (var dist in locationData[division]) {
+        distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
+      }
+    }
+  }
+
+  function loadUpazilas() {
+    var division = document.getElementById('reg-division').value;
+    var district = document.getElementById('reg-district').value;
+    var upaSelect = document.getElementById('reg-upazila');
+    
+    upaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+    
+    if (division && district && locationData[division][district]) {
+      locationData[division][district].forEach(upa => {
+        upaSelect.innerHTML += `<option value="${upa}">${upa}</option>`;
+      });
+    }
+  }
+
+  // ছবি রিডিং অ্যান্ড বেস৬৪ কনভার্ট
+  document.getElementById('reg-photo').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("ছবির সাইজ ২ এমবি এর বেশি হতে পারবে না!");
+        this.value = "";
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        regPhotoBase64 = evt.target.result;
+        var previewIcon = document.getElementById('preview-icon');
+        if (previewIcon) previewIcon.classList.add('hidden');
+        var preview = document.getElementById('photo-preview');
+        if (preview) {
+          preview.src = regPhotoBase64;
+          preview.classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // ডোনারের ধরণ পরিবর্তনের লজিক
+  function toggleRegDonorType() {
+    var type = document.getElementById('reg-donor-type').value;
+    var idBox = document.getElementById('reg-donor-id-box');
+    var idInput = document.getElementById('reg-donor-id');
+    
+    if (type === "সদস্য") {
+      idBox.className = "opacity-100 pointer-events-auto space-y-1.5 transition-all duration-300";
+      idInput.disabled = false;
+      idInput.required = true;
+    } else {
+      idBox.className = "opacity-40 pointer-events-none space-y-1.5 transition-all duration-300";
+      idInput.disabled = true;
+      idInput.required = false;
+      idInput.value = "";
+      // ক্লিয়ার ফর্ম
+      document.getElementById('reg-name').value = "";
+      document.getElementById('reg-phone').value = "";
+      document.getElementById('reg-blood').value = "";
+    }
+  }
+
+  // সদস্য আইডি অটো-ফিল খোঁজার চমৎকার লজিক (ওয়ান-ক্লিক অটো-ফিল!)
+  function lookupRegMember() {
+    var id = document.getElementById('reg-donor-id').value.trim();
+    if (!id) return;
+    
+    var loader = document.getElementById('loading');
+    if (loader) loader.classList.remove('hidden');
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (loader) loader.classList.add('hidden');
+        if (res.success) {
+          document.getElementById('reg-name').value = res.name;
+          document.getElementById('reg-blood').value = res.bloodGroup;
+          document.getElementById('reg-phone').value = res.phone;
+          showCustomAlert("ডাটা পাওয়া গেছে!", "আপনার সক্রিয় সদস্য প্রোফাইলের নাম, মোবাইল এবং রক্তের গ্রুপ অটো-ফিল করা হয়েছে।", "success");
+        } else {
+          showCustomAlert("ব্যর্থ হয়েছে!", "সদস্য আইডি ডাটাবেজে পাওয়া যায়নি!", "error");
+        }
+      })
+      .getMemberInfoById(id);
+  }
+
+  // শর্তাবলী অ্যাকোর্ডিয়ন কোলাপ্স লজিক
+  function toggleTerms() {
+    var content = document.getElementById('terms-content');
+    var chevron = document.getElementById('terms-chevron');
+    if (content && chevron) {
+      content.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
+  }
+
+  // চেকবক্স অনুযায়ী সাবমিট বাটনের ডাইনামিক স্টাইল ও লক লজিক
+  function handleAgreementToggle() {
+    var agreeCheckbox = document.getElementById('reg-agreement');
+    var btn = document.getElementById('reg-submit-btn');
+    if (!agreeCheckbox || !btn) return;
+
+    var checked = agreeCheckbox.checked;
+    if (checked) {
+      btn.disabled = false;
+      btn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-600/30 transition duration-300 flex items-center justify-center gap-2 cursor-pointer scale-100 hover:scale-[1.01] active:scale-[0.99]";
+      btn.innerHTML = `<i class="fa-solid fa-circle-check text-xs animate-pulse"></i> ডোনার হিসেবে নিবন্ধন করুন`;
+    } else {
+      btn.disabled = true;
+      btn.className = "w-full bg-slate-200 text-slate-400 font-black py-4 rounded-xl shadow transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed";
+      btn.innerHTML = `<i class="fa-solid fa-lock text-xs mr-1"></i> প্রথমে শর্তাবলীতে সম্মতি দিন`;
+    }
+  }
+
+  // ডোনার নিবন্ধন সাবমিট
+  function submitDonorReg(e) {
+    e.preventDefault();
+    var loader = document.getElementById('loading');
+    if (loader) loader.classList.remove('hidden');
+    
+    var btn = document.getElementById('reg-submit-btn');
+    if (btn) { btn.disabled = true; btn.classList.add('opacity-50'); }
+
+    var payload = {
+      donorType: document.getElementById('reg-donor-type').value,
+      donorId: document.getElementById('reg-donor-id').value,
+      name: document.getElementById('reg-name').value,
+      phone: document.getElementById('reg-phone').value,
+      gender: document.getElementById('reg-gender').value,
+      dob: document.getElementById('reg-dob').value,
+      bloodGroup: document.getElementById('reg-blood').value,
+      lastDonationDate: document.getElementById('reg-last-donation').value,
+      weight: document.getElementById('reg-weight').value,
+      division: document.getElementById('reg-division').value,
+      district: document.getElementById('reg-district').value,
+      upazila: document.getElementById('reg-upazila').value,
+      village: document.getElementById('reg-village').value,
+      photoData: regPhotoBase64
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (loader) loader.classList.add('hidden');
+        if (btn) { btn.disabled = false; btn.classList.remove('opacity-50'); }
+        
+        if (res && res.success) {
+          showCustomAlert("নিবন্ধন সফল হয়েছে!", "রক্তদাতা হিসেবে আপনার প্রোফাইলটি অগ্রযাত্রা পরিষদে সফলভাবে সংরক্ষিত হয়েছে। ধন্যবাদ!", "success", function() {
+            document.getElementById('reg-form').reset();
+            regPhotoBase64 = "";
+            var preview = document.getElementById('photo-preview');
+            var previewIcon = document.getElementById('preview-icon');
+            if (preview) preview.classList.add('hidden');
+            if (previewIcon) previewIcon.classList.remove('hidden');
+            handleAgreementToggle();
+            navigateTo('home');
+          });
+        } else {
+          showCustomAlert("ব্যর্থ হয়েছে!", "সমস্যা: " + (res ? res.error : "ডাটা সাবমিট করা যায়নি।"), "error");
+        }
+      })
+      .submitDonorRegistration(payload);
+  }
+</script>

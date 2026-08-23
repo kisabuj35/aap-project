@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>লাইভ ভিজিটর কাউন্টার</title>
+  
+  <!-- ফন্ট ও আইকন লাইব্রেরি -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: #0f172a;
+    }
+  </style>
+</head>
+<body class="p-4 sm:p-8 min-h-screen flex items-center justify-center">
+
+  <!-- ========================================== -->
+  <!-- স্টাইলিশ ভিজিটর কাউন্টার কার্ড -->
+  <!-- ========================================== -->
+  <div class="max-w-3xl w-full mx-auto select-none">
+    
+    <div class="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-2xl border border-emerald-500/20 relative overflow-hidden">
+      
+      <!-- ব্যাকগ্রাউন্ড গ্লোয়িং ইফেক্ট -->
+      <div class="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- কার্ড হেডার -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-800/80 pb-6 mb-6">
+        <div class="flex items-center gap-3.5 text-center sm:text-left">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl shadow-lg shrink-0">
+            <i class="fa-solid fa-chart-line animate-pulse"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black tracking-tight">ওয়েবসাইট ভিজিটর কাউন্টার</h3>
+            <p class="text-xs text-slate-400 font-medium">রিয়েল-টাইম ভিজিটর ট্রাফিক ও দৈনিক ভিজিট এনালাইটিক্স</p>
+          </div>
+        </div>
+
+        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-bold px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-inner">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> লাইভ ট্র্যাকিং সচল
+        </span>
+      </div>
+
+      <!-- কাউন্টার গ্রিড বক্স -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- ১. সর্বমোট ভিজিট কার্ড -->
+        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition duration-300 relative group">
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">সর্বমোট ভিজিট (Total)</span>
+            <div class="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl group-hover:scale-110 transition"><i class="fa-solid fa-eye text-sm"></i></div>
+          </div>
+          <h4 id="total-visits-count" class="text-2xl sm:text-3xl font-black text-white tracking-wide">...</h4>
+          <p class="text-[10px] text-slate-500 mt-1 font-medium">ওয়েবসাইট তৈরির পর থেকে মোট ভিজিট</p>
+        </div>
+
+        <!-- ২. আজকের ভিজিট কার্ড -->
+        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition duration-300 relative group">
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">আজকের ভিজিট (Today)</span>
+            <div class="p-2 bg-teal-500/10 text-teal-400 rounded-xl group-hover:scale-110 transition"><i class="fa-solid fa-calendar-day text-sm"></i></div>
+          </div>
+          <h4 id="daily-visits-count" class="text-2xl sm:text-3xl font-black text-emerald-400 tracking-wide">...</h4>
+          <p class="text-[10px] text-slate-500 mt-1 font-medium">আজ রাত ১২টা পর্যন্ত মোট ভিজিট</p>
+        </div>
+
+        <!-- ৩. আজকের তারিখ কার্ড -->
+        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition duration-300 sm:col-span-2 lg:col-span-1 relative group">
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">আজকের তারিখ</span>
+            <div class="p-2 bg-blue-500/10 text-blue-400 rounded-xl group-hover:scale-110 transition"><i class="fa-solid fa-clock text-sm"></i></div>
+          </div>
+          <h4 id="counter-today-date" class="text-sm sm:text-base font-extrabold text-slate-200 mt-1">...</h4>
+          <p class="text-[10px] text-emerald-400 mt-1 font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check"></i> রাত ১২টায় অটো রিসেট হবে
+          </p>
+        </div>
+
+      </div>
+
+      <!-- কার্ড ফুটার নোট -->
+      <div class="mt-6 border-t border-slate-800/80 pt-4 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-500 gap-2">
+        <span><i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> সুরক্ষিত অটোমেটিক ভিজিটর ট্র্যাকিং সিস্টেম</span>
+        <button onclick="resetCounterDataData()" class="text-slate-600 hover:text-red-400 transition" title="কাউন্টার রিসেট করুন">
+          <i class="fa-solid fa-rotate-right mr-1"></i> রিসেট ডাটা
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- অটোমেটিক ভিজিটর কাউন্টার জাভাস্ক্রিপ্ট -->
+  <!-- ========================================== -->
+  <script>
+    // সংখ্যাকে বাংলায় রূপান্তর করার ফাংশন
+    function convertToBanglaDigits(str) {
+      if (str === undefined || str === null || str === "") return "০";
+      var bnDigits = { "0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪", "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯" };
+      return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[w]; });
+    }
+
+    // আজকের তারিখের স্ট্রিং তৈরির ফাংশন (YYYY-MM-DD)
+    function getTodayDateString() {
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = (d.getMonth() + 1 < 10 ? '0' : '') + (d.getMonth() + 1);
+      var day = (d.getDate() < 10 ? '0' : '') + d.getDate();
+      return `${year}-${month}-${day}`;
+    }
+
+    // আজকের তারিখ বাংলায় সুন্দর করে দেখানো
+    function getFormattedBanglaDate() {
+      var d = new Date();
+      var months = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+      var day = d.getDate();
+      var monthName = months[d.getMonth()];
+      var year = d.getFullYear();
+      return `${convertToBanglaDigits(day)} ${monthName}, ${convertToBanglaDigits(year)}`;
+    }
+
+    // কাউন্টার লজিক ইনিশিয়ালাইজার
+    function initVisitorCounter() {
+      var todayStr = getTodayDateString();
+      
+      // লোকাল স্টোরেজ থেকে ডাটা লোড
+      var totalVisits = parseInt(localStorage.getItem('app_total_visits') || "1250"); // ডিফল্ট ১,২৫০ থেকে শুরু হবে
+      var dailyVisits = parseInt(localStorage.getItem('app_daily_visits') || "45");  // ডিফল্ট ৪৫ থেকে শুরু হবে
+      var lastVisitDate = localStorage.getItem('app_last_visit_date') || "";
+
+      // সেশন ট্র্যাকিং (একই ট্যাবে বারবার রিফ্রেশ দিলে প্রতিবার কাউন্ট না বাড়াতে চাইলে)
+      var hasVisitedThisSession = sessionStorage.getItem('app_visited_session');
+
+      if (!hasVisitedThisSession) {
+        // ১. সর্বমোট ভিজিট ১ বাড়ানো হলো
+        totalVisits += 1;
+        sessionStorage.setItem('app_visited_session', 'true');
+
+        // ২. তারিখ যাচাই: আজ প্রথম ভিজিট নাকি আগে হয়েছিল
+        if (lastVisitDate !== todayStr) {
+          // নতুন দিন শুরু হয়েছে! আজকের ভিজিট ১ থেকে রিসেট হলো
+          dailyVisits = 1;
+          localStorage.setItem('app_last_visit_date', todayStr);
+        } else {
+          // আজকের দিনের আগের ভিজিটের সাথে ১ যোগ হলো
+          dailyVisits += 1;
+        }
+
+        // লোকাল স্টোরেজে নতুন ডাটা সেভ
+        localStorage.setItem('app_total_visits', totalVisits);
+        localStorage.setItem('app_daily_visits', dailyVisits);
+      }
+
+      // DOM-এ তথ্য আপডেট
+      var totalEl = document.getElementById('total-visits-count');
+      var dailyEl = document.getElementById('daily-visits-count');
+      var dateEl = document.getElementById('counter-today-date');
+
+      if (totalEl) totalEl.innerText = convertToBanglaDigits(totalVisits.toLocaleString('en-US')) + " বার";
+      if (dailyEl) dailyEl.innerText = convertToBanglaDigits(dailyVisits.toLocaleString('en-US')) + " জন";
+      if (dateEl) dateEl.innerText = getFormattedBanglaDate();
+    }
+
+    // টেস্ট বা রিসেটের জন্য ফাংশন
+    function resetCounterDataData() {
+      if (confirm("আপনি কি ভিজিটর কাউন্টার ডাটা রিসেট করতে চান?")) {
+        localStorage.removeItem('app_total_visits');
+        localStorage.removeItem('app_daily_visits');
+        localStorage.removeItem('app_last_visit_date');
+        sessionStorage.removeItem('app_visited_session');
+        initVisitorCounter();
+      }
+    }
+
+    // পেজ লোড হলেই কাউন্টার চালু হবে
+    window.addEventListener('DOMContentLoaded', initVisitorCounter);
+  </script>
+
+</body>
+</html>

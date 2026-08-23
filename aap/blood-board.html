@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f8fafc;
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="max-w-6xl mx-auto px-4 py-12 select-none space-y-8">
+  <!-- ১. হেডার প্যানেল -->
+  <div class="text-center mb-4">
+    <span class="bg-red-50 text-red-500 text-[10px] px-3.5 py-1.5 rounded-full font-black uppercase border border-red-100 inline-flex items-center gap-1.5 mb-3 shadow-sm">
+      <i class="fa-solid fa-heart-pulse animate-pulse text-xs"></i> জীবন বাঁচাতে রক্তদান
+    </span>
+    <h3 class="text-3xl font-extrabold text-gray-800">কেন্দ্রীয় রক্তদান খতিয়ান বোর্ড</h3>
+    <p class="text-gray-400 mt-2 text-xs sm:text-sm font-semibold">আউলিয়াপুর অগ্রযাত্রা পরিষদের অধীনে সম্পন্ন হওয়া সফল রক্তদান ও ডোনারদের লাইভ খতিয়ান</p>
+    <div class="w-16 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
+  </div>
+
+  <!-- লোডার আইকন -->
+  <div id="blood-board-loader" class="text-center py-12">
+    <div class="ease-linear rounded-full border-4 border-t-4 border-red-500 h-10 w-10 mx-auto animate-spin"></div>
+    <p class="text-xs text-gray-400 font-bold mt-3">রক্তদান লাইভ ডাটা লোড হচ্ছে...</p>
+  </div>
+
+  <div id="main-content-layout" class="hidden space-y-8">
+    <!-- ২. ডাইনামিক লাইভ স্ট্যাটস ড্যাশবোর্ড -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div class="bg-gradient-to-br from-red-50 to-white p-5 rounded-3xl border border-red-100/60 flex items-center justify-between hover:shadow-lg transition">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-red-500 uppercase tracking-wider block">সর্বমোট রক্তদান সম্পন্ন</span>
+          <span id="stat-total-donations" class="text-2xl sm:text-3xl font-black text-red-600">০ বার</span>
+        </div>
+        <div class="p-4 bg-red-500 text-white rounded-2xl shadow-md shadow-red-500/10"><i class="fa-solid fa-droplet text-xl"></i></div>
+      </div>
+      <div class="bg-gradient-to-br from-emerald-50 to-white p-5 rounded-3xl border border-emerald-100/60 flex items-center justify-between hover:shadow-lg transition">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider block">নিবন্ধিত রক্তদাতা</span>
+          <span id="stat-registered-donors" class="text-2xl sm:text-3xl font-black text-emerald-600">০ জন</span>
+        </div>
+        <div class="p-4 bg-emerald-500 text-white rounded-2xl shadow-md shadow-emerald-500/10"><i class="fa-solid fa-users text-xl"></i></div>
+      </div>
+      <div class="bg-gradient-to-br from-purple-50 to-white p-5 rounded-3xl border border-purple-100/60 flex items-center justify-between hover:shadow-lg transition">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-purple-500 uppercase tracking-wider block">রক্তদান করেছেন</span>
+          <span id="stat-unique-donors" class="text-2xl sm:text-3xl font-black text-purple-600">০ জন</span>
+        </div>
+        <div class="p-4 bg-purple-500 text-white rounded-2xl shadow-md shadow-purple-500/10"><i class="fa-solid fa-hand-holding-heart text-xl"></i></div>
+      </div>
+    </div>
+
+    <!-- ৩. লাইভ রক্তের গ্রুপ পরিসংখ্যান -->
+    <div class="bg-white p-6 rounded-3xl border border-slate-100 space-y-4 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+      <h4 class="font-extrabold text-gray-800 text-sm border-b pb-3 flex items-center"><i class="fa-solid fa-chart-simple text-red-500 mr-2"></i> গ্রুপ ভিত্তিক রক্তদানের লাইভ পরিসংখ্যান</h4>
+      <div id="group-stats-pills" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3"></div>
+    </div>
+
+    <!-- ৪. সার্চ ও ফিল্টার ইঞ্জিন -->
+    <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-100 flex flex-col md:flex-row gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+      <div class="relative flex-grow">
+        <input type="text" id="search-blood" oninput="filterBloodList()" class="w-full pl-10 pr-4 py-3 border border-slate-100 rounded-2xl text-xs bg-slate-50/50 font-semibold focus:outline-none focus:ring-2 focus:ring-red-400" placeholder="দাতা, গ্রহীতা, মোবাইল বা রোগের সমস্যা লিখে খুঁজুন...">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400 text-xs"></i>
+      </div>
+      <div class="w-full md:w-56 shrink-0">
+        <select id="filter-group" onchange="filterBloodList()" class="w-full px-4 py-3 border border-slate-100 rounded-2xl text-xs bg-white text-gray-700 font-bold focus:outline-none focus:ring-2 focus:ring-red-400">
+          <option value="">রক্তের গ্রুপ: সকল</option>
+          <option value="A+">A+</option><option value="A-">A-</option>
+          <option value="B+">B+</option><option value="B-">B-</option>
+          <option value="AB+">AB+</option><option value="AB-">AB-</option>
+          <option value="O+">O+</option><option value="O-">O-</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ৫. লাইভ রক্তদান কার্ড লিস্ট প্যানেল (সফ্ট শ্যাডো ও স্কয়ার ইমেজে সজ্জিত) -->
+    <div id="blood-board-cards" class="space-y-6"></div>
+
+    <!-- ফাঁকা রেকর্ড মেসেজ -->
+    <div id="blood-board-empty" class="hidden text-center py-12 bg-white rounded-3xl border border-slate-100 p-8 shadow-sm">
+      <div class="text-red-500 text-3xl mb-2">🩸</div>
+      <p class="text-xs text-gray-400 font-bold">দুঃখিত, এই গ্রুপ বা তথ্যের কোনো রক্তদান খতিয়ান খুঁজে পাওয়া যায়নি!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var fullBloodList = [];
+
+  // পেজ লোড হবার সাথে সাথে ডাটা লোড করার স্বয়ংক্রিয় লজিক
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(response) {
+        document.getElementById('blood-board-loader').classList.add('hidden');
+        if (!response || response.error) {
+          alert("ডাটা লোড ত্রুটি: " + response.error);
+          return;
+        }
+        
+        document.getElementById('main-content-layout').classList.remove('hidden');
+        
+        // ক) পরিসংখ্যান রেন্ডারিং
+        var s = response.stats;
+        safeSetText('stat-total-donations', s.totalDonations + " বার");
+        safeSetText('stat-registered-donors', s.totalRegisteredDonors + " জন");
+        safeSetText('stat-unique-donors', s.uniqueDonorsCount + " জন");
+        
+        // খ) গ্রুপ ভিত্তিক সফল পিলস রেন্ডারিং
+        var pillsContainer = document.getElementById('group-stats-pills');
+        if (pillsContainer && s.groupStats) {
+          pillsContainer.innerHTML = '';
+          for (var key in s.groupStats) {
+            var count = s.groupStats[key];
+            var countColor = parseFloat(toEnDigits(count)) > 0 ? "text-red-600 font-black bg-red-50 border-red-100" : "text-gray-400 bg-slate-50 border-slate-100";
+            pillsContainer.innerHTML += `
+              <div class="border rounded-2xl p-3 text-center ${countColor} transition hover:shadow-sm">
+                <span class="block text-xs font-bold text-gray-500 mb-0.5">${key}</span>
+                <span class="text-sm font-black">${count} বার</span>
+              </div>
+            `;
+          }
+        }
+
+        fullBloodList = response.list || [];
+        renderBloodList(fullBloodList);
+      })
+      .getBloodDonationList();
+  })();
+
+  // ছবি ভেঙে যাওয়া প্রতিরোধের প্রফেশনাল ইমেজ ফলব্যাক হ্যান্ডলার ফিক্সড!
+  function getSafeImg(url, fallbackType) {
+    if (!url || url.trim() === "" || url.trim() === "Base64_Photo" || url.trim() === "N/A" || !url.startsWith("http")) {
+      if (fallbackType === 'donor') {
+        return "https://drive.google.com/file/d/1CdBTtfae_LWHX0s5FtCzShNVUyRpSIyO/view?usp=drive_link"; 
+      } else {
+        return "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150"; 
+      }
+    }
+    return url;
+  }
+
+  // ডাইনামিক কার্ড রেন্ডারার
+  function renderBloodList(list) {
+    var container = document.getElementById('blood-board-cards');
+    var emptyMsg = document.getElementById('blood-board-empty');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (list.length === 0) {
+      container.classList.add('hidden');
+      emptyMsg.classList.remove('hidden');
+      return;
+    }
+
+    emptyMsg.classList.add('hidden');
+    container.classList.remove('hidden');
+
+    list.forEach(item => {
+      // সেফ ছবি রিট্রিভাল
+      var donorPhotoUrl = getSafeImg(item.donorPhoto, 'donor');
+      var recipientPhotoUrl = getSafeImg(item.recipientPhoto, 'recipient');
+
+      var typeColor = item.donorType === "সদস্য" ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-slate-50 text-gray-600 border-slate-100";
+
+      // আপনার রিকোয়েস্ট অনুযায়ী: শ্যাডো ইফেক্ট এবং স্কয়ার ইমেজে সজ্জিত কার্ড লেআউট
+      container.innerHTML += `
+        <div class="bg-white rounded-3xl border border-emerald-500/20 p-6 flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-[0_15px_45px_rgba(0,0,0,0.06)] transition duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
+          
+          <!-- ক) রক্তদাতার অংশ (স্কয়ার ইমেজে সজ্জিত) -->
+          <div class="flex items-center gap-5 w-full md:w-5/12">
+            <img class="w-28 h-24 rounded-2xl border-2 border-emerald-500 bg-slate-100 object-cover shadow-sm shrink-0" src="${donorPhotoUrl}" alt="Donor" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'">
+            <div class="space-y-1">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase border ${typeColor}">${item.donorType}</span>
+              <h5 class="text-base font-black text-gray-800 leading-tight">${item.donorName}</h5>
+              <p class="text-[10px] text-gray-400 font-bold">পিতা: ${item.donorFather}</p>
+              
+              <!-- ব্যক্তিগত রক্তদান সংখ্যা ট্র্যাকার -->
+              <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 text-[9px] px-2 py-0.5 rounded-lg font-bold border border-red-100"><i class="fa-solid fa-heart"></i> রক্তদান করেছেন: ${item.donorBloodCount} বার</span>
+              
+              <p class="text-[10px] text-gray-500 font-black pt-1 block"><i class="fa-solid fa-phone text-gray-400 mr-1"></i> ${item.donorPhone}</p>
+            </div>
+          </div>
+
+          <!-- খ) কানেক্টিভ রক্তের গ্রুপ প্যানেল -->
+          <div class="flex flex-col items-center justify-center shrink-0 min-w-[120px]">
+            <span class="bg-red-50 text-red-600 text-[10px] font-black px-3.5 py-1 rounded-full border border-red-100 flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-droplet text-red-500 animate-pulse text-xs"></i> ${item.donorBlood}
+            </span>
+            <div class="h-6 w-[1px] md:w-12 md:h-[1px] bg-dashed border-t border-red-200 my-2"></div>
+            <span class="text-[9px] text-gray-400 font-bold flex items-center gap-1"><i class="fa-solid fa-calendar-day"></i> ${formatDate(item.donationDate)}</span>
+          </div>
+
+          <!-- গ) রক্তগ্রহীতার অংশ (স্কয়ার ইমেজে সজ্জিত) -->
+          <div class="flex items-center md:flex-row-reverse gap-5 w-full md:w-5/12 text-left md:text-right">
+            <img class="w-28 h-24 rounded-2xl border-2 border-red-400 bg-slate-100 object-cover shadow-sm shrink-0" src="${recipientPhotoUrl}" alt="Recipient" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150'">
+            <div class="space-y-1 w-full">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase border bg-red-50 text-red-600 border-red-100">রক্তগ্রহীতা</span>
+              <h5 class="text-base font-black text-gray-800 leading-tight">${item.recipientName}</h5>
+              <p class="text-[10px] text-gray-400 font-bold">রোগ: ${item.recipientDisease}</p>
+              <p class="text-[10px] text-gray-500 font-black"><i class="fa-solid fa-location-dot text-gray-400 mr-0.5"></i> ${item.recipientAddress}</p>
+            </div>
+          </div>
+
+        </div>
+      `;
+    });
+  }
+
+  function filterBloodList() {
+    var query = document.getElementById('search-blood').value.toLowerCase().trim();
+    var bloodGroup = document.getElementById('filter-group').value;
+    
+    var filtered = fullBloodList.filter(item => {
+      var matchQuery = item.donorName.toLowerCase().includes(query) || 
+                       item.recipientName.toLowerCase().includes(query) || 
+                       item.donorPhone.includes(query) || 
+                       item.recipientPhone.includes(query) ||
+                       item.recipientDisease.toLowerCase().includes(query);
+                       
+      var matchGroup = bloodGroup === "" ? true : item.donorBlood === bloodGroup;
+      
+      return matchQuery && matchGroup;
+    });
+    
+    renderBloodList(filtered);
+  }
+
+  function formatDate(dateVal) {
+    if (!dateVal) return "N/A";
+    try {
+      var d = new Date(dateVal);
+      if (isNaN(d.getTime())) return dateVal;
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      return toBnDigits(day + "-" + month + "-" + year);
+    } catch (e) {
+      return dateVal;
+    }
+  }
+
+  function safeSetText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.innerText = value;
+  }
+
+  function toBnDigits(str) {
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  function toEnDigits(str) {
+    var enDigits = { "০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9" };
+    return str.toString().replace(/[০-৯]/g, function(w) { return enDigits[w]; });
+  }
+</script>
+</body>
+</html>

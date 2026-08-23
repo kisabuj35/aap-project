@@ -1,0 +1,247 @@
+<!-- media_photos.html -->
+<div class="max-w-7xl mx-auto px-4 py-12 select-none">
+  
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">ফটো গ্যালারী</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">আমাদের কার্যক্রমের স্মৃতিচিত্র — প্রতিটি মুহূর্তের সাক্ষী</p>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-2 mb-10" id="photo-category-filters">
+    <button onclick="filterPhotos('ALL')" id="btn-cat-all" class="px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300">সকল ছবি</button>
+  </div>
+
+  <div id="photos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  <div id="photo-loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto mb-4"></div>
+  </div>
+
+  <!-- লাইভ তথ্য সামারি উইজেটস -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-16 border-t pt-10 border-gray-100">
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3"><i class="fa-solid fa-folder-open text-base"></i></div>
+      <span id="stat-albums" class="text-lg sm:text-xl font-black text-slate-800">৯+</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">অ্যালবাম</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3"><i class="fa-solid fa-image text-base"></i></div>
+      <span id="stat-photos" class="text-lg sm:text-xl font-black text-slate-800">১০০+</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">ফটো</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3"><i class="fa-solid fa-layer-group text-base"></i></div>
+      <span id="stat-categories" class="text-lg sm:text-xl font-black text-slate-800">৭</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">বিভাগ</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3"><i class="fa-solid fa-calendar-days text-base"></i></div>
+      <span class="text-lg sm:text-xl font-black text-slate-800">২০২৫-২৬</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">সর্বশেষ</span>
+    </div>
+  </div>
+
+  <!-- লাইটবক্স পপআপ মডাল -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/90 backdrop-blur-sm transition-opacity duration-300">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition text-2xl">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="max-w-4xl w-full mx-4 text-center">
+      <img id="lightbox-img" class="max-h-[80vh] mx-auto rounded-3xl shadow-2xl border-4 border-white/10" src="" alt="">
+      <h4 id="lightbox-title" class="text-white font-black text-sm sm:text-base mt-4">ছবির ক্যাপশন</h4>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var rawPhotoList = [];
+  var filteredPhotos = [];
+  var activeCategory = "ALL";
+
+  window.closeLightbox = function() {
+    document.getElementById('lightbox-modal').classList.add('hidden');
+  }
+
+  // ইনডেক্স ভিত্তিক জুম লাইটবক্স ওপেনার
+  window.openPhotoIndex = function(idx) {
+    var item = filteredPhotos[idx];
+    if (!item) return;
+    
+    if (item.url && item.url.trim() !== "" && item.url !== "#") {
+      document.getElementById('lightbox-img').src = item.url;
+      document.getElementById('lightbox-title').innerText = item.title;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    } else {
+      alert("দুঃখিত, এই কর্মসূচির কোনো ছবি লাইভ সংযুক্ত করা হয়নি।");
+    }
+  }
+
+  window.filterPhotos = function(category) {
+    activeCategory = category;
+    
+    document.querySelectorAll('#photo-category-filters button').forEach(btn => {
+      btn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300";
+    });
+
+    var btnId = (category === "ALL") ? "btn-cat-all" : "btn-cat-" + category.replace(/\s+/g, '-');
+    var activeBtn = document.getElementById(btnId);
+    if (activeBtn) {
+      activeBtn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300";
+    }
+
+    if (category === "ALL") {
+      filteredPhotos = rawPhotoList;
+    } else {
+      filteredPhotos = rawPhotoList.filter(p => p.category === category);
+    }
+    renderPhotoGrid(filteredPhotos);
+  }
+
+  // শতভাগ সুরক্ষিত এবং বহুমুখী ডাইনামিক বাংলা তারিখ ফরম্যাটার (NaN এরর সমাধান!)
+  function formatBengaliDate(dateVal) {
+    if (!dateVal) return "১২ মার্চ ২০২৩";
+    var dateStr = dateVal.toString().trim();
+    if (dateStr === "") return "১২ মার্চ ২০২৩";
+    
+    var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    
+    // ১. কন্টেন্টটি যদি ইতিমধ্যে বাংলা মাসের নাম যুক্ত থাকে, তবে শুধু ডিজিট পরিবর্তন করবে
+    var containsBnMonths = bnMonths.some(m => dateStr.includes(m)) || ["জানু", "ফেব্রু", "মার্চ", "এপ্রি", "মে", "জুন", "জুলা", "আগস্ট", "সেপ্টে", "অক্টো", "নভে", "ডিসে"].some(m => dateStr.includes(m));
+    if (containsBnMonths) {
+      return toBnDigits(dateStr);
+    }
+    
+    // ২. ব্রাউজার ডেট অবজেক্ট পার্সিং মেথড
+    var parsedDate = new Date(dateStr);
+    if (!isNaN(parsedDate.getTime())) {
+      var day = parsedDate.getDate();
+      var month = parsedDate.getMonth(); // 0-indexed
+      var year = parsedDate.getFullYear();
+      return toBnDigits(day) + " " + bnMonths[month] + " " + toBnDigits(year);
+    }
+    
+    // ৩. ম্যানুয়াল স্ল্যাশ/ড্যাশ কাস্টম পার্সার ফলব্যাক
+    var cleanDate = dateStr.split("T")[0];
+    var parts = cleanDate.split(/[-/]/);
+    if (parts.length === 3) {
+      var day, month, year;
+      if (parts[0].length === 4) { // YYYY-MM-DD
+        year = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        day = parseInt(parts[2], 10);
+      } else { // DD-MM-YYYY
+        day = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        year = parseInt(parts[2], 10);
+      }
+      
+      if (!isNaN(day) && !isNaN(month) && !isNaN(year) && month >= 1 && month <= 12) {
+        if (year < 100) year += 2000;
+        return toBnDigits(day) + " " + bnMonths[month - 1] + " " + toBnDigits(year);
+      }
+    }
+    
+    return toBnDigits(dateStr);
+  }
+
+  function renderPhotoGrid(list) {
+    var grid = document.getElementById('photos-grid');
+    grid.innerHTML = '';
+    
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-3xl border border-gray-100 p-6 font-bold">কোনো ছবি পাওয়া যায়নি।</div>';
+      return;
+    }
+
+    var colorClasses = [
+      "bg-emerald-600", "bg-purple-600", "bg-blue-600", "bg-amber-500", "bg-teal-600", "bg-rose-700"
+    ];
+
+    list.forEach((item, idx) => {
+      var bnIndex = toBnDigits(idx + 1);
+      var headerBg = colorClasses[idx % colorClasses.length];
+      var showDate = formatBengaliDate(item.date || '');
+      var excerpt = item.description || `${item.category} কর্মসূচি সফলভাবে সম্পন্ন হয়েছে এবং এর স্থিরচিত্র এখানে সংরক্ষিত করা হলো।`;
+
+      // ছবির রেশিও ও ফ্রেম কন্টেইনমেন্ট পরিবর্তন করা হয়েছে যাতে কোনো ছবি না কাটে
+      var imageHeaderHtml = '';
+      if (item.url && item.url.trim() !== "" && item.url !== "#") {
+        imageHeaderHtml = `
+          <div class="relative h-48 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-gray-50">
+            <img class="max-w-full max-h-full h-auto w-auto object-contain transition duration-500 ease-out group-hover:scale-105" src="${item.url}" alt="${item.title}">
+            <span class="absolute top-3.5 right-3.5 px-3 py-1 bg-black/40 backdrop-blur-[2px] rounded-full text-[9px] font-extrabold text-white tracking-wider z-10">
+              ${item.category}
+            </span>
+          </div>
+        `;
+      } else {
+        imageHeaderHtml = `
+          <div class="relative h-48 ${headerBg} flex items-center justify-center overflow-hidden">
+            <span class="absolute top-3.5 right-3.5 px-3 py-1 bg-white/20 backdrop-blur-[2px] rounded-full text-[9px] font-extrabold text-white tracking-wider z-10">
+              ${item.category}
+            </span>
+            <div class="text-white/20 font-black text-[7.5rem] leading-none select-none transform transition duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-2 group-hover:rotate-3">
+              ${bnIndex}
+            </div>
+          </div>
+        `;
+      }
+
+      grid.innerHTML += `
+        <div onclick="openPhotoIndex(${idx})" class="group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-emerald-200 hover:bg-slate-50/50 shadow-sm hover:shadow-md transition duration-300 cursor-pointer flex flex-col justify-between">
+          <div>
+            <!-- ইমেজ বা ডাইনামিক নাম্বার ফলব্যাক হেডার -->
+            ${imageHeaderHtml}
+            
+            <div class="p-6">
+              <h5 class="text-sm sm:text-base font-extrabold text-gray-800 leading-snug group-hover:text-emerald-600 transition duration-300 line-clamp-1">${item.title}</h5>
+              <p class="text-xs text-gray-400 mt-2 font-medium leading-relaxed line-clamp-2">${excerpt}</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-4 border-t border-slate-50 flex items-center gap-1.5 text-[10px] text-gray-400 font-bold">
+            <i class="fa-solid fa-calendar-day text-slate-300"></i>
+            <span>${showDate}</span>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('photo-loader').classList.add('hidden');
+        rawPhotoList = data || [];
+        filteredPhotos = rawPhotoList;
+        
+        var uniqueCategories = [...new Set(rawPhotoList.map(p => p.category))].filter(Boolean);
+        safeSetText('stat-photos', toBnDigits(rawPhotoList.length) + "+");
+        safeSetText('stat-categories', toBnDigits(uniqueCategories.length));
+        safeSetText('stat-albums', toBnDigits(uniqueCategories.length + 2) + "+");
+
+        var filterContainer = document.getElementById('photo-category-filters');
+        uniqueCategories.forEach(cat => {
+          var cleanId = cat.replace(/\s+/g, '-');
+          filterContainer.innerHTML += `
+            <button onclick="filterPhotos('${cat}')" id="btn-cat-${cleanId}" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">${cat}</button>
+          `;
+        });
+
+        renderPhotoGrid(filteredPhotos);
+      })
+      .getPhotoGalleryData();
+  })();
+
+  function safeSetText(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.innerText = val;
+  }
+</script>

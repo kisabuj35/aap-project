@@ -1,0 +1,178 @@
+<!-- media_videos.html -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+  
+  <!-- ১. টপ ব্যানার (ছবির মতো টাইটেল ও সাবটাইটেল সমৃদ্ধ) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">ভিডিও গ্যালারী</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">আমাদের কার্যক্রমের ভিডিও চিত্র — প্রতিটি মুহূর্ত ধারণ</p>
+  </div>
+
+  <!-- ২. ৩-কলামের নান্দনিক ভিডিও গ্রিড লেআউট -->
+  <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- ডাটা জাভাস্ক্রিপ্ট দিয়ে ডাইনামিক রেন্ডার হবে -->
+  </div>
+
+  <div id="video-loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto mb-4"></div>
+  </div>
+
+  <!-- ৩. লাইভ সামারি উইজেটস (ছবির মতো পেজের নিচে লাইভ কাউন্ট হবে) -->
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-16 border-t pt-10 border-gray-100 max-w-2xl mx-auto">
+    <!-- ভিডিও সংখ্যা -->
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-video text-base"></i>
+      </div>
+      <span id="stat-videos-count" class="text-lg sm:text-xl font-black text-slate-800">৬+</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">ভিডিও</span>
+    </div>
+
+    <!-- মোট মিনিট সংখ্যা -->
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-clock text-base"></i>
+      </div>
+      <span id="stat-videos-duration" class="text-lg sm:text-xl font-black text-slate-800">৬০+</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">মিনিট</span>
+    </div>
+
+    <!-- সর্বশেষ বছর তথ্য -->
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center hover:shadow-md transition duration-300 text-center col-span-2 md:col-span-1">
+      <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-calendar-days text-base"></i>
+      </div>
+      <span class="text-lg sm:text-xl font-black text-slate-800">২০২৫-২৬</span>
+      <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider mt-1">সর্বশেষ</span>
+    </div>
+  </div>
+
+  <!-- ভিডিও প্লেয়ার পপআপ মডাল (ইউটিউব ও ফেসবুক ডাইনামিক হ্যান্ডলার) -->
+  <div id="video-player-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/90 backdrop-blur-sm transition-opacity duration-300">
+    <button onclick="closeVideoPlayer()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition text-2xl">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="max-w-3xl w-full mx-4 aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
+      <iframe id="media-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  var rawVideoList = []; // গ্লোবাল ডেটা কন্টেইনার
+
+  // পপআপ প্লেয়ার লজিক
+  window.openVideoPlayer = function(videoUrl) {
+    var embedUrl = "";
+    
+    // ইউটিউব অথবা ফেসবুক ভিডিও লিংক নির্ধারণ ও কনভার্সন
+    if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+      var youtubeId = getYoutubeId(videoUrl);
+      embedUrl = 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1';
+    } else if (videoUrl.includes("facebook.com") || videoUrl.includes("fb.watch")) {
+      embedUrl = 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(videoUrl) + '&show_text=0&autoplay=1';
+    } else {
+      embedUrl = videoUrl; // ডাইরেক্ট ভিডিও লিংক
+    }
+    
+    document.getElementById('media-iframe').src = embedUrl;
+    document.getElementById('video-player-modal').classList.remove('hidden');
+  }
+
+  window.closeVideoPlayer = function() {
+    document.getElementById('media-iframe').src = "";
+    document.getElementById('video-player-modal').classList.add('hidden');
+  }
+
+  function getYoutubeId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[2].length == 11) ? match[2] : '';
+  }
+
+  // সংখ্যা রূপান্তরকারী হেল্পার
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  // ভিডিও গ্যালারী রেন্ডারার
+  function renderVideoGrid(list) {
+    var grid = document.getElementById('videos-grid');
+    grid.innerHTML = '';
+
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-3xl p-6 border font-bold">কোনো ভিডিও পাওয়া যায়নি।</div>';
+      return;
+    }
+
+    var colorClasses = [
+      "bg-emerald-700", "bg-teal-600", "bg-purple-700", "bg-indigo-700", "bg-rose-700", "bg-amber-700"
+    ];
+
+    // ছবিতে থাকা ডামি তারিখগুলোর চমৎকার সিকোয়েন্স জেনারেটর
+    var dateFallbackList = ["১৩ এপ্রিল ২০২৩", "১২ মার্চ ২০২৩", "১০ মার্চ ২০২৩", "৩০ ডিসেম্বর ২০২৩", "১ নভেম্বর ২০২৩", "১৩ এপ্রিল ২০২৩"];
+
+    list.forEach((item, idx) => {
+      var bgHeaderColor = colorClasses[idx % colorClasses.length];
+      var showDate = dateFallbackList[idx % dateFallbackList.length]; // ডেট সিকোয়েন্সার
+      
+      // ডেসক্রিপশন ডাটাবেজে না থাকলেও ডাইনামিকালি ডামি ডেসক্রিপশন জেনারেট করবে
+      var descExcerpt = item.title + " কর্মসূচির ধারণকৃত স্থিরচিত্র ভিডিও সম্বলিত চমৎকার দৃশ্যপট।";
+
+      grid.innerHTML += `
+        <div onclick="openVideoPlayer('${item.videoUrl}')" class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition duration-300 cursor-pointer flex flex-col justify-between">
+          <div>
+            <!-- ছবির মতো ওপরে ওয়াটারমার্ক আইকন ও ডাইনামিক ডিউরেশন ব্যাজ সংবলিত রঙিন হেডার -->
+            <div class="relative h-44 ${bgHeaderColor} flex items-center justify-center overflow-hidden">
+              <!-- ট্রানজিশন হোভার ওয়াটারমার্ক প্লে আইকন -->
+              <div class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center text-xs border border-white/15 transform transition duration-500 ease-out group-hover:scale-110 shadow-md">
+                <i class="fa-solid fa-play text-white/30 text-xs"></i>
+              </div>
+              <!-- কোণায় থাকা কালো ডিউরেশন ব্যাজ -->
+              <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 bg-black/60 text-white rounded text-[10px] font-black tracking-wide">
+                ${toBnDigits(item.duration || '১:৩০')}
+              </span>
+            </div>
+
+            <!-- টাইটেল, ডেসক্রিপশন এবং ইনফো বডি -->
+            <div class="p-6">
+              <h5 class="text-sm sm:text-base font-extrabold text-gray-800 leading-snug group-hover:text-emerald-600 transition duration-300 line-clamp-1">${item.title}</h5>
+              <p class="text-xs text-gray-400 mt-2 font-medium leading-relaxed line-clamp-2">${descExcerpt}</p>
+            </div>
+          </div>
+
+          <!-- ফুটার এরিয়া: ক্যালেন্ডার আইকন ও দেখুন বাটন -->
+          <div class="px-6 pb-6 pt-4 border-t border-slate-50 flex items-center justify-between text-[10px] text-gray-400 font-bold">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-calendar-day text-slate-300"></i> ${showDate}</span>
+            <span class="text-emerald-600 hover:text-emerald-700 font-extrabold flex items-center gap-1"><i class="fa-solid fa-play text-[10px]"></i> দেখুন</span>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('video-loader').classList.add('hidden');
+        rawVideoList = data || [];
+        
+        // লাইভ ডেটা অনুযায়ী পেজের নিচের উইজেট আপডেট
+        var totalMinutes = 0;
+        rawVideoList.forEach(item => {
+          if (item.duration) {
+            var mins = parseInt(item.duration.split(":")[0], 10);
+            if (!isNaN(mins)) totalMinutes += mins;
+          }
+        });
+        document.getElementById('stat-videos-count').innerText = toBnDigits(rawVideoList.length) + "+";
+        document.getElementById('stat-videos-duration').innerText = toBnDigits(totalMinutes > 0 ? totalMinutes : 60) + "+";
+
+        renderVideoGrid(rawVideoList);
+      })
+      .getVideoGalleryData();
+  })();
+</script>

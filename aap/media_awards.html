@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <!-- awards.html -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+  
+  <!-- ১. টপ ব্যানার (ছবির মতো থিম সমৃদ্ধ) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">পুরস্কার ও সম্মাননা</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">সমাজসেবায় অসামান্য অবদানের জন্য প্রাপ্ত সম্মাননা ও পুরস্কারসমূহ</p>
+  </div>
+
+  <!-- ২. ৪টি লাইভ সামারি উইজেট (ছবির মতো অরেঞ্জ ব্যানার স্টাইল) -->
+  <div class="bg-gradient-to-r from-amber-600 to-orange-700 rounded-3xl p-6 text-white shadow-md max-w-5xl mx-auto -mt-14 mb-16 relative z-10 border border-white/10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <!-- ১. সম্মাননা ও পুরস্কার -->
+      <div class="space-y-1 relative md:border-r border-white/10 last:border-r-0">
+        <div class="text-lg mb-1 text-amber-200"><i class="fa-solid fa-trophy animate-pulse"></i></div>
+        <span id="stat-awards-count" class="text-xl sm:text-2xl font-black block">৬+</span>
+        <span class="text-[9px] font-extrabold text-amber-100/80 block uppercase tracking-wider mt-0.5">সম্মাননা ও পুরস্কার</span>
+      </div>
+      <!-- ২. বছরের সেবা -->
+      <div class="space-y-1 relative md:border-r border-white/10 last:border-r-0">
+        <div class="text-lg mb-1 text-amber-200"><i class="fa-solid fa-heart"></i></div>
+        <span id="stat-service-years" class="text-xl sm:text-2xl font-black block">৯+</span>
+        <span class="text-[9px] font-extrabold text-amber-100/80 block uppercase tracking-wider mt-0.5">বছরের সেবা</span>
+      </div>
+      <!-- ৩. সরকারি স্বীকৃতি -->
+      <div class="space-y-1 relative md:border-r border-white/10 last:border-r-0">
+        <div class="text-lg mb-1 text-amber-200"><i class="fa-solid fa-ribbon"></i></div>
+        <span id="stat-gov-awards" class="text-xl sm:text-2xl font-black block">৩</span>
+        <span class="text-[9px] font-extrabold text-amber-100/80 block uppercase tracking-wider mt-0.5">সরকারি স্বীকৃতি</span>
+      </div>
+      <!-- ৪. সহযোগী প্রতিষ্ঠান -->
+      <div class="space-y-1 relative md:border-r border-white/10 last:border-r-0">
+        <div class="text-lg mb-1 text-amber-200"><i class="fa-solid fa-users"></i></div>
+        <span class="text-xl sm:text-2xl font-black block">১০০+</span>
+        <span class="text-[9px] font-extrabold text-amber-100/80 block uppercase tracking-wider mt-0.5">সহযোগী প্রতিষ্ঠান</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ৩. সেকশন টাইটেল (ছবির মতো) -->
+  <div class="text-center max-w-2xl mx-auto mb-10">
+    <span class="bg-amber-50 text-amber-700 text-xs px-3 py-1 rounded-full font-extrabold uppercase">সম্মাননাসমূহ</span>
+    <h3 class="text-2xl sm:text-3xl font-black text-gray-800 mt-2">আমাদের অর্জন ও সম্মাননা</h3>
+    <p class="text-xs sm:text-sm text-gray-400 mt-2 font-medium leading-relaxed">
+      গত ৯ বছরে সমাজসেবা, পরিবেশ সুরক্ষা, শিক্ষা সহায়তা ও সাম্প্রদায়িক সম্প্রীতি জোরদার করার ক্ষেত্রে অসামান্য অবদানের জন্য বিভিন্ন সরকারি ও বেসরকারি প্রতিষ্ঠান থেকে সম্মাননা লাভ করেছি।
+    </p>
+  </div>
+
+  <!-- পুরস্কার প্রদর্শনীর ডাইনামিক গ্রিড -->
+  <div id="awards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <!-- ডাইনামিক অ্যাওয়ার্ড রেন্ডার হবে -->
+  </div>
+
+  <div id="award-loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto mb-4"></div>
+  </div>
+
+  <!-- ৪. আমাদের অনুপ্রেরণা সেকশন (ছবির মতো পেজের নিচে) -->
+  <div class="mt-20 pt-12 border-t border-gray-100">
+    <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
+      <div class="text-amber-500 text-xl"><i class="fa-regular fa-star"></i></div>
+      <h4 class="text-xl sm:text-2xl font-black text-gray-800">আমাদের অনুপ্রেরণা</h4>
+      <p class="text-xs text-gray-400 font-medium leading-relaxed">
+        প্রতিটি সম্মাননা আমাদের আরও বেশি দায়িত্বশীল হওয়ার অনুপ্রেরণা যোগায়। আমরা বিশ্বাস করি, সততা, নিষ্ঠা ও একতার মাধ্যমে আরও অনেক দূর এগিয়ে যেতে পারব।
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <!-- ১. সততা ও নিষ্ঠা -->
+      <div class="bg-emerald-50/40 p-5 rounded-3xl border border-emerald-100/50 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-sm transition">
+        <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shadow-inner">
+          <i class="fa-regular fa-lightbulb"></i>
+        </div>
+        <h5 class="text-xs sm:text-sm font-black text-gray-800">সততা ও নিষ্ঠা</h5>
+        <p class="text-[11px] text-gray-400 font-semibold leading-relaxed">প্রতিটি কাজে সততা ও নিষ্ঠার সাথে কাজ করাই আমাদের মূলনীতি। আমরা সর্বদা স্বচ্ছভাবে কাজ করি।</p>
+      </div>
+      <!-- ২. একতা ও সংহতি -->
+      <div class="bg-amber-50/40 p-5 rounded-3xl border border-amber-100/50 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-sm transition">
+        <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-sm shadow-inner">
+          <i class="fa-regular fa-heart"></i>
+        </div>
+        <h5 class="text-xs sm:text-sm font-black text-gray-800">একতা ও সংহতি</h5>
+        <p class="text-[11px] text-gray-400 font-semibold leading-relaxed">সকল সদস্যের মধ্যে একতা ও সংহতি বজায় রেখে আমরা একসঙ্গে কাজ করি। দলবদ্ধ প্রচেষ্টাই সাফল্য।</p>
+      </div>
+      <!-- ৩. সেবাই আমাদের লক্ষ্য -->
+      <div class="bg-rose-50/40 p-5 rounded-3xl border border-rose-100/50 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-sm transition">
+        <div class="w-10 h-10 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center text-sm shadow-inner">
+          <i class="fa-regular fa-star"></i>
+        </div>
+        <h5 class="text-xs sm:text-sm font-black text-gray-800">সেবাই আমাদের লক্ষ্য</h5>
+        <p class="text-[11px] text-gray-400 font-semibold leading-relaxed">মানুষের কল্যাণে কাজ করাই আমাদের প্রধান লক্ষ্য। প্রতিটি পুরস্কার আমাদের সেবার প্রমাণ।</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ছবিতে প্রদর্শিত নির্দিষ্ট ক্যাটাগরি, আইকন এবং হেডার কালার মেলাবার ডাইনামিক ম্যাপিং লজিক
+  function getAwardCategory(title, desc) {
+    var text = (title + " " + (desc || "")).toLowerCase();
+    if (text.includes("স্বেচ্ছাসেবী") || text.includes("স্বীকৃতি") || text.includes("সরকারি") || text.includes("প্রশাসন")) {
+      return { 
+        text: "সরকারি স্বীকৃতি", 
+        icon: "fa-trophy", 
+        bgHeader: "bg-emerald-600", 
+        badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-100" 
+      };
+    } else if (text.includes("যুব") || text.includes("জাতীয়") || text.includes("উত্তরাঞ্চল") || text.includes("অধিদপ্তর")) {
+      return { 
+        text: "জাতীয় পুরস্কার", 
+        icon: "fa-award", 
+        bgHeader: "bg-amber-600", 
+        badgeClass: "bg-amber-50 text-amber-700 border-amber-100" 
+      };
+    } else if (text.includes("পরিবেশ") || text.includes("গাছ") || text.includes("বৃক্ষ") || text.includes("মন্ত্রণালয়")) {
+      return { 
+        text: "পরিবেশ সম্মাননা", 
+        icon: "fa-circle-notch", 
+        bgHeader: "bg-emerald-600", 
+        badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-100" 
+      };
+    } else if (text.includes("সম্প্রীতি") || text.includes("সদস্য") || text.includes("পৌরসভা") || text.includes("পদক")) {
+      return { 
+        text: "সম্প্রীতি পুরস্কার", 
+        icon: "fa-heart", 
+        bgHeader: "bg-purple-600", 
+        badgeClass: "bg-purple-50 text-purple-700 border-purple-100" 
+      };
+    } else if (text.includes("রক্ত") || text.includes("ব্লাড") || text.includes("রেড ক্রিসেন্ট") || text.includes("স্বাস্থ্য")) {
+      return { 
+        text: "স্বাস্থ্য সেবা", 
+        icon: "fa-heart-pulse", 
+        bgHeader: "bg-rose-600", 
+        badgeClass: "bg-rose-50 text-rose-700 border-rose-100" 
+      };
+    } else if (text.includes("শিক্ষা") || text.includes("মেধাবী") || text.includes("স্কুল") || text.includes("অফিস")) {
+      return { 
+        text: "শিক্ষা সম্মাননা", 
+        icon: "fa-star", 
+        bgHeader: "bg-amber-500", 
+        badgeClass: "bg-amber-50 text-amber-700 border-amber-100" 
+      };
+    }
+    return { 
+      text: "স্বেচ্ছাসেবী সম্মাননা", 
+      icon: "fa-award", 
+      bgHeader: "bg-blue-600", 
+      badgeClass: "bg-blue-50 text-blue-700 border-blue-100" 
+    };
+  }
+
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('award-loader').classList.add('hidden');
+        var grid = document.getElementById('awards-grid');
+        grid.innerHTML = '';
+
+        var rawList = data || [];
+        if (rawList.length === 0) {
+          grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-3xl p-6 border font-bold">কোনো পুরস্কার তথ্য পাওয়া যায়নি।</div>';
+          return;
+        }
+
+        // লাইভ ডেটা অনুযায়ী ওপরে লাইভ কাউন্টার আপডেট
+        var govAwardsCount = rawList.filter(item => {
+          var mapped = getAwardCategory(item.title, item.description);
+          return mapped.text === "সরকারি স্বীকৃতি";
+        }).length;
+
+        document.getElementById('stat-awards-count').innerText = toBnDigits(rawList.length) + "+";
+        document.getElementById('stat-gov-awards').innerText = toBnDigits(govAwardsCount > 0 ? govAwardsCount : 3);
+
+        rawList.forEach(item => {
+          var mapped = getAwardCategory(item.title, item.description); // ডাইনামিক ক্যাটাগরি ও কালার মেকার
+
+          grid.innerHTML += `
+            <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group">
+              <div>
+                <!-- ছবিতে প্রদর্শিত ওপরে মেডেল/ট্রফি আইকন ও বছর সংবলিত রঙিন হেডার -->
+                <div class="relative h-28 ${mapped.bgHeader} flex flex-col items-center justify-center overflow-hidden pt-4 pb-2">
+                  <!-- ডাইনামিক বৃত্তাকার আইকন (হোভার ইফেক্টসহ) -->
+                  <div class="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center text-sm border border-white/20 transform transition duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 shadow-md">
+                    <i class="fa-solid ${mapped.icon}"></i>
+                  </div>
+                  <!-- বছর ট্যাগ -->
+                  <span class="text-[9px] font-black text-white/90 mt-1.5 flex items-center gap-1">
+                    <i class="fa-regular fa-calendar-days"></i> ${toBnDigits(item.year || '২০২৬')}
+                  </span>
+                </div>
+
+                <div class="p-5 pb-0">
+                  <!-- ক্যাটাগরি ব্যাজ -->
+                  <span class="inline-block px-2.5 py-0.5 rounded-lg text-[9px] font-black border uppercase tracking-wider ${mapped.badgeClass}">
+                    ${mapped.text}
+                  </span>
+                  <!-- পুরস্কারের টাইটেল -->
+                  <h4 class="text-xs sm:text-sm font-black text-gray-800 leading-tight mt-3">${item.title}</h4>
+                  <!-- প্রদানকারী কর্তৃপক্ষ -->
+                  <span class="text-[10px] text-gray-400 font-extrabold flex items-center gap-1 mt-1.5 leading-none">
+                    <i class="fa-solid fa-location-dot text-slate-300"></i> ${item.authority || 'কর্তৃপক্ষ'}
+                  </span>
+                  <!-- সার্টিফিকেট ইমেজ (ড্রাইভ বা এক্সটার্নাল লিংক থাকলে শো করবে) -->
+                  ${item.imageUrl ? `
+                    <div class="my-4 h-36 overflow-hidden rounded-2xl border border-gray-100">
+                      <img class="w-full h-full object-cover" src="${item.imageUrl}" alt="${item.title}">
+                    </div>
+                  ` : ''}
+                  <!-- বিবরণী -->
+                  <p class="text-xs text-gray-500 leading-relaxed mt-2 font-medium line-clamp-3">${item.description || ''}</p>
+                </div>
+              </div>
+
+              <!-- কার্ড ফুটার (ছবির মতো নান্দনিক স্বীকৃতি) -->
+              <div class="p-5 pt-0">
+                <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between text-[10px] text-gray-400 font-bold">
+                  <span class="text-[9px] font-extrabold text-amber-500 flex items-center gap-1"><i class="fa-solid fa-star"></i> গৌরবময় স্বীকৃতি</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      })
+      .getAwardsData();
+  })();
+</script>
+  </body>
+</html>

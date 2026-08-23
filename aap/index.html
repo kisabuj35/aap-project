@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>আউলিয়াপুর অগ্রযাত্রা পরিষদ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body { font-family: 'Hind Siliguri', sans-serif; }
+    .nav-active { color: #059669 !important; background-color: #f0fdf4; border-radius: 8px; }
+    .loader { border-top-color: #059669; animation: spinner 1s linear infinite; }
+    @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen text-gray-800">
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <!-- টপ ইউটিলিটি বার (স্লোগান, ফোন ও ইমেইল) -->
+  <div class="bg-slate-900 text-white text-xs py-2 border-b border-slate-800 select-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center flex-wrap gap-2">
+      <!-- বাম পাশে স্লোগান -->
+      <div class="flex items-center space-x-2 font-medium">
+        <i class="fa-solid fa-flag text-emerald-500"></i>
+        <span>আজকের উদ্যোগ আগামীর অগ্রযাত্রা</span>
+      </div>
+      <!-- ডান পাশে যোগাযোগের নম্বর ও ইমেইল -->
+      <div class="flex items-center space-x-4 text-gray-300">
+        <a href="tel:+8801710181059" class="hover:text-emerald-400 transition flex items-center">
+          <i class="fa-solid fa-phone text-emerald-500 mr-1.5"></i> +৮৮০ ১৭১০-১৮১০৫৯
+        </a>
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <a href="mailto:kisabuj35@gmail.com" class="hover:text-emerald-400 transition flex items-center">
+          <i class="fa-solid fa-envelope text-emerald-500 mr-1.5"></i> kisabuj35@gmail.com 
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- হেডার ও প্রফেশনাল ড্রপডাউন মেনুবার -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      
+      <!-- লোগো এবং টাইটেল এরিয়া -->
+      <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer select-none" onclick="navigateTo('home')">
+        <div class="bg-emerald-50 p-1 rounded-full shadow-md shrink-0 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center overflow-hidden">
+          <img src="https://lh3.googleusercontent.com/d/1Z6FVIIFOBq8kWcdalYa0lczot3yLS5Vl" id="org-logo" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div class="max-w-[190px] sm:max-w-none">
+          <h1 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-800 leading-tight truncate">আউলিয়াপুর অগ্রযাত্রা পরিষদ</h1>
+          <p class="text-[9px] sm:text-xs text-emerald-600 font-semibold tracking-wide truncate">মানবীক সেবা মূলক সংগঠন, পটুয়াখালী</p>
+        </div>
+      </div>
+
+      <!-- ডেক্সটপ মেনুবার -->
+      <nav class="hidden md:flex space-x-1 xl:space-x-2 text-sm font-semibold text-gray-600 items-center">
+        <a href="#home" id="nav-home" class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg transition duration-200">হোম</a>
+        
+        <!-- ১. আমাদের সম্পর্কে -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            আমাদের সম্পর্কে <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#about_intro" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-address-card mr-2 text-emerald-600 w-4"></i>আমাদের সম্পর্কে</a>
+              <a href="#about_rules" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-scale-balanced mr-2 text-emerald-600 w-4"></i>সংগঠনের বিধিমালা</a>
+              <a href="#about_mission" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-bullseye mr-2 text-emerald-600 w-4"></i>লক্ষ্য ও উদ্দেশ্য</a>
+              <a href="#about_faq" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-b-lg"><i class="fa-solid fa-circle-question mr-2 text-emerald-600 w-4"></i>প্রশ্ন ও উত্তর</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ২. কমিটি -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            কমিটি <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#committee_advisors" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-graduation-cap mr-2 text-emerald-600 w-4"></i>উপদেষ্টা মণ্ডলী</a>
+              <a href="#committee_executives" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-users mr-2 text-emerald-600 w-4"></i>কার্যনির্বাহী পরিষদ</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ৩. মিডিয়া -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            মিডিয়া <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#media_photos" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-image mr-2 text-emerald-600 w-4"></i>ফটো গ্যালারি</a>
+              <a href="#media_videos" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-video mr-2 text-emerald-600 w-4"></i>ভিডিও গ্যালারি</a>
+              <a href="#media_news" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-newspaper mr-2 text-emerald-600 w-4"></i>বিজ্ঞপ্তী</a>
+              <a href="#media_press" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-newspaper mr-2 text-emerald-600 w-4"></i>পত্রিকায় সংবাদ</a>
+              <a href="#media_awards" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-b-lg"><i class="fa-solid fa-trophy mr-2 text-emerald-600 w-4"></i>পুরস্কার ও সম্মাননা</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ৪. প্রকল্প -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            প্রকল্প <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#project_view/উষ্ণ হোক শীত" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-snowflake mr-2 text-emerald-600 w-4"></i>উষ্ণ হোক শীত</a>
+              <a href="#project_view/তরুণ জ্ঞানের দীপশিখা" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-book-open mr-2 text-emerald-600 w-4"></i>তরুণ জ্ঞানের দীপশিখা</a>
+              <a href="#project_view/সবুজ স্বপ্ন" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-tree mr-2 text-emerald-600 w-4"></i>সবুজ স্বপ্ন</a>
+              <a href="#project_view/সম্প্রীতির কুরবানি" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-hands-holding-child mr-2 text-emerald-600 w-4"></i>সম্প্রীতির কুরবানি</a>
+              <a href="#project_view/ভাতের হাসি" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-bowl-rice mr-2 text-emerald-600 w-4"></i>ভাতের হাসি</a>
+              <a href="#project_view/মেধাবীদের সম্মাননা" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-b-lg"><i class="fa-solid fa-graduation-cap mr-2 text-emerald-600 w-4"></i>মেধাবীদের সম্মাননা</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ৫. সদস্য পোর্টাল -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            সদস্য পোর্টাল <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#member_register" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-user-plus mr-2 text-emerald-600 w-4"></i>সদস্য তথ্য ফর্ম</a>
+              <a href="#member_payment" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-credit-card mr-2 text-emerald-600 w-4"></i>ফি বা চাঁদা প্রদান</a>
+              <a href="#search_members" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-magnifying-glass mr-2 text-emerald-600 w-4"></i>সদস্য তালিকা</a>
+              <a href="#search_ledger" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-b-lg"><i class="fa-solid fa-file-invoice-dollar mr-2 text-emerald-600 w-4"></i>ব্যক্তিগত লেজার স্লিপ</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ৬. রক্তদান ড্রপডাউন -->
+        <div class="relative group">
+          <button class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg flex items-center transition focus:outline-none">
+            রক্তদান <i class="fa-solid fa-chevron-down text-[10px] ml-1 transition group-hover:rotate-180"></i>
+          </button>
+          <div class="absolute left-0 top-full pt-1 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+            <div class="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+              <a href="#blood-board" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-chart-line mr-2 text-emerald-600 w-4"></i>রক্তদাতার পরিসংখ্যান</a>
+              <a href="#donor_list" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-users-viewfinder mr-2 text-emerald-600 w-4"></i>রক্ত ডোনার তালিকা</a>
+              <a href="#donor_registration" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"><i class="fa-solid fa-user-plus mr-2 text-emerald-600 w-4"></i>রক্ত ডোনার নিবন্ধন</a>
+              <a href="#blood_donation" id="nav-blood" class="flex items-center px-4 py-2.5 text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-b-lg"><i class="fa-solid fa-droplet mr-2 text-emerald-600 w-4"></i>রক্তদান ফর্ম</a> 
+            </div>
+          </div>
+        </div>
+        
+        <!-- ৭. ডাইনামিক "দান করুন" বাটন -->
+        <button onclick="navigateTo('donation')" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold px-5 py-2.5 rounded-2xl text-xs flex items-center shadow-lg shadow-orange-500/20 hover:shadow-xl transition duration-300 ml-2 scale-[1.03] shrink-0">
+          <a href="#donation"><i class="fa-solid fa-heart mr-1.5 animate-pulse text-sm"></i> দান করুন </a>
+        </button>
+        
+        <!-- ৮. যোগাযোগ -->
+        <a href="#contact" id="nav-contact" onclick="navigateTo('contact')" class="hover:bg-emerald-50 hover:text-emerald-700 px-3 py-2 rounded-lg transition duration-200">যোগাযোগ</a>
+        
+        <!-- অ্যাডমিন লগইন -->
+        <a href="#admin_panel" id="nav-admin" onclick="openAdminLogin()" class="bg-slate-900 text-white hover:bg-emerald-600 px-4 py-2 rounded-lg transition duration-200 flex items-center shrink-0"><i class="fa-solid fa-lock mr-2"></i>অ্যাডমিন লগইন</a>
+      </nav>
+
+      <!-- মোবাইল মেনু বাটন -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-btn" class="text-gray-600 focus:outline-none p-2 rounded-lg hover:bg-gray-100">
+          <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- সংবাদ শিরোনাম স্ক্রলিং মার্কি ব্যানার -->
+  <div class="bg-amber-400 text-amber-950 text-xs font-bold py-2 overflow-hidden flex items-center shadow-inner border-t border-amber-300">
+    <div class="bg-amber-500 px-4 py-1 rounded-r-full shrink-0 z-10 shadow-md text-amber-950"><i class="fa-solid fa-bullhorn mr-1.5"></i>সর্বশেষ বার্তা:</div>
+    <marquee class="flex-grow select-none" behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+      * আউলিয়াপুর অগ্রযাত্রা পরিষদের নতুন সদস্য নিবন্ধন ফর্ম এখন সম্পূর্ণ লাইভ *।* জরুরী রক্তের প্রয়োজনে যেকোনো মোবাইল নাম্বার অথবা আইডি দিয়ে রক্তদাতা ও সদস্য খতিয়ান লাইভ চেক করুন *।* রক্ত ডোনার নিবন্ধন ফর্ম এখন সম্পূর্ণ লাইভ *
+    </marquee>
+  </div>
+</header>
+
+<!-- মোবাইল স্লাইডার ড্রয়ার -->
+<div id="mobile-drawer" class="hidden fixed inset-0 z-50 overflow-hidden select-none">
+  <div class="absolute inset-0 bg-gray-900 bg-opacity-50 transition-opacity" onclick="toggleDrawer()"></div>
+  <div class="absolute inset-y-0 right-0 max-w-xs w-full bg-white shadow-2xl flex flex-col justify-between py-6">
+    
+    <div class="px-6 border-b pb-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="bg-emerald-600 text-white p-2 rounded-full"><i class="fa-solid fa-people-group text-sm"></i></div>
+        <span class="font-extrabold text-sm text-gray-800 leading-tight">অগ্রযাত্রা পরিষদ</span>
+      </div>
+      <button onclick="toggleDrawer()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto px-6 py-4 space-y-3 text-sm font-bold text-gray-600">
+      <a href="#home" onclick="mobileNav('home')" class="block py-2.5 hover:text-emerald-600">হোম</a>
+      
+      <div>
+        <button onclick="toggleSub('mob-about')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>আমাদের সম্পর্কে</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-about" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#about_intro" onclick="mobileNav('about_intro')" class="block py-1">আমাদের সম্পর্কে জানুন</a>
+          <a href="#about_rules" onclick="mobileNav('about_rules')" class="block py-1">সংগঠনের বিধিমালা</a>
+          <a href="#about_mission" onclick="mobileNav('about_mission')" class="block py-1">সংগঠনের লক্ষ্য ও উদ্দেশ্য</a>
+          <a href="#about_faq" onclick="mobileNav('about_faq')" class="block py-1">প্রশ্ন ও উত্তর</a>
+        </div>
+      </div>
+
+      <div>
+        <button onclick="toggleSub('mob-committee')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>কমিটি</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-committee" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#committee_advisors" onclick="mobileNav('committee_advisors')" class="block py-1">উপদেষ্টা মণ্ডলী</a>
+          <a href="#committee_executives" onclick="mobileNav('committee_executives')" class="block py-1">কার্যনির্বাহী পরিষদ</a>
+        </div>
+      </div>
+
+      <div>
+        <button onclick="toggleSub('mob-media')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>মিডিয়া</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-media" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#media_photos" onclick="mobileNav('media_photos')" class="block py-1">ফটো গ্যালারি</a>
+          <a href="#media_videos" onclick="mobileNav('media_videos')" class="block py-1">ভিডিও গ্যালারি</a>
+          <a href="#media_news" onclick="mobileNav('media_news')" class="block py-1">বিজ্ঞপ্তী</a>
+          <a href="#media_press" onclick="mobileNav('media_press')" class="block py-1">পত্রিকায় সংবাদ</a>
+          <a href="#media_awards" onclick="mobileNav('media_awards')" class="block py-1">পুরস্কার ও সম্মাননা</a>
+        </div>
+      </div>
+
+      <!-- প্রজেক্ট ডাইনামিক স্লাইডার -->
+      <div>
+        <button onclick="toggleSub('mob-projects')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>প্রকল্প</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-projects" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#" onclick="mobileNavProject('উষ্ণ হোক শীত')" class="block py-1">উষ্ণ হোক শীত</a>
+          <a href="#" onclick="mobileNavProject('তরুণ জ্ঞানের দীপশিখা')" class="block py-1">তরুণ জ্ঞানের দীপশিখা</a>
+          <a href="#" onclick="mobileNavProject('সবুজ স্বপ্ন')" class="block py-1">সবুজ স্বপ্ন</a>
+          <a href="#" onclick="mobileNavProject('সম্প্রীতির কুরবানি')" class="block py-1">সম্প্রীতির কুরবানি</a>
+          <a href="#" onclick="mobileNavProject('ভাতের হাসি')" class="block py-1">ভাতের হাসি</a>
+          <a href="#" onclick="mobileNavProject('মেধাবীদের সম্মাননা')" class="block py-1">মেধাবীদের সম্মাননা</a>
+        </div>
+      </div>
+
+      <div>
+        <button onclick="toggleSub('mob-member')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>সদস্য পোর্টাল</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-member" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#member_register" onclick="mobileNav('member_register')" class="block py-1">সদস্য তথ্য ফর্ম</a>
+          <a href="#member_payment" onclick="mobileNav('member_payment')" class="block py-1">ফি বা চাঁদা প্রদান</a>
+          <a href="#search_members" onclick="mobileNav('search_members')" class="block py-1">সদস্য তালিকা</a>
+          <a href="#search_ledger" onclick="mobileNav('search_ledger')" class="block py-1">ব্যক্তিগত লেজার স্লিপ</a>
+        </div>
+      </div>
+
+      <!-- মোবাইল রক্তদান ডাইনামিক অ্যাকোর্ডিয়ন -->
+      <div>
+        <button onclick="toggleSub('mob-blood-sec')" class="w-full text-left py-2.5 flex justify-between items-center hover:text-emerald-600">
+          <span>রক্তদান</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="mob-blood-sec" class="hidden pl-6 py-2 space-y-2 text-xs font-semibold text-gray-500">
+          <a href="#blood-board" onclick="mobileNav('blood-board')" class="block py-1">রক্তদাতার পরিসংখ্যান</a>
+          <a href="#donor_list" onclick="mobileNav('donor_list')" class="block py-1">রক্ত ডোনার তালিকা</a>
+          <a href="#donor_registration" onclick="mobileNav('donor_registration')" class="block py-1">রক্ত ডোনার নিবন্ধন</a>
+          <a href="#blood_donation" onclick="mobileNav('blood_donation')" class="block py-1">রক্তদান ফর্ম</a>
+        </div>
+      </div>
+      
+      <!-- ডোনেশন ফর্ম বাটন -->
+      <div class="px-6 border-t pt-4">
+        <button onclick="mobileNav('donation')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 rounded-xl text-center shadow-lg transition flex items-center justify-center">
+          <i class="fa-solid fa-heart mr-2 animate-pulse"></i>চাঁদা প্রদান / ডোনেশন করুন
+        </button>
+      </div>
+      <a href="#contact" onclick="mobileNav('contact')" class="block py-2.5 hover:text-emerald-600">যোগাযোগ</a>
+      <a href="#" id="nav-admin" onclick="openAdminLogin()" class="bg-slate-900 text-white hover:bg-emerald-600 px-4 py-2 rounded-lg transition duration-200 flex items-center shrink-0"><i class="fa-solid fa-lock mr-2"></i>অ্যাডমিন লগইন</a>
+    </div>
+  </div>
+</div>
+
+<!-- কন্টেন্ট এরিয়া -->
+<main class="flex-grow">
+  <div id="loading" class="hidden fixed inset-0 bg-gray-950 bg-opacity-40 z-50 flex items-center justify-center">
+    <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
+      <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+      <p class="text-gray-700 font-semibold text-sm">অগ্রযাত্রার তথ্য লোড হচ্ছে...</p>
+    </div>
+  </div>
+  <div id="main-content" class="transition-opacity duration-300 opacity-100"></div>
+</main>
+
+<!-- গ্লোবাল ডাইনামিক অ্যালার্ট সিস্টেম -->
+<div id="custom-alert-modal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-40 z-50 flex items-center justify-center px-4">
+  <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl text-center max-w-sm w-full transform scale-95 transition-all duration-300">
+    <div id="alert-icon-container" class="mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center">
+      <i id="alert-icon" class="text-3xl"></i>
+    </div>
+    <h4 id="alert-title" class="text-lg sm:text-xl font-extrabold text-gray-800 mb-2"></h4>
+    <p id="alert-message" class="text-xs sm:text-sm text-gray-500 mb-6 leading-relaxed"></p>
+    <button id="alert-btn" onclick="closeCustomAlert()" class="w-full text-white font-bold py-2.5 rounded-xl text-sm transition">ঠিক আছে</button>
+  </div>
+</div>
+
+<!-- ফুটার সেকশন -->
+<footer class="bg-slate-950 text-gray-400 select-none">
+  
+  <!-- ১. অরেঞ্জ কল-টু-অ্যাকশন ব্যানার সেকশন -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -translate-y-8 relative z-10">
+    <div class="bg-orange-500 text-white px-6 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center gap-4 border border-orange-400/30">
+      <div class="text-center md:text-left">
+        <h4 class="text-lg sm:text-xl font-black">আমাদের সাথে যুক্ত থাকুন</h4>
+        <p class="text-xs text-orange-100 mt-0.5 font-medium">আউলিয়াপুর অগ্রযাত্রা পরিষদ, পটুয়াখালী সদর</p>
+      </div>
+      <div class="text-center md:text-left">
+        <h4 class="text-lg sm:text-xl font-black">আজকের উদ্যোগ আগামীর অগ্রযাত্রা</h4>
+        <p class="text-xs text-orange-100 mt-0.5 font-medium">Today's initiative, tomorrow's progress.</p>
+      </div>
+      <div class="flex space-x-2.5 shrink-0">
+        <button class="bg-white text-orange-600 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center shadow-md hover:bg-orange-50 transition">
+          <i class="fa-solid fa-music mr-1.5"></i>থিম সঙ্গীত
+        </button>
+        <a href="tel:+8801710181059" class="bg-teal-600 text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center shadow-md hover:bg-teal-700 transition">
+          <i class="fa-solid fa-phone mr-1.5"></i>কল করুন
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ২. ফুটার চার-কলাম লিংক সেকশন -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+    <div class="space-y-4">
+      <div class="flex items-center space-x-2">
+        <div class="bg-emerald-600 text-white p-2 rounded-full"><i class="fa-solid fa-people-group text-sm"></i></div>
+        <span class="font-extrabold text-white text-base">আউলিয়াপুর অগ্রযাত্রা পরিষদ</span>
+      </div>
+      <p class="text-gray-500 text-xs leading-relaxed">
+        আমরা একটি অরাজনৈতিক ও সেবামূলক সামাজিক সংগঠন যা সমাজের অবহেলিত ও দরিদ্র মানুষের পাশে দাঁড়াতে অঙ্গীকারবদ্ধ।
+      </p>
+      <div class="flex space-x-3 pt-2">
+        <a href="#" class="bg-slate-900 text-gray-400 hover:text-white hover:bg-emerald-600 w-9 h-9 rounded-full flex items-center justify-center transition border border-slate-800"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+        <a href="#" class="bg-slate-900 text-gray-400 hover:text-white hover:bg-red-600 w-9 h-9 rounded-full flex items-center justify-center transition border border-slate-800"><i class="fa-brands fa-youtube text-sm"></i></a>
+        <a href="#" class="bg-slate-900 text-gray-400 hover:text-white hover:bg-pink-600 w-9 h-9 rounded-full flex items-center justify-center transition border border-slate-800"><i class="fa-brands fa-instagram text-sm"></i></a>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <h5 class="text-white font-extrabold text-sm border-b border-emerald-500 pb-2 inline-block">আমাদের সম্পর্কে</h5>
+      <ul class="space-y-2 text-xs">
+        <li><a href="#about_intro" onclick="navigateTo('about_intro')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>আমাদের পরিচিতি</a></li>
+        <li><a href="#about_rules" onclick="navigateTo('about_rules')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>সংগঠনের বিধিমালা</a></li>
+        <li><a href="#about_mission" onclick="navigateTo('about_mission')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>লক্ষ্য ও উদ্দেশ্য</a></li>
+      </ul>
+    </div>
+
+    <div class="space-y-4">
+      <h5 class="text-white font-extrabold text-sm border-b border-emerald-500 pb-2 inline-block">গুরুত্বপূর্ণ লিংক সমূহ</h5>
+      <ul class="space-y-2 text-xs">
+        <li><a href="#committee_list" onclick="navigateTo('committee_list')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>সংগঠনের কমিটি তালিকা</a></li>
+        <li><a href="#search_members" onclick="navigateTo('search_members')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>সদস্য ও রক্তদাতা তালিকা</a></li>
+        <li><a href="#donation" onclick="navigateTo('donation')" class="hover:text-emerald-500 transition flex items-center"><i class="fa-solid fa-angle-right mr-1.5 text-emerald-600"></i>অনলাইন পেমেন্ট / ডোনেশন</a></li>
+      </ul>
+    </div>
+
+    <div class="space-y-4">
+      <h5 class="text-white font-extrabold text-sm border-b border-emerald-500 pb-2 inline-block">যোগাযোগের ঠিকানা</h5>
+      <ul class="space-y-2.5 text-xs text-gray-500">
+        <li class="flex items-start"><i class="fa-solid fa-location-dot text-emerald-500 w-5 mt-0.5 shrink-0"></i> <span>আউলিয়াপুর ইউনিয়ন, পটুয়াখালী সদর, পটুয়াখালী।</span></li>
+        <li class="flex items-center"><i class="fa-solid fa-phone text-emerald-500 w-5 shrink-0"></i> <span>+8801710181059</span></li>
+        <li class="flex items-center"><i class="fa-solid fa-envelope text-emerald-500 w-5 shrink-0"></i> <span class="truncate">info@aap.auliapur.com</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bg-slate-900 py-6 border-t border-slate-800 text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-2">
+      <p>&copy; ২০২৬-২০২৬ আউলিয়াপুর অগ্রযাত্রা পরিষদ — সর্বস্বত্ব সংরক্ষিত।</p>
+      <p class="font-medium text-gray-400">ডিজাইন ও ডেভলপমেন্টঃ <span class="text-emerald-500">মোঃ কামরুল ইসলাম সবুজ</span></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // আপনার অ্যাকটিভ গুগল ওয়েব অ্যাপ লিংক
+  const webAppUrl = "https://script.google.com/macros/s/AKfycbybsk_sCt7rHMm4_MGDSLAWVz4lug9dPJ4QtuJ5filxF5XdmVicY9cftpnin535Q6B6Lw/exec";
+  const WEB_APP_URL = webAppUrl;
+
+  // গ্লোবাল ক্যাশ কমিটি ডাটা ট্র্যাকার (ডোনার ডাটা মার্জিংয়ের জন্য)
+  var rawDonorsGlobal = [];
+  var cachedCommitteeList = null;
+
+  // ========================================================================
+  // ডাইনামিক recursive Proxy ব্রিজ (CORS ও চেইনিং এরর সমাধান)
+  // =========================================================================
+  function executeServerFunction(functionName, args, onSuccess, onFailure) {
+    fetch(webAppUrl, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: functionName,
+        arguments: args
+      }),
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('সার্ভার থেকে রেসপন্স পাওয়া যায়নি');
+      return response.json();
+    })
+    .then(result => {
+      if (result.status === 'success') {
+        if (onSuccess) onSuccess(result.data);
+      } else {
+        if (onFailure) onFailure(result.message || result.error);
+        else console.error('সার্ভার ত্রুটি:', result.message);
+      }
+    })
+    .catch(error => {
+      if (onFailure) onFailure(error);
+      else console.error('কানেকশন ব্যর্থ হয়েছে:', error);
+    });
+  }
+
+  function createRunProxy(onSuccess, onFailure) {
+    return new Proxy({}, {
+      get: function(target, prop) {
+        if (prop === 'withSuccessHandler') {
+          return function(newSuccess) {
+            return createRunProxy(newSuccess, onFailure);
+          };
+        }
+        if (prop === 'withFailureHandler') {
+          return function(newFailure) {
+            return createRunProxy(onSuccess, newFailure);
+          };
+        }
+        return function(...args) {
+          executeServerFunction(prop, args, onSuccess, onFailure);
+        };
+      }
+    });
+  }
+
+  window.google = {
+    script: {
+      run: createRunProxy(null, null)
+    }
+  };
+
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  
+  if (mobileBtn) {
+    mobileBtn.addEventListener('click', toggleDrawer);
+  }
+
+  function toggleDrawer() { 
+    if (mobileDrawer) mobileDrawer.classList.toggle('hidden'); 
+  }
+  
+  function toggleSub(subId) { 
+    const subEl = document.getElementById(subId);
+    if (subEl) subEl.classList.toggle('hidden'); 
+  }
+  
+  function mobileNav(pageName) { 
+    toggleDrawer(); 
+    navigateTo(pageName); 
+  }
+
+  function safeSetText(id, value) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.innerText = value;
+    }
+  }
+
+  let alertCallback = null;
+  function showCustomAlert(title, message, type = "success", callback = null) {
+    const modal = document.getElementById('custom-alert-modal');
+    const iconContainer = document.getElementById('alert-icon-container');
+    const icon = document.getElementById('alert-icon');
+    const titleEl = document.getElementById('alert-title');
+    const messageEl = document.getElementById('alert-message');
+    const btn = document.getElementById('alert-btn');
+    
+    if (!modal || !iconContainer || !icon || !titleEl || !messageEl || !btn) return;
+    
+    titleEl.innerText = title;
+    messageEl.innerText = message;
+    alertCallback = callback;
+
+    if (type === "success") {
+      iconContainer.className = "mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center bg-emerald-50 text-emerald-500";
+      icon.className = "fa-solid fa-circle-check text-3xl";
+      btn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-emerald-100";
+    } else if (type === "error") {
+      iconContainer.className = "mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center bg-red-50 text-red-500";
+      icon.className = "fa-solid fa-circle-xmark text-3xl";
+      btn.className = "w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-red-100";
+    } else {
+      iconContainer.className = "mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center bg-amber-50 text-amber-500";
+      icon.className = "fa-solid fa-triangle-exclamation text-3xl";
+      btn.className = "w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-amber-100";
+    }
+    modal.classList.remove('hidden');
+  }
+
+  function closeCustomAlert() {
+    const modal = document.getElementById('custom-alert-modal');
+    if (modal) modal.classList.add('hidden');
+    if (typeof alertCallback === 'function') { alertCallback(); }
+  }
+
+  function navigateTo(pageName) {
+    const loader = document.getElementById('loading');
+    const mainContent = document.getElementById('main-content');
+    
+    if (loader) loader.classList.remove('hidden');
+    if (mainContent) mainContent.style.opacity = '0.3';
+
+    const url = `${pageName}.html`; 
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("পেজটি আপনার হোস্টিং সার্ভারে খুঁজে পাওয়া যায়নি");
+        }
+        return response.text();
+      })
+      .then(htmlContent => {
+        if (mainContent) {
+          mainContent.innerHTML = htmlContent;
+          executeScripts(mainContent);
+        }
+        updateNavbarActive(pageName);
+        if (loader) loader.classList.add('hidden');
+        if (mainContent) mainContent.style.opacity = '1';
+      })
+      .catch(err => {
+        if (mainContent) {
+          mainContent.innerHTML = `<div class="max-w-xl mx-auto my-12 p-6 bg-red-50 text-red-700 rounded-lg text-center shadow">লোডিং সমস্যা: ${err.message || err}</div>`;
+        }
+        if (loader) loader.classList.add('hidden');
+        if (mainContent) mainContent.style.opacity = '1';
+      });
+  }
+
+  function navigateToProject(projectName) {
+    const loader = document.getElementById('loading');
+    const mainContent = document.getElementById('main-content');
+    
+    if (loader) loader.classList.remove('hidden');
+    if (mainContent) mainContent.style.opacity = '0.3';
+
+    const url = `project_view.html`; 
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("প্রজেক্ট ভিউ পেজটি আপনার হোস্টিং সার্ভারে খুঁজে পাওয়া যায়নি");
+        }
+        return response.text();
+      })
+      .then(htmlContent => {
+        if (mainContent) {
+          mainContent.innerHTML = htmlContent;
+          executeScripts(mainContent);
+        }
+        
+        if (typeof renderProjectData === 'function') {
+          renderProjectData(projectName);
+        }
+        
+        if (loader) loader.classList.add('hidden');
+        if (mainContent) mainContent.style.opacity = '1';
+      })
+      .catch(err => {
+        if (loader) loader.classList.add('hidden');
+        if (mainContent) mainContent.style.opacity = '1';
+        showCustomAlert("লোডিং সমস্যা!", err.message || err, "error");
+      });
+  }
+
+  function mobileNavProject(projectName) {
+    toggleDrawer();
+    navigateToProject(projectName);
+  }
+
+  function executeScripts(container) {
+    const scripts = container.getElementsByTagName('script');
+    for (let i = 0; i < scripts.length; i++) {
+      const scriptElement = document.createElement('script');
+      scriptElement.text = scripts[i].text;
+      document.body.appendChild(scriptElement).parentNode.removeChild(scriptElement);
+    }
+  }
+
+  function updateNavbarActive(pageName) {
+    document.querySelectorAll('nav a').forEach(el => el.classList.remove('nav-active'));
+    const activeElement = document.getElementById('nav-' + pageName);
+    if (activeElement) { activeElement.classList.add('nav-active'); }
+  }
+
+  function openAdminLogin() {
+    navigateTo('admin_panel'); 
+  }
+
+  function handleRouting() {
+    let hash = window.location.hash.substring(1); 
+    if (!hash || hash === "") {
+      hash = 'home';
+    }
+    
+    if (hash.startsWith('project_view/')) {
+      let projectName = decodeURIComponent(hash.replace('project_view/', ''));
+      navigateToProject(projectName);
+    } else {
+      navigateTo(hash);
+    }
+  }
+
+  // =========================================================================
+  // ১. ডিজিট রূপান্তর ও হোম পেজের লাইভ কাউন্ট-আপ ইঞ্জিন (Count-Up Animation Engine)
+  // =========================================================================
+  function convertToBanglaDigits(str) {
+    if (str === undefined || str === null || str === "") return "০";
+    var bnDigits = { "0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪", "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯" };
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[w]; });
+  }
+
+  function convertToEnglishDigits(str) {
+    if (str === undefined || str === null || str === "") return "0";
+    var enDigits = { "০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9" };
+    return str.toString().replace(/[০-৯]/g, function(w) { return enDigits[w]; });
+  }
+
+  // হোম পেজের সংখ্যা ১ থেকে লাস্ট সংখ্যা পর্যন্ত লাইভ কাউন্টিং অ্যানিমেশন
+  function animateCounter(elementId, rawValue, duration) {
+    duration = duration || 1800;
+    var el = document.getElementById(elementId);
+    if (!el) return;
+
+    if (!rawValue) {
+      el.innerText = "০";
+      return;
+    }
+
+    var strVal = rawValue.toString().trim();
+    var enStr = convertToEnglishDigits(strVal);
+    var numMatch = enStr.match(/\d+/);
+
+    if (!numMatch) {
+      el.innerText = strVal;
+      return;
+    }
+
+    var targetNum = parseInt(numMatch[0], 10);
+    if (isNaN(targetNum) || targetNum <= 0) {
+      el.innerText = strVal;
+      return;
+    }
+
+    // প্রেফিক্স ও সাফিক্স (যেমন: "+ টি", " জন", " বার") আলাদা রাখার লজিক
+    var firstDigitIdx = strVal.search(/[0-9০-৯]/);
+    var lastDigitIdx = -1;
+    for (var i = 0; i < strVal.length; i++) {
+      if (/[0-9০-৯]/.test(strVal[i])) {
+        lastDigitIdx = i;
+      }
+    }
+
+    var prefix = "";
+    var suffix = "";
+    if (firstDigitIdx !== -1) {
+      prefix = strVal.substring(0, firstDigitIdx);
+      suffix = strVal.substring(lastDigitIdx + 1);
+    }
+
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      // মসৃণ Ease-OutCubic অ্যানিমেশন কার্ভ
+      var easeProgress = 1 - Math.pow(1 - progress, 3);
+      var currentNum = Math.floor(easeProgress * targetNum);
+      
+      var formattedBnNum = convertToBanglaDigits(currentNum.toLocaleString('en-US'));
+      el.innerText = prefix + formattedBnNum + suffix;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        var finalBnNum = convertToBanglaDigits(targetNum.toLocaleString('en-US'));
+        el.innerText = prefix + finalBnNum + suffix;
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
+  // =========================================================================
+  // ২. ডোনার ও কমিটি ডাটা ইন্টেলিজেন্ট মার্জিং মেথড
+  // =========================================================================
+  function mergeAndRenderDonors() {
+    if (!rawDonorsGlobal || rawDonorsGlobal.length === 0) return;
+
+    if (cachedCommitteeList && cachedCommitteeList.length > 0) {
+      rawDonorsGlobal.forEach(function(donor) {
+        if (!donor) return;
+        var dPhone = donor.phone ? donor.phone.toString().replace(/[^0-9]/g, '') : '';
+        var dName = donor.name ? donor.name.toString().trim().toLowerCase() : '';
+
+        var match = cachedCommitteeList.find(function(m) {
+          if (!m) return false;
+          var mPhone = m.phone ? m.phone.toString().replace(/[^0-9]/g, '') : '';
+          var mName = m.name ? m.name.toString().trim().toLowerCase() : '';
+          
+          if (dPhone !== '' && mPhone !== '' && dPhone === mPhone) return true;
+          if (dName !== '' && mName !== '' && dName === mName) return true;
+          return false;
+        });
+
+        if (match) {
+          donor.profession = donor.profession || match.profession || match.occupation || match.job || match.pese;
+          donor.education = donor.education || match.education || match.qualification || match.degree || match.educationalQualification || match.edu;
+          donor.org = donor.org || match.org || match.workplace || match.organization || match.office || match.workPlace;
+          if (match.fbLink) donor.fbLink = donor.fbLink || match.fbLink;
+          if (match.email) donor.email = donor.email || match.email;
+          if (match.photo && (!donor.photo || donor.photo.trim() === "" || donor.photo === "N/A")) {
+            donor.photo = match.photo;
+          }
+        }
+      });
+    }
+
+    if (typeof renderDonorsList === 'function') {
+      renderDonorsList();
+    }
+    if (typeof startDonorSlider === 'function') {
+      startDonorSlider();
+    }
+  }
+
+  // পেজ লোড হবার সাথে সাথে রাউটিং রান হবে
+  window.addEventListener('hashchange', handleRouting);
+  window.addEventListener('load', function() {
+    handleRouting();
+  });
+</script>
+</body>
+</html>

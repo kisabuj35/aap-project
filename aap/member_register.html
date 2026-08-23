@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="max-w-2xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ হেডার ব্যানার (ডাইনামিক ডিজাইন) -->
+  <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6 sm:p-8 rounded-t-3xl text-white text-center relative shadow-lg">
+    <div class="absolute top-4 right-4 bg-white/20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+      <i class="fa-solid fa-circle-check animate-pulse"></i> অনলাইন রেজিস্ট্রেশন
+    </div>
+    <h3 class="text-2xl font-black">সদস্য নিবন্ধন স্লিপ</h3>
+    <p class="text-xs text-emerald-100 mt-1 leading-relaxed">আউলিয়াপুর অগ্রযাত্রা পরিষদের ডিজিটাল সদস্য তথ্য ফর্ম</p>
+    <div class="w-16 h-1 bg-white/40 mx-auto mt-4 rounded-full"></div>
+  </div>
+
+  <!-- মূল নিবন্ধন স্লিপ ফর্ম বডি -->
+  <form id="reg-form" onsubmit="submitForm(event)" class="bg-white p-6 sm:p-8 rounded-b-3xl shadow-xl border-x border-b border-gray-100 space-y-6">
+    
+    <!-- ১ম ও ২য় ধাপ (ক্যাটাগরি ও নাম) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১. সদস্যের ধরণ (ক্যাটাগরি) <span class="text-rose-500">*</span></label>
+        <select id="memberType" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          <option value="সাধারণ সদস্য">সাধারণ সদস্য</option>
+          <option value="ফাউন্ডার মেম্বার">ফাউন্ডার মেম্বার (প্রতিষ্ঠাতা সদস্য)</option>
+          <option value="আজীবন সদস্য">আজীবন সদস্য</option>
+          <option value="দাতা সদস্য">দাতা সদস্য</option>
+          <option value="স্বেচ্ছাসেবী সদস্য">স্বেচ্ছাসেবী সদস্য (ভলান্টিয়ার)</option>
+        </select>
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">২. সদস্যের নাম <span class="text-rose-500">*</span></label>
+        <input type="text" id="name" required placeholder="আপনার পূর্ণ নাম লিখুন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ৩য় ও ৪র্থ ধাপ (পিতার নাম ও মাতার নাম) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৩. পিতার নাম <span class="text-rose-500">*</span></label>
+        <input type="text" id="fatherName" required placeholder="পিতার নাম লিখুন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৪. মাতার নাম <span class="text-rose-500">*</span></label>
+        <input type="text" id="motherName" required placeholder="মাতার নাম লিখুন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ৫ম, ৬ষ্ঠ ও ৭ম ধাপ (লিঙ্গ, শিক্ষাগত যোগ্যতা ও পদবী) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৫. লিঙ্গ (Gender) <span class="text-rose-500">*</span></label>
+        <select id="gender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          <option value="পুরুষ">পুরুষ</option>
+          <option value="মহিলা">মহিলা</option>
+          <option value="অন্যান্য">অন্যান্য</option>
+        </select>
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৬. শিক্ষাগত যোগ্যতা <span class="text-rose-500">*</span></label>
+        <input type="text" id="education" placeholder="যেমন: এসএসসি, এইচএসসি, বিএ" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৭. সংগঠনে পদবী <span class="text-rose-500">*</span></label>
+        <input type="text" id="designation" placeholder="যেমন: সাধারণ সদস্য, সহ-সভাপতি" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ঠিকানা এন্ট্রি প্যানেল -->
+    <div class="bg-slate-50/60 p-5 rounded-2xl border border-slate-200/60 space-y-4">
+      <h5 class="text-xs font-bold text-slate-800 flex items-center"><i class="fa-solid fa-map-location-dot text-emerald-600 mr-2 text-sm animate-pulse"></i> স্থায়ী ও বর্তমান ঠিকানা বিবরণী</h5>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">গ্রাম <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-village" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">ওয়ার্ড নং <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-ward" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">পোস্ট অফিস <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-post" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">ইউনিয়ন <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-union" value="আউলিয়াপুর" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">থানা/উপজেলা <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-thana" value="পটুয়াখালী সদর" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold text-gray-500">জেলা <span class="text-rose-500">*</span></label>
+          <input type="text" id="addr-district" value="পটুয়াখালী" required class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+        </div>
+      </div>
+    </div>
+
+    <!-- ৮ম, ৯ম ও ১০ম ধাপ (মোবাইল, এনআইডি ও পেশা) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৮. মোবাইল নম্বর <span class="text-rose-500">*</span></label>
+        <input type="tel" id="phone" required placeholder="০১৭১০১৮১০৫৯ (১১ ডিজিট)" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">৯. এনআইডি/জন্মনিবন্ধন <span class="text-rose-500">*</span></label>
+        <input type="text" id="nid" required placeholder="NID বা জন্মনিবন্ধন নং" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১০. পেশা <span class="text-rose-500">*</span></label>
+        <input type="text" id="profession" placeholder="যেমন: ছাত্র, ব্যবসায়ী" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ১১শ, ১২শ ও ১৩শ ধাপ (যোগদানের তারিখ, রক্তের গ্রুপ ও মাসিক চাঁদা) -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="space-y-1.5 md:col-span-2">
+        <label class="block text-xs font-bold text-gray-700">১১. সংগঠনে যোগদানের তারিখ <span class="text-rose-500">*</span></label>
+        <input type="date" id="joinDate" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১২. রক্তের গ্রুপ <span class="text-rose-500">*</span></label>
+        <select id="bloodGroup" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+          <option value="">নির্বাচন করুন</option>
+          <option value="A+">A+</option><option value="A-">A-</option>
+          <option value="B+">B+</option><option value="B-">B-</option>
+          <option value="AB+">AB+</option><option value="AB-">AB-</option>
+          <option value="O+">O+</option><option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১৩. মাসিক চাঁদা <span class="text-rose-500">*</span></label>
+        <input type="number" id="monthlyFee" placeholder="৳ ১০০" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ১৪শ, ১৫শ ও ১৬শ ধাপ (ইমেইল, ফেসবুক ও মন্তব্য) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১৪. ইমেইল এড্রেস (ঐচ্ছিক)</label>
+        <input type="email" id="email" placeholder="example@gmail.com" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১৫. ফেসবুক প্রোফাইল লিঙ্ক (ঐচ্ছিক)</label>
+        <input type="url" id="fbLink" placeholder="https://facebook.com/username" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-700">১৬. সংগঠনের প্রতি মন্তব্য (ঐচ্ছিক)</label>
+        <input type="text" id="comments" placeholder="আপনার মন্তব্য লিখুন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-gray-700 bg-slate-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white transition-all">
+      </div>
+    </div>
+
+    <!-- ১৭শ ধাপ: ছবি আপলোড ও লাইভ প্রিভিউ প্যানেল -->
+    <div class="flex flex-col sm:flex-row items-center gap-5 p-5 bg-slate-50/80 border border-slate-200/60 rounded-2xl">
+      <div class="relative shrink-0 select-none">
+        <img id="photo-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150" class="w-16 h-16 rounded-2xl border-2 border-white object-cover object-top shadow-md bg-slate-200" alt="Profile Preview">
+        <div class="absolute -bottom-1 -right-1 bg-emerald-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow border border-white">
+          <i class="fa-solid fa-camera"></i>
+        </div>
+      </div>
+      <div class="space-y-1.5 w-full">
+        <label class="block text-xs font-bold text-gray-700">১৭. সদস্যের এক কপি ছবি আপলোড করুন (ঐচ্ছিক)</label>
+        <input type="file" id="photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition duration-200 cursor-pointer">
+      </div>
+    </div>
+
+    <!-- সংগঠনের নিয়ম ও শর্তাবলী -->
+    <div class="border border-amber-200 bg-amber-50/15 rounded-2xl p-5 space-y-4">
+      <button type="button" onclick="toggleTermsAccordion()" class="w-full flex items-center justify-between text-amber-800 focus:outline-none">
+        <span class="text-xs font-black flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> সংগঠনের নিয়ম ও শর্তাবলী (গুরুত্বপূর্ণ)
+        </span>
+        <i id="accordion-arrow" class="fa-solid fa-chevron-up text-xs transition-transform duration-300"></i>
+      </button>
+      
+      <div id="terms-content" class="transition-all duration-300 text-[11px] text-gray-600 space-y-3 font-medium leading-relaxed pl-1 pt-1 border-t border-amber-200/50">
+        <p>১. আমি এতদ্বারা ঘোষণা করছি যে আবেদন ফরমে প্রদত্ত সমস্ত তথ্য সম্পূর্ণ সত্য ও নির্ভুল। কোনো তথ্য গোপন করা হয়নি।</p>
+        <p>২. আমি সংগঠনের মূল লক্ষ্য, উদ্দেশ্য ও সমাজকল্যাণমূলক কার্যক্রমে সবসময় সততা ও নিষ্ঠার সাথে অংশগ্রহণ করতে প্রতিজ্ঞাবদ্ধ।</p>
+        <p>৩. সংগঠনের নিয়ম-শৃঙ্খলা ভঙ্গকারী বা সামাজিক মূল্যবোধ পরিপন্থী কোনো প্রকার কাজের সাথে আমি নিজেকে জড়িত রাখব না।</p>
+        <p>৪. সংগঠনের মাসিক নির্ধারিত চাঁদা নিয়মিত পরিশোধ করে সংগঠনের আর্থিক ভিত্তি মজবুত রাখতে আমি সবসময় সচেষ্ট থাকব।</p>
+        <p>৫. সংগঠনের পরিচালনা পর্ষদ কর্তৃক গৃহীত যেকোনো যৌক্তিক সিদ্ধান্ত চূড়ান্ত বলে মেনে নিতে আমি সম্পূর্ণ সম্মত আছি।</p>
+      </div>
+    </div>
+
+    <!-- শর্তাবলী সম্মতি চেকবক্স -->
+    <div class="flex items-start gap-3 px-1.5 py-1">
+      <input type="checkbox" id="agree-checkbox" onchange="handleAgreementToggle(this.checked)" class="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-gray-300 cursor-pointer">
+      <label for="agree-checkbox" class="text-[11px] font-bold text-gray-600 leading-relaxed cursor-pointer">
+        আমি উপরোক্ত সকল শর্তাবলী মনোযোগ দিয়ে পড়েছি এবং আউলিয়াপুর অগ্রযাত্রা পরিষদের সক্রিয় সদস্য হিসেবে সংগঠনের সকল নিয়মাবলী মেনে চলতে সম্মতি দিচ্ছি।
+      </label>
+    </div>
+
+    <!-- সাবমিট বাটন -->
+    <div class="pt-4 select-none">
+      <button type="submit" id="submit-btn" disabled class="w-full bg-slate-200 text-gray-400 font-extrabold py-4 rounded-xl shadow-sm transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed">
+        <i id="btn-icon" class="fa-solid fa-lock text-sm"></i> <span id="btn-text">প্রথমে শর্তাবলীতে সম্মতি দিন</span>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- সাকসেস পপআপ মডাল -->
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-sm w-full transform scale-100 transition-all">
+      <div class="mx-auto w-16 h-16 rounded-full bg-emerald-500 text-white flex items-center justify-center text-3xl shadow-lg mb-4 animate-bounce">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h4 class="text-xl font-black text-gray-800 mb-2">আবেদন সফল হয়েছে!</h4>
+      <p class="text-xs text-gray-500 leading-relaxed mb-4">সংগঠনের পক্ষ থেকে আপনার সদস্য আইডি জেনারেট করা হয়েছে:</p>
+      <span id="new-id-display" class="bg-emerald-50 text-emerald-800 font-extrabold text-lg px-5 py-2.5 rounded-xl border border-emerald-100 inline-block mb-6 select-all font-mono tracking-wider">...</span>
+      <button onclick="closeModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-md">ঠিক আছে</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var photoBase64 = "";
+  var photoName = "";
+
+  // ডাইনামিক লাইভ ইমেজ প্রিভিউ লজিক
+  document.getElementById('photo').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var preview = document.getElementById('photo-preview');
+    if (!file) {
+      photoBase64 = "";
+      photoName = "";
+      if (preview) preview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+      return;
+    }
+    photoName = file.name;
+    var reader = new FileReader();
+    reader.onload = function(evt) { 
+      photoBase64 = evt.target.result; 
+      if (preview) preview.src = photoBase64; 
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // শর্তাবলী অ্যাকোর্ডিয়ন বক্স টগল ফাংশন
+  function toggleTermsAccordion() {
+    var content = document.getElementById('terms-content');
+    var arrow = document.getElementById('accordion-arrow');
+    if (content && arrow) {
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        arrow.classList.remove('rotate-180');
+      } else {
+        content.style.display = 'none';
+        arrow.classList.add('rotate-180');
+      }
+    }
+  }
+
+  // চেকবক্স অনুযায়ী সাবমিট বাটন আনলক করার ফাংশন
+  function handleAgreementToggle(isChecked) {
+    var btn = document.getElementById('submit-btn');
+    var btnText = document.getElementById('btn-text');
+    var btnIcon = document.getElementById('btn-icon');
+    
+    if (!btn || !btnText || !btnIcon) return;
+
+    if (isChecked) {
+      btn.disabled = false;
+      btn.className = "w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 transition duration-300 flex items-center justify-center gap-2 scale-100 hover:scale-[1.01] active:scale-[0.99] cursor-pointer";
+      btnText.innerText = "তথ্য সাবমিট করুন";
+      btnIcon.className = "fa-solid fa-user-plus text-sm animate-pulse";
+    } else {
+      btn.disabled = true;
+      btn.className = "w-full bg-slate-200 text-gray-400 font-extrabold py-4 rounded-xl shadow-sm transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed";
+      btnText.innerText = "প্রথমে শর্তাবলীতে সম্মতি দিন";
+      btnIcon.className = "fa-solid fa-lock text-sm";
+    }
+  }
+
+  // ফর্ম সাবমিশন এবং ডাটাবেস হ্যান্ডলার
+  function submitForm(e) {
+    e.preventDefault();
+
+    // মোবাইল নাম্বারের শুরুতে স্বয়ংক্রিয় ০ নিশ্চিতকরণ
+    var rawPhone = document.getElementById('phone').value.trim();
+    var cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+    if (cleanPhone.length === 10 && cleanPhone.startsWith('1')) {
+      cleanPhone = '0' + cleanPhone;
+    }
+
+    // আলাদা ঠিকানার তথ্য সংগ্রহ করে একক টেক্সট তৈরি
+    var village = document.getElementById('addr-village').value.trim();
+    var ward = document.getElementById('addr-ward').value.trim();
+    var post = document.getElementById('addr-post').value.trim();
+    var union = document.getElementById('addr-union').value.trim();
+    var thana = document.getElementById('addr-thana').value.trim();
+    var district = document.getElementById('addr-district').value.trim();
+
+    var fullAddressText = "গ্রাম: " + village + 
+                         ", ওয়ার্ড নং: " + ward + 
+                         ", ডাকঘর: " + post + 
+                         ", ইউনিয়ন: " + union + 
+                         ", উপজেলা: " + thana + 
+                         ", জেলা: " + district;
+
+    // ব্যাকএন্ডে পাঠানোর ডাটা পে-লোড
+    var payload = {
+      memberType: document.getElementById('memberType').value,
+      name: document.getElementById('name').value,
+      fatherName: document.getElementById('fatherName').value,
+      motherName: document.getElementById('motherName').value,
+      gender: document.getElementById('gender').value,
+      education: document.getElementById('education').value,
+      designation: document.getElementById('designation').value,
+      address: fullAddressText,
+      phone: cleanPhone,
+      nid: document.getElementById('nid').value,
+      profession: document.getElementById('profession').value,
+      bloodGroup: document.getElementById('bloodGroup').value,
+      monthlyFee: document.getElementById('monthlyFee').value,
+      joinDate: document.getElementById('joinDate').value, 
+      email: document.getElementById('email').value,
+      fbLink: document.getElementById('fbLink').value,
+      comments: document.getElementById('comments').value,
+      photoData: photoBase64,
+      photoName: photoName
+    };
+
+    // বোতামের অবস্থা পরিবর্তন (লোডিং স্টেট)
+    var btn = document.getElementById('submit-btn');
+    var btnText = document.getElementById('btn-text');
+    if (btnText) btnText.innerText = "সাবমিট হচ্ছে...";
+    if (btn) btn.disabled = true;
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (res && res.success) {
+          document.getElementById('new-id-display').innerText = res.memberId;
+          document.getElementById('success-modal').classList.remove('hidden');
+          document.getElementById('reg-form').reset();
+          
+          var agreeCheckbox = document.getElementById('agree-checkbox');
+          if (agreeCheckbox) {
+            agreeCheckbox.checked = false;
+            handleAgreementToggle(false);
+          }
+
+          photoBase64 = "";
+          photoName = "";
+          var preview = document.getElementById('photo-preview');
+          if (preview) preview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+        } else {
+          alert("ত্রুটি: " + (res.error || "অজানা সমস্যা হয়েছে"));
+          handleAgreementToggle(true);
+        }
+      })
+      .withFailureHandler(function(err) {
+        alert("সার্ভার ত্রুটি: " + err.message);
+        handleAgreementToggle(true);
+      })
+      .submitMemberRegistration(payload);
+  }
+
+  function closeModal() {
+    document.getElementById('success-modal').classList.add('hidden');
+    if (typeof navigateTo === 'function') {
+      navigateTo('home');
+    }
+  }
+</script>
+  </body>
+</html>

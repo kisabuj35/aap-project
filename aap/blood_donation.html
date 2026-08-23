@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="max-w-2xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ হেডার ব্যানার (রক্তদান মহৎ থিম) -->
+  <div class="bg-gradient-to-r from-red-600 to-rose-600 p-6 sm:p-8 rounded-t-3xl text-white text-center relative shadow-lg">
+    <div class="absolute top-4 right-4 bg-white/20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+      <i class="fa-solid fa-droplet animate-pulse text-[10px]"></i> লাইভ ট্র্যাকার
+    </div>
+    <h3 class="text-2xl font-black">রক্তদান কর্মসূচী ফর্ম</h3>
+    <p class="text-xs text-rose-100 mt-1 leading-relaxed">আউলিয়াপুর অগ্রযাত্রা পরিষদের রক্তদাতা ও রক্তগ্রহীতা ট্র্যাকার স্লিপ</p>
+    <div class="w-16 h-1 bg-white/40 mx-auto mt-4 rounded-full"></div>
+  </div>
+
+  <!-- মূল ফর্ম বডি (মাঝের অংশ সাদা) -->
+  <form id="blood-form" onsubmit="submitBlood(event)" class="bg-white p-6 sm:p-8 rounded-b-3xl shadow-xl border-x border-b border-gray-100 space-y-8">
+    
+    <!-- ক) রক্তদাতার তথ্য প্যানেল -->
+    <div class="space-y-4">
+      <h4 class="font-extrabold text-gray-700 text-sm border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-droplet text-red-500 animate-pulse text-base"></i> রক্তদাতার বিবরণী</h4>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রক্তদাতার ধরণ <span class="text-rose-500">*</span></label>
+          <select id="donor-type" onchange="toggleDonorType()" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+            <option value="সদস্য">সংগঠনের সদস্য</option>
+            <option value="সাধারণ">সাধারণ রক্তদাতা</option>
+          </select>
+        </div>
+        <div id="donor-id-box" class="space-y-1.5 transition-all duration-300">
+          <label class="block text-xs font-bold text-gray-500">সদস্য আইডি <span class="text-rose-500">*</span></label>
+          <input type="text" id="donor-id" onblur="lookupDonor()" placeholder="যেমন: AAP001" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+          <span class="text-[9px] text-gray-400 block mt-1 font-semibold leading-relaxed">*আইডি লিখে অন্য কোথাও ক্লিক করুন, তথ্য অটো-ফিল হবে।</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রক্তদাতার নাম <span class="text-rose-500">*</span></label>
+          <input type="text" id="donor-name" required placeholder="দাতার পূর্ণ নাম" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">পিতার নাম <span class="text-rose-500">*</span></label>
+          <input type="text" id="donor-father" required placeholder="পিতার নাম" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রক্তের গ্রুপ <span class="text-rose-500">*</span></label>
+          <select id="donor-blood" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+            <option value="">নির্বাচন করুন</option>
+            <option value="A+">A+</option><option value="A-">A-</option>
+            <option value="B+">B+</option><option value="B-">B-</option>
+            <option value="AB+">AB+</option><option value="AB-">AB-</option>
+            <option value="O+">O+</option><option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">মোবাইল নাম্বার <span class="text-rose-500">*</span></label>
+          <input type="tel" id="donor-phone" required placeholder="১১ ডিজিটের নম্বর" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রক্ত প্রদানের তারিখ <span class="text-rose-500">*</span></label>
+          <input type="date" id="donation-date" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- রিসিভার ও দাতা উভয়ের ছবির ডাইনামিক লাইভ প্রিভিউ -->
+      <div class="flex flex-col sm:flex-row items-center gap-5 p-5 bg-slate-50/50 border border-slate-200/60 rounded-2xl">
+        <div class="relative shrink-0">
+          <img id="donor-photo-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150" class="w-16 h-16 rounded-2xl border-2 border-white object-cover object-top shadow-md bg-slate-200" alt="Donor Preview">
+          <div class="absolute -bottom-1 -right-1 bg-red-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow border border-white">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 w-full">
+          <label class="block text-xs font-bold text-gray-700">রক্তদাতার ছবি আপলোড করুন</label>
+          <input type="file" id="donor-photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition cursor-pointer">
+        </div>
+      </div>
+    </div>
+
+    <!-- খ) রক্তগ্রহীতার তথ্য প্যানেল -->
+    <div class="space-y-4 pt-4 border-t border-slate-100">
+      <h4 class="font-extrabold text-gray-700 text-sm border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-hospital text-emerald-600 mr-2 text-base"></i> রক্তগ্রহীতার বিবরণী</h4>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রক্তগ্রহীতার নাম <span class="text-rose-500">*</span></label>
+          <input type="text" id="recipient-name" required placeholder="গ্রহীতার পূর্ণ নাম" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">গ্রহীতার মোবাইল নাম্বার <span class="text-rose-500">*</span></label>
+          <input type="tel" id="recipient-phone" required placeholder="১১ ডিজিটের মোবাইল নম্বর" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">গ্রহীতার ঠিকানা <span class="text-rose-500">*</span></label>
+          <input type="text" id="recipient-address" required placeholder="গ্রাম বা জেলা ও ইউনিয়ন" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-gray-500">রোগের সমস্যা (কেন রক্ত দরকার?) <span class="text-rose-500">*</span></label>
+          <input type="text" id="recipient-disease" placeholder="ডেলিভারি / থ্যালাসেমিয়া" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <!-- গ্রহীতার লাইভ ছবি প্রিভিউ -->
+      <div class="flex flex-col sm:flex-row items-center gap-5 p-5 bg-slate-50/50 border border-slate-200/60 rounded-2xl">
+        <div class="relative shrink-0">
+          <img id="recipient-photo-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150" class="w-16 h-16 rounded-2xl border-2 border-white object-cover object-top shadow-md bg-slate-200" alt="Recipient Preview">
+          <div class="absolute -bottom-1 -right-1 bg-emerald-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow border border-white">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 w-full">
+          <label class="block text-xs font-bold text-gray-700">গ্রহীতার এক কপি ছবি আপলোড করুন</label>
+          <input type="file" id="recipient-photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition cursor-pointer">
+        </div>
+      </div>
+
+      <div class="space-y-1.5">
+        <label class="block text-xs font-bold text-gray-500">মন্তব্য (ঐচ্ছিক)</label>
+        <textarea id="remarks" rows="2" placeholder="অতিরিক্ত বিবরণ বা কোনো মন্তব্য থাকলে" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs bg-slate-50/50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400/20 focus:border-red-500 focus:bg-white transition-all resize-none"></textarea>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         রক্তদান কর্মসূচী নিয়ম ও শর্তাবলী প্যানেল (accordion যুক্ত)
+         ============================================== -->
+    <div class="border border-amber-200 bg-amber-50/15 rounded-2xl p-5 space-y-4">
+      <button type="button" onclick="toggleTermsAccordion()" class="w-full flex items-center justify-between text-amber-800 focus:outline-none">
+        <span class="text-xs font-black flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> রক্তদান কর্মসূচী নিয়ম ও শর্তাবলী (গুরুত্বপূর্ণ)
+        </span>
+        <i id="accordion-arrow" class="fa-solid fa-chevron-up text-xs transition-transform duration-300"></i>
+      </button>
+      
+      <!-- শর্তাবলীর বিবরণী -->
+      <div id="terms-content" class="transition-all duration-300 text-[11px] text-gray-600 space-y-3 font-medium leading-relaxed pl-1 pt-1 border-t border-amber-200/50">
+        <p>১. আমি নিশ্চয়তা প্রদান করছি যে রক্তদাতার রক্ত সম্পূর্ণ স্বেচ্ছায় এবং মানবকল্যাণের স্বার্থে বিনামূল্যে প্রদান করা হয়েছে।</p>
+        <p>২. রক্তদাতার বয়স সর্বনিম্ন ১৮ বছর এবং তিনি সম্পূর্ণ শারীরিকভাবে সুস্থ থাকা অবস্থায় রক্ত প্রদান করেছেন।</p>
+        <p>৩. রক্তদাতার কোনো প্রকার জটিল রোগ (যেমন হেপাটাইটিস, এইডস) বা ক্ষতিকর ঔষুধ সেবনরত অবস্থায় রক্ত নেওয়া হয়নি।</p>
+        <p>৪. আমি রক্তদান সম্পর্কিত এই সংগৃহীত ডেটা আউলিয়াপুর অগ্রযাত্রা পরিষদের ডাটাবেজে সুরক্ষার সাথে সংরক্ষণের অনুমতি দিচ্ছি।</p>
+        <p>৫. রক্তগ্রহীতার পক্ষ থেকে রক্তদাতার সাথে কোনো প্রকার অপেশাদার বা অসৌজন্যমূলক আচরণ করা হবে না।</p>
+      </div>
+    </div>
+
+    <!-- শর্তাবলী সম্মতি চেকবক্স -->
+    <div class="flex items-start gap-3 px-1.5 py-1">
+      <input type="checkbox" id="agree-checkbox" onchange="handleAgreementToggle(this.checked)" class="mt-0.5 w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-gray-300 cursor-pointer">
+      <label for="agree-checkbox" class="text-[11px] font-bold text-gray-600 leading-relaxed cursor-pointer">
+        আমি উপরোক্ত সকল শর্তাবলী মনোযোগ দিয়ে পড়েছি এবং সংগঠনের নিয়মাবলী মেনে রক্তদান সম্পন্ন করার তথ্য জমা দিতে সম্মত হচ্ছি।
+      </label>
+    </div>
+
+    <!-- সুরক্ষিত সাবমিট বাটন (ডিফল্ট লক অবস্থায় থাকবে) -->
+    <div class="pt-4 select-none">
+      <button type="submit" id="blood-submit-btn" disabled class="w-full bg-slate-200 text-gray-400 font-extrabold py-4 rounded-xl shadow-sm transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed">
+        <i id="btn-icon" class="fa-solid fa-lock text-sm"></i> <span id="btn-text">প্রথমে শর্তাবলীতে সম্মতি দিন</span>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  var donorPhotoBase64 = "";
+  var recipientPhotoBase64 = "";
+
+  // ডাইনামিক লাইভ ইমেজ প্রিভিউ (রক্তদাতার ছবি)
+  document.getElementById('donor-photo').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var preview = document.getElementById('donor-photo-preview');
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function(evt) { 
+        donorPhotoBase64 = evt.target.result; 
+        if (preview) preview.src = donorPhotoBase64;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      donorPhotoBase64 = "";
+      if (preview) preview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+    }
+  });
+
+  // ডাইনামিক লাইভ ইমেজ প্রিভিউ (রক্তগ্রহীতার ছবি)
+  document.getElementById('recipient-photo').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var preview = document.getElementById('recipient-photo-preview');
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function(evt) { 
+        recipientPhotoBase64 = evt.target.result; 
+        if (preview) preview.src = recipientPhotoBase64;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      recipientPhotoBase64 = "";
+      if (preview) preview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+    }
+  });
+
+  // মেম্বার টাইপ টগল
+  function toggleDonorType() {
+    var type = document.getElementById('donor-type').value;
+    var idBox = document.getElementById('donor-id-box');
+    var idInput = document.getElementById('donor-id');
+    
+    if (type === 'সদস্য') {
+      if (idBox) idBox.classList.remove('hidden');
+      if (idInput) idInput.required = true;
+    } else {
+      if (idBox) idBox.classList.add('hidden');
+      if (idInput) {
+        idInput.required = false;
+        idInput.value = '';
+      }
+      document.getElementById('donor-name').value = '';
+      document.getElementById('donor-father').value = '';
+      document.getElementById('donor-blood').value = '';
+      document.getElementById('donor-phone').value = '';
+      var preview = document.getElementById('donor-photo-preview');
+      if (preview) preview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+    }
+  }
+
+  // সদস্য আইডি লিখে অন্য কোথাও ক্লিক করলে স্বয়ংক্রিয় ডাটা খোঁজার প্রফেশনাল লজিক (Auto-fill!)
+  function lookupDonor() {
+    var id = document.getElementById('donor-id').value.trim();
+    if (!id) return;
+    
+    var loader = document.getElementById('loading');
+    if (loader) loader.classList.remove('hidden');
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (loader) loader.classList.add('hidden');
+        if (res.success) {
+          document.getElementById('donor-name').value = res.name;
+          document.getElementById('donor-father').value = res.fatherName;
+          document.getElementById('donor-blood').value = res.bloodGroup;
+          document.getElementById('donor-phone').value = res.phone;
+          
+          // যদি সদস্যের ছবি ডেটাবেসে আগে থেকেই থাকে তা লোড হবে
+          var preview = document.getElementById('donor-photo-preview');
+          if (preview && res.photo && res.photo !== "N/A" && res.photo !== "") {
+            preview.src = res.photo;
+            donorPhotoBase64 = res.photo; // ব্যাকএন্ড থেকে পাওয়া ছবি সেভ
+          }
+        } else {
+          showCustomAlert("ত্রুটি!", "সদস্য আইডি ডাটাবেজে পাওয়া যায়নি!", "error");
+        }
+      })
+      .getMemberInfoById(id);
+  }
+
+  // শর্তাবলী অ্যাকোর্ডিয়ন বক্স টগল করার ফাংশন
+  function toggleTermsAccordion() {
+    var content = document.getElementById('terms-content');
+    var arrow = document.getElementById('accordion-arrow');
+    if (content && arrow) {
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        arrow.classList.remove('rotate-180');
+      } else {
+        content.style.display = 'none';
+        arrow.classList.add('rotate-180');
+      }
+    }
+  }
+
+  // চেকবক্স অনুযায়ী সাবমিট বাটন লক এবং আনলক করার ফাংশন
+  function handleAgreementToggle(isChecked) {
+    var btn = document.getElementById('blood-submit-btn');
+    var btnText = document.getElementById('btn-text');
+    var btnIcon = document.getElementById('btn-icon');
+    
+    if (!btn) return;
+
+    if (isChecked) {
+      btn.disabled = false;
+      btn.className = "w-full bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white font-black py-4 rounded-xl shadow-lg shadow-rose-600/10 hover:shadow-rose-600/20 transition duration-300 flex items-center justify-center gap-2 scale-100 hover:scale-[1.01] active:scale-[0.99] cursor-pointer";
+      if (btnText) btnText.innerText = "রক্তদান রিপোর্ট ও নোটিফিকেশন সাবমিট";
+      if (btnIcon) btnIcon.className = "fa-solid fa-heart text-sm animate-pulse";
+    } else {
+      btn.disabled = true;
+      btn.className = "w-full bg-slate-200 text-gray-400 font-extrabold py-4 rounded-xl shadow-sm transition duration-300 flex items-center justify-center gap-2 cursor-not-allowed";
+      if (btnText) btnText.innerText = "প্রথমে শর্তাবলীতে সম্মতি দিন";
+      if (btnIcon) btnIcon.className = "fa-solid fa-lock text-sm";
+    }
+  }
+
+  // ডাটাবেস সাবমিশন স্ক্রিপ্ট
+  function submitBlood(e) {
+    e.preventDefault();
+    var loader = document.getElementById('loading');
+    if (loader) loader.classList.remove('hidden');
+    
+    var btn = document.getElementById('blood-submit-btn');
+    if (btn) { btn.disabled = true; btn.classList.add('opacity-50'); }
+
+    var payload = {
+      donorType: document.getElementById('donor-type').value,
+      donorId: document.getElementById('donor-id').value,
+      donorName: document.getElementById('donor-name').value,
+      donorFather: document.getElementById('donor-father').value,
+      donorBlood: document.getElementById('donor-blood').value,
+      donorPhone: document.getElementById('donor-phone').value,
+      donationDate: document.getElementById('donation-date').value,
+      donorPhotoData: donorPhotoBase64,
+      recipientName: document.getElementById('recipient-name').value,
+      recipientPhone: document.getElementById('recipient-phone').value,
+      recipientAddress: document.getElementById('recipient-address').value,
+      recipientDisease: document.getElementById('recipient-disease').value,
+      recipientPhotoData: recipientPhotoBase64,
+      remarks: document.getElementById('remarks').value
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (loader) loader.classList.add('hidden');
+        if (btn) { btn.disabled = false; btn.classList.remove('opacity-50'); }
+        
+        if (res.success) {
+          showCustomAlert("রিপোর্ট সাবমিট হয়েছে!", "রক্তদান খতিয়ান সংরক্ষিত হয়েছে এবং অনুমোদন পাওয়ার পর এসএমএস ও ডাটাবেজে যুক্ত হবে। ধন্যবাদ!", "success", function() {
+            document.getElementById('blood-form').reset();
+            
+            // চেকবক্স ও বাটন রি-লক করা
+            var agreeCheckbox = document.getElementById('agree-checkbox');
+            if (agreeCheckbox) {
+              agreeCheckbox.checked = false;
+              handleAgreementToggle(false);
+            }
+
+            donorPhotoBase64 = "";
+            recipientPhotoBase64 = "";
+            
+            // লাইভ ছবি প্রিভিউ রিসেট
+            var donorPreview = document.getElementById('donor-photo-preview');
+            var recipientPreview = document.getElementById('recipient-photo-preview');
+            if (donorPreview) donorPreview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+            if (recipientPreview) recipientPreview.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150";
+            
+            navigateTo('home');
+          });
+        } else {
+          showCustomAlert("ব্যর্থ হয়েছে!", "সমস্যা: " + res.error, "error");
+        }
+      })
+      .submitBloodDonation(payload);
+  }
+</script>
+  </body>
+</html>

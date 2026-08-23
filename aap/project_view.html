@@ -1,0 +1,304 @@
+  <!-- project_view.html -->
+<div class="max-w-7xl mx-auto px-4 py-12 select-none space-y-12">
+  
+  <!-- ১. ডাইনামিক হিরো ব্যানার (থিম অনুযায়ী স্বয়ংক্রিয় কালার পরিবর্তন হবে) -->
+  <div id="p-banner" class="bg-gradient-to-r p-8 sm:p-10 rounded-3xl text-white text-center shadow-lg relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl sm:text-4xl font-black" id="p-title">প্রকল্পের নাম</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide" id="p-subtitle">প্রকল্পের মূল স্লোগান</p>
+  </div>
+
+  <!-- ২. প্রকল্প পরিচিতি কার্ড -->
+  <div class="bg-white p-6 sm:p-8 rounded-[32px] shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start gap-6 hover:shadow transition duration-300">
+    <div id="p-icon-box" class="p-5 rounded-2xl text-2xl shrink-0">
+      <i id="p-icon" class="fa-solid"></i>
+    </div>
+    <div class="space-y-2">
+      <h4 class="text-base sm:text-lg font-black text-gray-800">প্রকল্প পরিচিতি</h4>
+      <p id="p-desc" class="text-xs sm:text-sm text-gray-500 leading-relaxed font-semibold">লোডিং হচ্ছে...</p>
+    </div>
+  </div>
+
+  <!-- ৩. ৪টি প্রধান পরিসংখ্যান কার্ড (লাইভ শিট থেকে অটো-আপডেট হবে!) -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+      <span class="text-[9px] font-extrabold text-gray-400 block uppercase" id="p-card-1-title">মোট পরিমাণ</span>
+      <span id="p-card-1-val" class="text-lg sm:text-xl font-black text-slate-800 mt-1 block">...</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+      <span class="text-[9px] font-extrabold text-gray-400 block uppercase" id="p-card-2-title">সুবিধাভোগী</span>
+      <span id="p-card-2-val" class="text-lg sm:text-xl font-black text-slate-800 mt-1 block">...</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+      <span class="text-[9px] font-extrabold text-gray-400 block uppercase" id="p-card-3-title">কর্মসূচি চলমান</span>
+      <span id="p-card-3-val" class="text-lg sm:text-xl font-black text-slate-800 mt-1 block">...</span>
+    </div>
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+      <span class="text-[9px] font-extrabold text-gray-400 block uppercase" id="p-card-4-title">কভারেজ</span>
+      <span id="p-card-4-val" class="text-lg sm:text-xl font-black text-slate-800 mt-1 block">...</span>
+    </div>
+  </div>
+
+  <!-- ৪. লক্ষ্যসমূহ ও অর্জনসমূহ -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- লক্ষ্যসমূহ -->
+    <div class="bg-white p-6 sm:p-8 rounded-[32px] shadow-sm border border-gray-100 space-y-4">
+      <h5 class="text-sm font-black text-gray-800 border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-crosshairs text-red-500"></i> লক্ষ্যসমূহ</h5>
+      <div class="space-y-3" id="p-goals-container"></div>
+    </div>
+    <!-- অর্জনসমূহ -->
+    <div class="bg-white p-6 sm:p-8 rounded-[32px] shadow-sm border border-gray-100 space-y-4">
+      <h5 class="text-sm font-black text-gray-800 border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-award text-amber-500"></i> অর্জনসমূহ</h5>
+      <div class="space-y-3" id="p-achieve-container"></div>
+    </div>
+  </div>
+
+  <!-- ৫. প্রধান কার্যক্রমসমূহ ও সময়রেখা গ্রিড -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- প্রধান কার্যক্রমসমূহ -->
+    <div class="bg-white p-6 sm:p-8 rounded-[32px] shadow-sm border border-gray-100 space-y-4">
+      <h5 class="text-sm font-black text-gray-800 border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-list-check text-emerald-600"></i> প্রধান কার্যক্রমসমূহ</h5>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2" id="p-activities-container"></div>
+    </div>
+
+    <!-- সময়রেখা (Timeline) -->
+    <div class="bg-white p-6 sm:p-8 rounded-[32px] shadow-sm border border-gray-100 space-y-4">
+      <h5 class="text-sm font-black text-gray-800 border-b pb-2 flex items-center gap-2"><i class="fa-solid fa-timeline text-indigo-500"></i> সময়রেখা (Timeline)</h5>
+      <div class="space-y-3.5 pt-2" id="p-timeline-container"></div>
+    </div>
+  </div>
+
+  <!-- ৬. প্রভাব ও প্রতিফলন সিগনেচার ব্যানার -->
+  <div id="p-impact-banner" class="p-6 sm:p-8 rounded-[32px] border text-white text-center space-y-2.5 shadow-md">
+    <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto text-yellow-300 text-lg">
+      <i class="fa-solid fa-quote-left"></i>
+    </div>
+    <h4 class="text-base font-black">প্রভাব ও প্রতিফলন</h4>
+    <p id="p-impact-desc" class="text-xs max-w-2xl mx-auto leading-relaxed font-semibold italic">...</p>
+  </div>
+
+</div>
+
+<script>
+  // ৬টি প্রকল্পের কাস্টম ডাইনামিক মেটাডাটা রিপোজিটরি
+  const projectMetadata = {
+    "উষ্ণ হোক শীত": {
+      subtitle: "শীতার্ত মানুষের পাশে আমাদের উষ্ণ হাত",
+      themeColor: "from-red-600 to-rose-600 border-red-200",
+      badgeColor: "bg-red-50 text-red-600 border-red-100",
+      btnColor: "bg-red-500",
+      textColor: "text-red-600",
+      accentBg: "bg-red-50",
+      icon: "fa-snowflake",
+      desc: "শীতকালে দরিদ্র ও অসহায় মানুষের মাঝে শীতবস্ত্র বিতরণের মাধ্যমে উষ্ণতা ছড়িয়ে দেওয়া আমাদের এই প্রকল্পের মূল উদ্দেশ্য। প্রতিবছর শীতের শুরুতেই আমরা তহবিল সংগ্রহ এবং শীতবস্ত্র বিতরণ কর্মসূচি পরিচালনা করি। পটুয়াখালী জেলার বিভিন্ন প্রত্যন্ত এলাকায় এই কর্মসূচি পরিচালনা করা হয়।",
+      cards: ["বিতরণকৃত শীতবস্ত্র", "সুবিধাভোগী পরিবার", "কর্মসূচি চলমান", "কভারেজ উপজেলা"],
+      goals: ["দরিদ্র ও অসহায় মানুষের মাঝে শীতবস্ত্র বিতরণ", "সমাজে সচেতনতা তৈরি ও তহবিল সংগ্রহ", "তরুণদের মাঝে স্বেচ্ছাসেবী মানসিকতা জাগ্রত করা", "বিভিন্ন উপজেলায় কর্মসূচি সম্প্রসারণ"],
+      achievements: ["৬,০০০+ শীতবস্ত্র বিতরণ সম্পন্ন", "২০০+ পরিবারে শীতকালীন আর্থিক সহায়তা", "নিয়মিত বার্ষিক কার্যক্রম সফলভাবে পরিচালনা", "৪টি উপজেলায় সরাসরি কভারেজ সম্প্রসারণ"],
+      activities: ["কম্বল ও গরম কাপড় বিতরণ", "তহবিল সংগ্রহ ক্যাম্পেইন", "সোশ্যাল মিডিয়া প্রচার ও সচেতনতা", "স্থানীয় প্রশাসনের সাথে সমন্বয়"],
+      defaultTimelines: [{ year: "২০১৯", text: "প্রথম শীতবস্ত্র বিতরণ - ৫০টি পরিবারে কম্বল প্রদান" }, { year: "২০২২", text: "কোভিড-১৯ মহামারিতেও বিতরণ অব্যাহত" }, { year: "২০২৬", text: "৪টি উপজেলায় শীতবস্ত্র সম্প্রসারণ কর্মসূচি" }],
+      impact: "শীতবস্ত্র প্রকল্পের মাধ্যমে শীতার্ত মানুষের পাশে দাঁড়ানো সম্ভব হয়েছে, যা অসহায় মানুষের মনে অনেক উষ্ণতা ছড়িয়েছে এবং মানুষের দুর্দশা কমিয়ে এনেছে।"
+    },
+    "তরুণ জ্ঞানের দীপশিখা": {
+      subtitle: "শিক্ষার আলো ছড়িয়ে দিচ্ছি আমরা",
+      themeColor: "from-blue-600 to-indigo-600 border-blue-200",
+      badgeColor: "bg-blue-50 text-blue-600 border-blue-100",
+      btnColor: "bg-blue-500",
+      textColor: "text-blue-600",
+      accentBg: "bg-blue-50",
+      icon: "fa-book-open",
+      desc: "দরিদ্র ও মেধাবী শিক্ষার্থীদের শিক্ষা সহায়তা প্রদানের লক্ষে এই কর্মসূচি পরিচালিত হয়। বই, খাতা, কলম, স্কুল ব্যাগ, জ্যামিতি বক্স এবং কোচিং ফি সহায়তাসহ বিভিন্নভাবে আমরা শিক্ষার্থীদের সহযোগিতা করে আসছি। কৃতি ছাত্র সংবর্ধনার মাধ্যমে আমরা মেধার সঠিক মূল্যায়ন করে থাকি।",
+      cards: ["সুবিধাভোগী শিক্ষার্থী", "বিতরণকৃত উপকরণ সেট", "কর্মসূচি চলমান", "কভারেজ এলাকা"],
+      goals: ["মেধাবী শিক্ষার্থীদের আর্থিক সহায়তা", "বিনামূল্যে শিক্ষা উপকরণ বিতরণ", "শিক্ষার্থীদের মাঝে সংবর্ধনা ও অনুপ্রেরণা", "বিনামূল্যে কোচিং ও ফি সহায়তা"],
+      achievements: ["৩০০+ শিক্ষার্থীকে আর্থিক বৃত্তি প্রদান", "৫০+ সেট উন্নত শিক্ষা সামগ্রী বিতরণ", "নিয়মিত বার্ষিক সফল সংবর্ধনা অনুষ্ঠান", "এসএসসি ও এইচএসসি পরীক্ষার্থীদের গাইডেন্স"],
+      activities: ["বিনামূল্যে বই ও খাতা বিতরণ", "মেধাবী শিক্ষার্থী সংবর্ধনা", "কোচিং ও ফি সহায়তা প্রজেক্ট", "পরীক্ষার্থীদের জন্য বিশেষ গাইডেন্স ক্লাস"],
+      defaultTimelines: [{ year: "২০২১", text: "প্রথম শিক্ষা উপকরণ বিতরণ - ১০ জন শিক্ষার্থী" }, { year: "২০২৩", text: "বিনামূল্যে কোচিং সহায়তা শুরু" }, { year: "২০২৬", text: "৩০০+ শিক্ষার্থীকে সফলভাবে সংবর্ধনা প্রদান" }],
+      impact: "আমাদের এই প্রকল্পের মাধ্যমে সুবিধা বঞ্চিত শিক্ষার্থীদের পড়ালেখা চালিয়ে যাওয়া নিশ্চিত করা সম্ভব হয়েছে, যা ঝরে পড়ার হার কমিয়ে এনেছে।"
+    },
+    "সবুজ স্বপ্ন": {
+      subtitle: "বৃক্ষরোপণে আমরা একসাথে",
+      themeColor: "from-emerald-600 to-teal-600 border-emerald-200",
+      badgeColor: "bg-emerald-50 text-emerald-600 border-emerald-100",
+      btnColor: "bg-emerald-500",
+      textColor: "text-emerald-600",
+      accentBg: "bg-emerald-50",
+      icon: "fa-tree",
+      desc: "পরিবেশ রক্ষায় আমাদের বৃক্ষরোপণ কর্মসূচি বছরজুড়েই চলমান। বৃক্ষরোপণ ছাড়াও আমরা পরিবেশ সচেতনতা সৃষ্টির জন্য ক্যাম্পেইন করি। স্কুল, কলেজ, সড়ক ও বিভিন্ন পাবলিক জায়গায় গাছ লাগানো হয়। ফলজ, বনজ ও ঔষধি গাছ সহ বিভিন্ন প্রজাতির গাছ রোপণ করা হয়।",
+      cards: ["রোপিত গাছ", "বৃক্ষরোপণ অভিযান", "কর্মসূচি চলমান", "অংশগ্রহণকারী"],
+      goals: ["পরিবেশের ভারসাম্য রক্ষার্থে বৃক্ষরোপণ", "পরিবেশ সচেতনতা বৃদ্ধি ও র‍্যালি", "সবুজায়ন ও বনায়ন নিশ্চিত করা", "ফলজ, বনজ ও ঔষধি গাছ রোপণ"],
+      achievements: ["১৩,০০০+ ফলদ ও বনজ গাছ রোপণ", "২০টির বেশি স্পেশাল রোপণ অভিযান", "বিশ্ব পরিবেশ দিবস উদযাপন", "জেলাভিত্তিক সবুজায়ন লক্ষ্য অর্জন"],
+      activities: ["বিশ্ব পরিবেশ দিবস উদযাপন", "স্কুল ও কলেজে গাছ রোপণ", "পরিবেশ সচেতনতামূলক র‍্যালি ও লিফলেট", "গাছের যত্ন ও পরিচর্যা ক্যাম্পেইন"],
+      defaultTimelines: [{ year: "২০১৯", text: "প্রথম বৃক্ষরোপণ কর্মসূচি - ৫০০ চারা রোপণ" }, { year: "২০২২", text: "৫,০০০ চারা রোপণ মাইলফলক অর্জন" }, { year: "২০২৬", text: "১৩,০০০+ চারা রোপণ সফলভাবে সম্পন্ন" }],
+      impact: "বৃক্ষরোপণ কর্মসূচিটি পটুয়াখালীর পরিবেশগত ভারসাম্য রক্ষা এবং এলাকার প্রাকৃতিক সৌন্দর্য ও সবুজায়ন বৃদ্ধিতে অত্যন্ত অগ্রগামী ভূমিকা রাখছে।"
+    },
+    "সম্প্রীতির কুরবানি": {
+      subtitle: "সাম্প্রদায়িক সম্প্রীতির বন্ধন রক্ষায়",
+      themeColor: "from-fuchsia-600 to-pink-600 border-fuchsia-200",
+      badgeColor: "bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100",
+      btnColor: "bg-fuchsia-500",
+      textColor: "text-fuchsia-600",
+      accentBg: "bg-fuchsia-50",
+      icon: "fa-hands-holding-child",
+      desc: "সাম্প্রদায়িক সম্প্রীতি ও সহমর্মিতা বৃদ্ধির জন্য আমাদের এই প্রকল্পটি পরিচালিত হয়। ঈদ-উল-আযহায় বিভিন্ন ধর্মানুসারী পরিবারের মাঝে কোরবানির মাংস ও আনন্দ উপহার বিতরণ করা হয়। এছাড়া সামাজিক মিলনমেলা ও সৌহার্দ্য অনুষ্ঠানের আয়োজন করা হয়।",
+      cards: ["আয়োজিত অনুষ্ঠান", "অংশগ্রহণকারী", "কর্মসূচি চলমান", "বিতরণকৃত মাংস"],
+      goals: ["সাম্প্রদায়িক সম্প্রীতি ও ভ্রাতৃত্ব বৃদ্ধি", "গরিব ও দুস্থদের মাঝে ঈদ আনন্দ ছড়িয়ে দেওয়া", "আন্তঃধর্মীয় সৌহার্দ্য ও সামাজিক মিলনমেলা", "পরিবারগুলোতে মাংস ও উপহার সামগ্রী বিতরণ"],
+      achievements: ["১৫টির বেশি সফল সামাজিক অনুষ্ঠান", "৫০০+ মানুষের সরাসরি অংশগ্রণ", "নিয়মিত ঈদ আনন্দ প্রজেক্ট বাস্তবায়ন", "১০০+ দরিদ্র পরিবারে সফলভাবে ঈদ মাংস বিতরণ"],
+      activities: ["ঈদের আনন্দ ও মাংস বিতরণ", "সামাজিক সম্প্রীতি সমাবেশ", "আন্তঃধর্মীয় সৌহার্দ্য মেলা", "সাংস্কৃতিক অনুষ্ঠান ও আলোচনা সভা"],
+      defaultTimelines: [{ year: "২০২১", text: "প্রথম সম্প্রীতির কুরবানি প্রজেক্ট শুরু" }, { year: "২০২৩", text: "৫০টি পরিবারে মাংস বিতরণ" }, { year: "২০২৬", text: "১০০+ পরিবারে সফলভাবে উৎসব ও খাদ্য সামগ্রী বিতরণ" }],
+      impact: "এই মানবিক ও সামাজিক সৌহার্দ্যপূর্ণ উদ্যোগের মাধ্যমে এলাকায় ভাতৃত্বের বন্ধন অনেক সুদৃঢ় ও সাম্প্রদায়িক সম্প্রীতি বহুগুণে বৃদ্ধি পেয়েছে।"
+    },
+    "ভাতের হাসি": {
+      subtitle: "অনাহারীদের মুখে হাসি ফোটাতে",
+      themeColor: "from-amber-600 to-orange-600 border-amber-200",
+      badgeColor: "bg-amber-50 text-amber-600 border-amber-100",
+      btnColor: "bg-amber-500",
+      textColor: "text-amber-600",
+      accentBg: "bg-amber-50",
+      icon: "fa-bowl-rice",
+      desc: "খাদ্য সহায়তা প্রদানের মাধ্যমে অসহায় মানুষদের মুখে হাসি ফোটানোর জন্য আমাদের এই প্রকল্পটি পরিচালিত হয়। বন্যা, প্রাকৃতিক দুর্যোগ, রমজান মাস এবং অন্যান্য সময়ে আমরা খাদ্য সামগ্রী বিতরণ করে থাকি। চাল, ডাল, তেল, পেঁয়াজ সহ পুষ্টিকর খাদ্য বিতরণ করা হয়।",
+      cards: ["সুবিধাভোগী পরিবার", "বিতরণকৃত ইফতার", "কর্মসূচি চলমান", "খাদ্য প্যাকেজ"],
+      goals: ["অনাহার ও দুর্যোগকালীন খাদ্য সহায়তা", "অসহায় পরিবারের পাশে দাঁড়ানো", "রমজান মাসে ইফতার ও ঈদ উপহার বিতরণ", "নিয়মিত পুষ্টিকর খাদ্য সামগ্রী বিতরণ"],
+      achievements: ["৫০০+ অতিদরিদ্র পরিবারে খাদ্য সহায়তা প্রদান", "১,০০০+ প্যাকেট ইফতার ও সেহেরি সামগ্রী বিতরণ", "বন্যায় দুর্গত এলাকায় দ্রুত খাদ্য পৌঁছে দেওয়া", "২,০০০+ পুষ্টিকর খাদ্য কন্টেইনার সফলভাবে বিতরণ"],
+      activities: ["রমজান ইফতার ও সেহেরি সামগ্রী বিতরণ", "বন্যায় জরুরি খাদ্য ও পানি ত্রাণ সরবরাহ", "খাদ্য প্যাকেট বিতরণ ক্যাম্পেইন", "অসহায় ও ভাসমান পরিবার চিহ্নিতকরণ"],
+      defaultTimelines: [{ year: "২০২২", text: "প্রথম খাদ্য সহায়তা প্রকল্প - ভাতের হাসি শুরু" }, { year: "২০২৩", text: "কোভিড পরবর্তী সংকটে ১০০ পরিবারে জরুরি রেশন" }, { year: "২০২৬", text: "৫০০+ সুবিধাভোগী পরিবারে নিয়মিত ঈদ উপহার" }],
+      impact: "ক্ষুধা মুক্ত সমাজ ও রমজান মাসের পবিত্রতা বজায় রেখে হাজারো অসহায় মানুষের মুখে হাসি ফুটিয়েছে 'ভাতের হাসি' প্রকল্প।"
+    },
+    "মেধাবীদের সম্মাননা": {
+      subtitle: "মেধার আলোয় হোক আলোকিত ভবিষ্যৎ",
+      themeColor: "from-purple-600 to-violet-600 border-purple-200",
+      badgeColor: "bg-purple-50 text-purple-600 border-purple-100",
+      btnColor: "bg-purple-500",
+      textColor: "text-purple-600",
+      accentBg: "bg-purple-50",
+      icon: "fa-trophy",
+      desc: "শিক্ষা, সাংস্কৃতিক ও সামাজিক ক্ষেত্রে বিশেষ অবদানের জন্য মেধাবী ব্যক্তিদের সম্মাননা প্রদানের জন্য আমাদের এই প্রকল্পটি পরিচালিত হয়। আমরা বিশ্বাস করি ভালো কাজের স্বীকৃতি মানুষকে আরও অনুপ্রাণিত করে এবং সমাজে ইতিবাচক প্রতিযোগিতা তৈরি করে।",
+      cards: ["সম্মানিত ব্যক্তি", "আয়োজিত অনুষ্ঠান", "কর্মসূচি চলমান", "বিশেষ বিভাগ"],
+      goals: ["মেধাবী কৃতি শিক্ষার্থীদের সংবর্ধনা", "গুনীজনদের সম্মাননা ও স্মৃতি স্মারক প্রদান", "সমাজসেবায় অবদানের স্বীকৃতি", "মেধাবীদের উচ্চশিক্ষায় মেন্টরশিপ দেওয়া"],
+      achievements: ["৫০ জনেরও বেশি সেরা মেধাবীকে সফল সংবর্ধনা", "১০টির বেশি সফল স্বীকৃতি প্রদান অনুষ্ঠান", "কৃতি শিক্ষার্থীদের মাঝে শিক্ষাবৃত্তি বিতরণ", "অত্র এলাকায় শিক্ষার আলো বাড়াতে সফল প্রণোদনা"],
+      activities: ["মেধাবী কৃতি সংবর্ধনা", "গুনীজনদের জন্য বিশেষ সম্মাননা সভা", "বৃত্তি ও স্মৃতি স্মারক বিতরণ", "কৃতি ছাত্র মেন্টরশিপ ও ক্যারিয়ার গাইডেন্স"],
+      defaultTimelines: [{ year: "২০২৬", text: "প্রথম তারাদের সালাম গুনীজন সংবর্ধনা অনুষ্ঠান" }, { year: "২০২৬", text: "সেরা কৃতি শিক্ষার্থীদের সফল সংবর্ধনা" }, { year: "২০২৬", text: "৫টি বিভাগে কৃতিদের শিক্ষাবৃত্তি প্রদান" }],
+      impact: "মেধাবীদের এই মহৎ স্বীকৃতি ও সম্মাননা এলাকার নতুন প্রজন্মকে পড়ালেখা ও ভালো কাজে উৎসাহিত করতে অগ্রগামী ভূমিকা পালন করছে।"
+    }
+  };
+
+  // ফ্রন্টএন্ডে প্রজেক্ট পেজটি ডাইনামিকালি সাজানোর মাস্টার ফাংশন (১০০% ছবির মতো নিখুঁত!)
+  function renderProjectData(projectName) {
+    var meta = projectMetadata[projectName];
+    if (!meta) return;
+
+    // ১. ব্যানার ও পরিচিতি আপডেট
+    document.getElementById('p-title').innerText = projectName;
+    document.getElementById('p-subtitle').innerText = meta.subtitle;
+    document.getElementById('p-desc').innerText = meta.desc;
+    
+    // ব্যানার থিম কালার ফিক্সড
+    var banner = document.getElementById('p-banner');
+    banner.className = `bg-gradient-to-r ${meta.themeColor} p-8 sm:p-10 rounded-3xl text-white text-center shadow-lg relative overflow-hidden`;
+
+    var iconBox = document.getElementById('p-icon-box');
+    iconBox.className = `${meta.accentBg} ${meta.textColor} p-5 rounded-2xl text-2xl shrink-0`;
+    
+    var icon = document.getElementById('p-icon');
+    icon.className = `fa-solid ${meta.icon}`;
+
+    // ২. পরিসংখ্যান কার্ড টাইটেল ও ডাটা লোড
+    safeSetText('p-card-1-title', meta.cards[0]);
+    safeSetText('p-card-1-val', "...+"); // লাইভ ডাটা লোড হওয়ার আগে ডিফল্ট
+    
+    safeSetText('p-card-2-title', meta.cards[1]);
+    safeSetText('p-card-2-val', meta.cards[0].includes("গাছ") ? "২০+" : "১০০+");
+    
+    safeSetText('p-card-3-title', meta.cards[2]);
+    safeSetText('p-card-3-val', meta.cards[2].includes("চলমান") ? (meta.cards[0].includes("গাছ") ? "৭ বছর" : "৫ বছর") : "৩ বছর");
+    
+    safeSetText('p-card-4-title', meta.cards[3]);
+    safeSetText('p-card-4-val', meta.cards[3].includes("উপজেলা") ? "৪টি" : "৫টি");
+
+    // ৩. লক্ষ্যসমূহ রেন্ডার
+    var goalsContainer = document.getElementById('p-goals-container');
+    goalsContainer.innerHTML = '';
+    meta.goals.forEach((goal, idx) => {
+      goalsContainer.innerHTML += `
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">${toBnDigits(idx + 1)}</div>
+          <p class="text-xs text-gray-500 font-semibold leading-relaxed">${goal}</p>
+        </div>
+      `;
+    });
+
+    // ৪. অর্জনসমূহ রেন্ডার
+    var achieveContainer = document.getElementById('p-achieve-container');
+    achieveContainer.innerHTML = '';
+    meta.achievements.forEach(ach => {
+      achieveContainer.innerHTML += `
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-amber-50 text-amber-500 text-xs font-black flex items-center justify-center shrink-0 mt-0.5"><i class="fa-solid fa-circle-check"></i></div>
+          <p class="text-xs text-gray-500 font-semibold leading-relaxed">${ach}</p>
+        </div>
+      `;
+    });
+
+    // ৫. প্রধান কার্যক্রমসমূহ রেন্ডার
+    var actContainer = document.getElementById('p-activities-container');
+    actContainer.innerHTML = '';
+    meta.activities.forEach((act, idx) => {
+      actContainer.innerHTML += `
+        <div class="bg-slate-50/60 border border-slate-100 p-4 rounded-xl flex items-center gap-3">
+          <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 text-[10px] font-bold flex items-center justify-center shrink-0">${toBnDigits(idx + 1)}</div>
+          <span class="text-xs text-gray-600 font-bold">${act}</span>
+        </div>
+      `;
+    });
+
+    // ৬. সময়রেখা (Timeline) ইনিশিয়াল লোড
+    var timelineContainer = document.getElementById('p-timeline-container');
+    timelineContainer.innerHTML = '';
+    meta.defaultTimelines.forEach(t => {
+      timelineContainer.innerHTML += `
+        <div class="bg-slate-50/60 border border-slate-100 p-4 rounded-2xl flex items-start gap-4">
+          <div class="bg-emerald-50 text-emerald-700 w-12 h-10 rounded-xl flex items-center justify-center shrink-0 font-black text-xs shadow-sm">${toBnDigits(t.year)}</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">${t.text}</p>
+        </div>
+      `;
+    });
+
+    // ৭. প্রভাব ব্যানার থিম সিঙ্ক
+    var impactBanner = document.getElementById('p-impact-banner');
+    impactBanner.className = `p-6 sm:p-8 rounded-[32px] border text-white text-center space-y-2.5 shadow-md bg-gradient-to-br ${meta.themeColor}`;
+    safeSetText('p-impact-desc', meta.impact);
+
+    // ৮. **গুগল শিট থেকে রিয়েল-টাইম ডাটা রিড ফিক্স (লাইভ কানেকশন!)**
+    google.script.run
+      .withSuccessHandler(function(stats) {
+        if (stats && stats.success) {
+          // যদি ডাটাবেজে এই প্রজেক্টের রোপণ/বিতরণ করা কোনো সংখ্যা থাকে তবে প্রথম কার্ডে আপডেট হবে
+          if (stats.totalAmount !== "০") {
+            safeSetText('p-card-1-val', stats.totalAmount + "+");
+          }
+          if (stats.totalEntries !== "০") {
+            safeSetText('p-card-2-val', stats.totalEntries + "+");
+          }
+
+          // যদি ডাটাবেজে কাস্টম সময়রেখা এন্ট্রি থাকে তবে তা সময়রেখার ওপরে পুশ হবে
+          if (stats.timelines && stats.timelines.length > 0) {
+            stats.timelines.forEach(t => {
+              timelineContainer.innerHTML = `
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:border-emerald-400 hover:scale-[1.01] transition duration-200">
+                  <div class="bg-emerald-50 text-emerald-700 w-12 h-10 rounded-xl flex items-center justify-center shrink-0 font-black text-xs shadow-sm">${t.year}</div>
+                  <p class="text-[11px] sm:text-xs text-gray-500 font-semibold mt-1.5 leading-relaxed">${t.text}</p>
+                </div>
+              ` + timelineContainer.innerHTML;
+            });
+          }
+        }
+      })
+      .getLiveProjectStats(projectName);
+  }
+
+  // বাংলা সংখ্যা রূপান্তরকারী (জাভাস্ক্রিপ্ট)
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+</script>  

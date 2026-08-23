@@ -1,0 +1,279 @@
+<!-- about_rules.html -->
+<div class="max-w-4xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ ব্যানার (গঠনতন্ত্র থিম) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">সংগঠনের বিধিমালা</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">আউলিয়াপুর অগ্রযাত্রা পরিষদের সাংবিধানিক গঠনতন্ত্র ও পরিচালনা বিধিমালা</p>
+  </div>
+
+  <!-- ৩টি অধ্যায়ের কুইক ট্যাব বাটন (গঠনতন্ত্রের ২য় ভাগ ভিত্তিক!) -->
+  <div class="flex flex-wrap justify-center gap-2 pb-5 border-b border-gray-100 mb-8">
+    <button onclick="changeChapter(1)" id="btn-chap-1" class="px-5 py-2 bg-emerald-600 text-white rounded-full text-xs font-black shadow-md transition duration-300">১ম অধ্যায়: সদস্যপদের শ্রেণী</button>
+    <button onclick="changeChapter(2)" id="btn-chap-2" class="px-5 py-2 bg-slate-50 text-gray-500 border border-slate-100 hover:bg-slate-100 rounded-full text-xs font-black transition duration-300">২য় অধ্যায়: সদস্য যোগ্যতা</button>
+    <button onclick="changeChapter(3)" id="btn-chap-3" class="px-5 py-2 bg-slate-50 text-gray-500 border border-slate-100 hover:bg-slate-100 rounded-full text-xs font-black transition duration-300">৩য় অধ্যায়: সদস্যপদ বাতিল</button>
+  </div>
+
+  <!-- চ্যাপ্টার কন্টেন্ট এরিয়া -->
+  <div class="space-y-6">
+
+    <!-- ১ম অধ্যায়: সদস্যপদ ও শ্রেণীবিভাগ (অনুচ্ছেদ-৭) -->
+    <div id="content-chap-1" class="space-y-4">
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow transition">
+        <div class="bg-emerald-50 text-emerald-600 p-3.5 rounded-2xl text-lg shrink-0"><i class="fa-solid fa-address-card"></i></div>
+        <div>
+          <span class="text-[10px] font-extrabold text-emerald-700 block uppercase">১ম অধ্যায় (অনুচ্ছেদ-৭)</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">সদস্যপদের শ্রেণীবিভাগ ও ভর্তি ফি</span>
+        </div>
+      </div>
+
+      <!-- ৪ প্রকারের সদস্যপদ কার্ড -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <!-- সাধারণ সদস্য -->
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 transition duration-300">
+          <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase">সাধারণ সদস্য</span>
+          <h5 class="font-extrabold text-gray-800 text-sm mt-2">ফি: ৫০ টাকা (ভর্তি ফরম)</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">গঠনতন্ত্রের শর্তের সাথে সঙ্গতিপূর্ণ যেকোনো নাগরিক ৫০ টাকা ভর্তি ফরম ফি প্রদানের মাধ্যমে সাধারণ সদস্য হতে পারবেন [2]।</p>
+        </div>
+
+        <!-- সহযোগী সদস্য -->
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 transition duration-300">
+          <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-black uppercase">সহযোগী সদস্য</span>
+          <h5 class="font-extrabold text-gray-800 text-sm mt-2">ফি: বাৎসরিক ৫,০০০ টাকা</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">প্রবাসী নাগরিকগণ বাৎসরিক ন্যূনতম ৫০০০/- টাকা (এককালীন বা কিস্তিতে) প্রদানের মাধ্যমে সহযোগী সদস্য হতে পারবেন [2]।</p>
+        </div>
+
+        <!-- সম্মানিত সদস্য -->
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 transition duration-300">
+          <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-600 text-[10px] font-black uppercase">সম্মানিত সদস্য</span>
+          <h5 class="font-extrabold text-gray-800 text-sm mt-2">স্বীকৃতি স্বরূপ (বিনা ফি)</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">স্ব স্ব ক্ষেত্রে বিশেষ অবদানের স্বীকৃতি স্বরূপ যেকোনো সম্মানিত ব্যক্তিকে কার্যনির্বাহী পরিষদের অনুমোদনক্রমে এই পদ দেওয়া হবে [2]।</p>
+        </div>
+
+        <!-- আজীবন সদস্য -->
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 hover:border-emerald-200 transition duration-300">
+          <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-600 text-[10px] font-black uppercase">আজীবন সদস্য</span>
+          <h5 class="font-extrabold text-gray-800 text-sm mt-2">ফি: এককালীন ৩০,০০০ টাকা</h5>
+          <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">শর্তের সাথে সঙ্গতি রেখে এককালীন ৩০,০০০/- টাকা প্রদানের মাধ্যমে যেকোনো প্রাপ্তবয়স্ক ব্যক্তি আজীবন সদস্যপদ লাভ করতে পারবেন [2]।</p>
+        </div>
+
+      </div>
+
+      <!-- বিশেষ নিষেধসংক্রান্ত ডার্ক রেড বক্স (অনুচ্ছেদ-৭ এর শর্তাবলি!) -->
+      <div class="mt-4 border border-red-200 bg-red-50/20 p-5 rounded-2xl flex items-start gap-4">
+        <div class="bg-red-100 text-red-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-user-slash animate-pulse"></i></div>
+        <div class="text-[10px] sm:text-xs text-red-950 font-bold leading-relaxed space-y-1">
+          <p class="text-red-600 font-extrabold text-sm mb-1">সদস্যপদের বিশেষ অযোগ্যতা ও বিধিনিষেধ সমূহ:</p>
+          <p>• রাজনৈতিক দলের সাথে সরাসরি সম্পৃক্ত বা পদধারী কোনো ব্যক্তি,</p>
+          <p>• সুদের ব্যবসার সাথে প্রত্যক্ষ বা পরোক্ষভাবে জড়িত কোনো ব্যক্তি,</p>
+          <p>• চাদাবাজি বা জোরপূর্বক ভূমি দখলের অভিযোগ প্রমাণিত কোনো ব্যক্তি,</p>
+          <p>• মাদকাসক্ত অথবা মাদক ব্যবসার সাথে জড়িত কোনো ব্যক্তি,</p>
+          <p>• এবং পিতা-মাতার অবাধ্য অথবা পরিবারের অবাধ্য কোনো সন্তান এই সংগঠনের সদস্য হতে পারবেন না।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ২য় অধ্যায়: সদস্য হওয়ার যোগ্যতা (অনুচ্ছেদ-৮) -->
+    <div id="content-chap-2" class="hidden space-y-4">
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow transition">
+        <div class="bg-emerald-50 text-emerald-600 p-3.5 rounded-2xl text-lg shrink-0"><i class="fa-solid fa-user-check"></i></div>
+        <div>
+          <span class="text-[10px] font-extrabold text-emerald-700 block uppercase">২য় অধ্যায় (অনুচ্ছেদ-৮)</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">সদস্য হওয়ার যোগ্যতা ও ৯টি অফিশিয়াল শর্তাবলি</span>
+        </div>
+      </div>
+
+      <!-- ৯টি শর্ত কার্ড -->
+      <div class="space-y-3">
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">ক</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">জন্মসূত্রে/পিতৃসূত্রে/মাতৃসূত্রে আউলিয়াপুর ইউনিয়নের স্থায়ী বাসিন্দা হতে হবে (পরবর্তীতে কার্যপরিধি বৃদ্ধি সাপেক্ষে যেকোনো বাংলাদেশী নাগরিক)।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">খ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">ন্যূনতম ১৮ (আঠারো) বছর বয়স হতে হবে এবং ভোটাধিকার থাকতে হবে (চলমান শিক্ষার্থীদের ক্ষেত্রে বয়স শিথিলযোগ্য)।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">গ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">উন্নত নৈতিক চরিত্রের অধিকারী হতে হবে এবং আদালত কর্তৃক কোনো সাজাপ্রাপ্ত আসামী হওয়া যাবে না।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">ঘ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">সম্পূর্ণ সুস্থ মস্তিষ্কের অধিকারী হতে হবে (কোনো বিকৃত মস্তিষ্ক, উন্মাদ বা মানসিক ভারসাম্যহীন ব্যক্তি হওয়া যাবে না)।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">ঙ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">সংস্থার আদর্শ ও জনকল্যাণমূলক উদ্দেশ্যের প্রতি অবিচল এবং গঠনতন্ত্রের প্রতি সম্পূর্ণ অনুগত থাকতে হবে।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">চ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">সংগঠন কর্তৃক নির্ধারিত ভর্তি ফি এবং মাসিক চাঁদা নিয়মিত পরিশোধ করার সদিচ্ছা থাকতে হবে।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">ছ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">সংস্থার সাধারণ বা বিশেষ অর্পিত দায়িত্বগুলো সক্রিয় ও আন্তরিকতার সাথে পালন করতে হবে।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">জ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">সমাজের অবহেলিত মানুষের পাশে দাঁড়িয়ে সমাজকল্যাণ ও আর্তমানবতার সেবায় নিজেকে নিয়োজিত করতে হবে।</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">ঝ</div>
+          <p class="text-[11px] sm:text-xs text-gray-500 font-semibold leading-relaxed">নির্ধারিত সদস্য ফরম নিখুঁতভাবে পূরণ করে আবেদন করতে হবে এবং তা কার্যনির্বাহী পরিষদ কর্তৃক গৃহীত হতে হবে।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ৩য় অধ্যায়: সদস্যপদ বাতিল (অনুচ্ছেদ-৯) -->
+    <div id="content-chap-3" class="hidden space-y-4">
+      <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow transition">
+        <div class="bg-emerald-50 text-emerald-600 p-3.5 rounded-2xl text-lg shrink-0"><i class="fa-solid fa-user-slash"></i></div>
+        <div>
+          <span class="text-[10px] font-extrabold text-emerald-700 block uppercase">৩য় অধ্যায় (অনুচ্ছেদ-৯)</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">সদস্যপদ বাতিল সংক্রান্ত বিশেষ সাংগঠনিক ধারাসমূহ</span>
+        </div>
+      </div>
+
+      <!-- ৩য় অধ্যায়ের ধারাসমূহ -->
+      <div class="space-y-3.5">
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="bg-slate-50 text-slate-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-gavel"></i></div>
+          <div>
+            <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">গঠনতন্ত্র পরিপন্থী কাজ করা</h5>
+            <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">কোনো সদস্যের বিরুদ্ধে রাষ্ট্রবিরোধী কিংবা সংগঠনের গঠনতন্ত্রের পরিপন্থী কোনো অসাংগঠনিক কাজ প্রমাণিত হলে তাঁর সদস্যপদ বাতিল হবে।</p>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="bg-slate-50 text-slate-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-money-bill-transfer"></i></div>
+          <div>
+            <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">তহবিল তছরুপ ও অবৈধ চাদাবাজি</h5>
+            <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">সংস্থার তহবিলে তছরুপ বা নয়ছয় করলে, অথবা সংগঠনের নামে বাইরে কোনো অসাংগঠনিক চাঁদা বা ডোনেশন সংগ্রহ করলে তাঁর সদস্যপদ স্থায়ীভাবে বাতিল হবে।</p>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="bg-slate-50 text-slate-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-calendar-minus"></i></div>
+          <div>
+            <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">টানা ৬ মাস চাঁদা পরিশোধ না করা</h5>
+            <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">কোনো সাধারণ সদস্য পরিষদের নির্ধারিত মাসিক চাঁদা বা ফি একাধারে ৬ (ছয়) মাস পর্যন্ত বকেয়া রাখলে বা পরিশোধ না করলে তাঁর সদস্যপদ বাতিল বলে গণ্য হবে।</p>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex items-start gap-4">
+          <div class="bg-slate-50 text-slate-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-user-clock"></i></div>
+          <div>
+            <h5 class="font-extrabold text-gray-800 text-xs sm:text-sm">মিটিং ও কার্যক্রমে নিষ্ক্রিয়তা</h5>
+            <p class="text-[10px] sm:text-xs text-gray-400 mt-1 leading-relaxed">গ্রহণযোগ্য কারণ ছাড়া কার্যনির্বাহী কমিটির পর পর ৩টি সভায় অনুপস্থিত থাকলে অথবা কোনো কাজের দায়িত্ব পেয়ে একাধারে ৬ মাস নিষ্ক্রিয় ও অকর্মণ্য থাকলে সদস্যপদ বাতিল করা হবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- গঠনতন্ত্র পরিবর্তন বিষয়ক সতর্কতা প্যানেল -->
+  <div class="mt-8 border border-amber-200 bg-amber-50/20 p-5 rounded-3xl flex items-start gap-4 select-none">
+    <div class="bg-amber-100 text-amber-600 p-2.5 rounded-xl text-xs shrink-0 mt-0.5"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="text-[10px] sm:text-xs text-amber-900/80 leading-relaxed font-bold">
+      গঠনতন্ত্রের অনুচ্ছেদ-৯ এর অধীনে: যেকোনো সদস্যপদ বাতিলের ক্ষেত্রে কার্যনির্বাহী বা কার্যকরী পরিষদের সর্বসম্মতি অথবা সংখ্যাগরিষ্ঠতার চূড়ান্ত সিদ্ধান্তই সাংগঠনিকভাবে শেষ এবং চূড়ান্ত বলে গণ্য হবে।
+    </div>
+  </div>
+
+  <!-- নেভিগেশন ও ফুটার পেজ ইন্ডিকেটর ডটস -->
+  <div class="flex justify-between items-center text-xs font-bold text-gray-500 mt-10 border-t pt-6 border-slate-100 select-none">
+    
+    <!-- পূর্ববর্তী বাটন -->
+    <button onclick="navigateChapter(-1)" id="btn-prev-chap" class="px-4 py-2 border rounded-xl bg-white text-gray-400 hover:bg-slate-50 transition cursor-not-allowed" disabled>
+      <i class="fa-solid fa-angle-left mr-1"></i> পূর্ববর্তী
+    </button>
+    
+    <!-- ৩টি ইন্ডিকেটর পেজ ডটস -->
+    <div class="flex items-center space-x-2.5" id="pagination-dots">
+      <span id="dot-1" class="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-md shadow-emerald-100 transition duration-300"></span>
+      <span id="dot-2" class="w-2.5 h-2.5 rounded-full bg-gray-200 transition duration-300"></span>
+      <span id="dot-3" class="w-2.5 h-2.5 rounded-full bg-gray-200 transition duration-300"></span>
+    </div>
+
+    <!-- পরবর্তী বাটন -->
+    <button onclick="navigateChapter(1)" id="btn-next-chap" class="px-4 py-2 border rounded-xl bg-white text-emerald-600 hover:bg-slate-50 transition flex items-center">
+      পরবর্তী <i class="fa-solid fa-angle-right ml-1"></i>
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // ডাইনামিক রিয়েল-টাইম অধ্যায় পরিবর্তনের প্রফেশনাল ক্লায়েন্ট সাইড স্ক্রিপ্ট
+  var activeChapter = 1;
+
+  function changeChapter(chapNum) {
+    activeChapter = chapNum;
+    updateChapterUI();
+  }
+
+  function navigateChapter(direction) {
+    activeChapter += direction;
+    if (activeChapter < 1) activeChapter = 1;
+    if (activeChapter > 3) activeChapter = 3;
+    updateChapterUI();
+  }
+
+  function updateChapterUI() {
+    // ১. সব অধ্যায়ের কন্টেন্ট হাইড এবং নির্দিষ্ট অধ্যায় সচল করা
+    for (var i = 1; i <= 3; i++) {
+      var content = document.getElementById('content-chap-' + i);
+      if (content) {
+        if (i === activeChapter) {
+          content.classList.remove('hidden');
+        } else {
+          content.classList.add('hidden');
+        }
+      }
+    }
+
+    // ২. টপ বাটনগুলোর কালার রিসেট ও অ্যাক্টিভ বাটন হাইলাইট করা
+    for (var i = 1; i <= 3; i++) {
+      var btn = document.getElementById('btn-chap-' + i);
+      if (btn) {
+        if (i === activeChapter) {
+          btn.className = "px-5 py-2 bg-emerald-600 text-white rounded-full text-xs font-black shadow-md shadow-emerald-100 transition duration-300";
+        } else {
+          btn.className = "px-5 py-2 bg-slate-50 text-gray-500 border border-slate-100 hover:bg-slate-100 rounded-full text-xs font-black transition duration-300";
+        }
+      }
+    }
+
+    // ৩. পূর্ববর্তী ও পরবর্তী বাটন স্টাইল ডাইনামিক টগল
+    var prevBtn = document.getElementById('btn-prev-chap');
+    var nextBtn = document.getElementById('btn-next-chap');
+
+    if (activeChapter === 1) {
+      prevBtn.disabled = true;
+      prevBtn.className = "px-4 py-2 border rounded-xl bg-white text-gray-400 hover:bg-slate-50 transition cursor-not-allowed";
+    } else {
+      prevBtn.disabled = false;
+      prevBtn.className = "px-4 py-2 border rounded-xl bg-white text-emerald-600 hover:bg-slate-50 transition flex items-center cursor-pointer";
+    }
+
+    if (activeChapter === 3) {
+      nextBtn.disabled = true;
+      nextBtn.className = "px-4 py-2 border rounded-xl bg-white text-gray-400 hover:bg-slate-50 transition cursor-not-allowed";
+    } else {
+      nextBtn.disabled = false;
+      nextBtn.className = "px-4 py-2 border rounded-xl bg-white text-emerald-600 hover:bg-slate-50 transition flex items-center cursor-pointer";
+    }
+
+    // ৪. পেজ ইন্ডিকেটর ডটস আপডেট
+    for (var i = 1; i <= 3; i++) {
+      var dot = document.getElementById('dot-' + i);
+      if (dot) {
+        if (i === activeChapter) {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-md shadow-emerald-100 transition duration-300";
+        } else {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-gray-200 transition duration-300";
+        }
+      }
+    }
+  }
+</script>

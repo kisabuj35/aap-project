@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9;
+      }
+
+      /* আধুনিক স্টাইলিশ লোডার ডিজাইন */
+      #loader, .loader, [id*="load"], [class*="load"] {
+        backdrop-filter: blur(10px) !important;
+        background-color: rgba(15, 23, 42, 0.65) !important;
+        transition: all 0.5s ease-in-out !important;
+      }
+      [id*="load"] > div, .loader > div, [class*="load"] > div {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-radius: 32px !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        padding: 2.5rem !important;
+        max-width: 90% !important;
+        transform: scale(1) !important;
+        animation: modalPulse 2s infinite ease-in-out !important;
+      }
+      [id*="load"] svg, .loader svg, [class*="load"] svg, .spinner, [id*="spinner"] {
+        border-top-color: #059669 !important;
+        animation: spin 1s linear infinite !important;
+      }
+      @keyframes modalPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 select-none relative">
+  <!-- ১. স্লাইডার হিরো ব্যানার এবং ফ্লোটিং লাইভ সামারি -->
+  <section class="relative text-white py-28 px-4 sm:px-6 lg:px-8 shadow-inner overflow-hidden select-none min-h-[480px] flex items-center justify-center rounded-3xl">
+    
+    <!-- স্লাইডার ব্যাকগ্রাউন্ড ছবি সমূহ -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-100" id="slide-1" style="background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200');"></div>
+      <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" id="slide-2" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1200');"></div>
+      <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0" id="slide-3" style="background-image: url('https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=1200');"></div>
+      <div class="absolute inset-0 bg-emerald-950/75 z-10"></div>
+    </div>
+
+    <!-- হিরো কন্টেন্ট -->
+    <div class="relative max-w-7xl mx-auto text-center z-20 space-y-4">
+      <span class="inline-block bg-emerald-900/60 text-white text-xs px-4 py-1.5 rounded-full font-black uppercase tracking-wider shadow border border-emerald-800/40">২০২৬ সালে প্রতিষ্ঠিত সামাজিক সংগঠন</span>
+      <h2 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight">আউলিয়াপুর অগ্রযাত্রা পরিষদ</h2>
+      <p class="text-sm sm:text-base text-emerald-50 font-bold italic leading-relaxed">
+          "আজকের উদ্যোগ, আগামীর অগ্রযাত্রা।"
+        </p>
+      <!-- Humanity Quotes -->
+      <div class="max-w-3xl mx-auto space-y-3 pt-3">
+        <p class="text-sm sm:text-base text-emerald-50 font-bold italic leading-relaxed">
+          "মানুষ মানুষের জন্য, জীবন জীবনের জন্য — আসুন স্বার্থহীন সেবার মাধ্যমে অসহায় মানুষের মুখে হাসি ফোটাই।"
+        </p>
+        <p class="text-xs sm:text-sm text-emerald-100/90 font-medium">
+          "একটি মহৎ উদ্যোগ এবং আপনার একটু সদিচ্ছা পরিবর্তন করে দিতে পারে সমাজের অনেক অন্ধকার অধ্যায়।"
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ফ্লোটিং লাইভ কাউন্টার -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 select-none">
+    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100 text-center">
+      <div class="flex-1 py-4 hover:bg-emerald-50/20 transition rounded-l-3xl">
+        <span id="live-planted" class="block text-4xl font-black text-emerald-600">০</span>
+        <span class="text-gray-500 text-xs font-bold uppercase mt-1 block">বৃক্ষরোপণ কর্মসূচি</span>
+      </div>
+      <div class="flex-1 py-4 hover:bg-emerald-50/20 transition">
+        <span id="live-members" class="block text-4xl font-black text-emerald-600">০</span>
+        <span class="text-gray-500 text-xs font-bold uppercase mt-1 block">নিবন্ধিত সদস্য</span>
+      </div>
+      <div class="flex-1 py-4 hover:bg-emerald-50/20 transition rounded-r-3xl">
+        <span id="live-blood" class="block text-4xl font-black text-emerald-600">০</span>
+        <span class="text-gray-500 text-xs font-bold uppercase mt-1 block">মোট রক্তদান</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ২. আমাদের সাম্প্রতিক কার্যক্রম -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12 select-none">
+      <span class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1 rounded-full font-extrabold uppercase">আমাদের কাজ</span>
+      <h3 class="text-3xl font-extrabold text-gray-800 mt-2">সাম্প্রতিক কার্যক্রম</h3>
+      <div class="w-16 h-1 bg-emerald-500 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="recent-activities-container">
+      <!-- লাইভ ডাটা কার্ড এখানে রেন্ডার হবে -->
+    </div>
+  </section>
+
+  <!-- ৩. আমাদের উদ্দেশ্য এবং আসন্ন কর্মসূচি প্যানেল -->
+  <section class="bg-slate-50 py-16 rounded-3xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- বাম পাশ: আমাদের লক্ষ্য -->
+      <div class="lg:col-span-7">
+        <span class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1 rounded-full font-extrabold uppercase">আমাদের লক্ষ্য</span>
+        <h3 class="text-3xl font-extrabold text-gray-800 mt-2 mb-8">যে উদ্দেশ্যে আমরা কাজ করি</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-emerald-400 hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="bg-amber-100 text-amber-500 p-4 rounded-full mb-3 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"><i class="fa-solid fa-graduation-cap text-2xl"></i></div>
+            <h4 class="font-extrabold text-gray-800 text-base mb-1 group-hover:text-emerald-600 transition">শিক্ষা বিস্তার</h4>
+            <p class="text-gray-500 text-xs">দরিদ্র ও মেধাবী শিক্ষার্থীদের মাঝে বিনামূল্যে শিক্ষা সামগ্রী ও সাহায্য প্রদান।</p>
+          </div>
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-emerald-400 hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="bg-red-100 text-red-500 p-4 rounded-full mb-3 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"><i class="fa-solid fa-heart-pulse text-2xl"></i></div>
+            <h4 class="font-extrabold text-gray-800 text-base mb-1 group-hover:text-emerald-600 transition">স্বাস্থ্য সেবা</h4>
+            <p class="text-gray-500 text-xs">জরুরী রক্তদান কর্মসূচী ও বিনামূল্যে রক্তের গ্রুপ নির্ণয় ক্যাম্পেইন পরিচালনা করা।</p>
+          </div>
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-emerald-400 hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="bg-emerald-100 text-emerald-500 p-4 rounded-full mb-3 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"><i class="fa-solid fa-tree text-2xl"></i></div>
+            <h4 class="font-extrabold text-gray-800 text-base mb-1 group-hover:text-emerald-600 transition">পরিবেশ রক্ষা</h4>
+            <p class="text-gray-500 text-xs">সবুজায়ন ও জলবায়ু রক্ষায় পটুয়াখালী জেলাজুড়ে চারাগাছ রোপণ কর্মসূচী।</p>
+          </div>
+          <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-emerald-400 hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="bg-blue-100 text-blue-500 p-4 rounded-full mb-3 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"><i class="fa-solid fa-hands-holding text-2xl"></i></div>
+            <h4 class="font-extrabold text-gray-800 text-base mb-1 group-hover:text-emerald-600 transition">মানবিক সেবা</h4>
+            <p class="text-gray-500 text-xs">বন্যা, ঝড় বা তীব্র শীতে অসহায় ও দুস্থ মানুষের মাঝে ত্রাণ ও উপহার সামগ্রী বিতরণ।</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ডান পাশ: আসন্ন কর্মসূচি -->
+      <div class="lg:col-span-5">
+        <span class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1 rounded-full font-extrabold uppercase">আপডেট</span>
+        <h3 class="text-3xl font-extrabold text-gray-800 mt-2 mb-8">আসন্ন কর্মসূচি</h3>
+        
+        <div class="space-y-4" id="upcoming-events-container">
+          <!-- লাইভ আসন্ন ইভেন্ট রেন্ডার হবে -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ৪. প্রধান উপদেষ্টার বাণী প্যানেল -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="advisor-section">
+    <div class="text-center mb-12">
+      <h3 class="text-3xl font-extrabold text-gray-800">প্রধান উপদেষ্টার বাণী</h3>
+      <div class="w-16 h-1 bg-emerald-500 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <div class="bg-white rounded-[32px] shadow-xl border border-gray-100 p-8 flex flex-col lg:flex-row gap-8">
+      <!-- বাম পাশের প্রোফাইল কার্ড -->
+      <div class="lg:w-1/3 flex flex-col items-center border-r border-gray-100 pr-0 lg:pr-8 text-center lg:text-left select-none">
+        
+        <!-- ডাইনামিক লাইভ ইমেজ বা ব্যাকগ্রাউন্ড লেটার কন্টেইনার -->
+        <div class="relative shrink-0 select-none mb-4">
+          <img id="advisor-photo" class="w-40 h-44 rounded-3xl border-4 border-emerald-50 object-cover object-top shadow-lg" src="" alt="Advisor" style="display: none;">
+          <div id="advisor-letter" style="display: none;" class="w-40 h-44 rounded-3xl border-4 border-emerald-50 text-white font-black text-5xl flex items-center justify-center shadow-lg select-none">
+            <!-- ডাইনামিক ১ম অক্ষর আসবে -->
+          </div>
+        </div>
+
+        <h4 id="advisor-name" class="text-2xl font-black text-gray-800 mb-1">...</h4>
+        <span id="advisor-desig" class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full font-extrabold mb-6">...</span>
+        
+        <div class="space-y-3.5 text-sm text-gray-500 w-full font-semibold">
+          <p class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition"><i class="fa-solid fa-briefcase text-emerald-500 w-6"></i> পেশা: <span id="advisor-profession" class="ml-1 font-bold text-gray-700">...</span></p>
+          <p class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition"><i class="fa-solid fa-user-graduate text-emerald-500 w-6"></i>  শিক্ষা: <span id="advisor-education" class="ml-1 font-bold text-gray-700">...</span></p>
+          <p class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition"><i class="fa-solid fa-building text-emerald-500 w-6"></i>  কর্মস্থল: <span id="advisor-org" class="ml-1 font-bold text-gray-700">...</span></p>
+          <p class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition"><i class="fa-solid fa-phone text-emerald-500 w-6"></i> ফোন: <span id="advisor-phone" class="ml-1 font-bold text-gray-700">...</span></p>
+          <a id="advisor-fb" href="#" target="_blank" class="flex items-center justify-center lg:justify-start hover:text-emerald-600 transition text-emerald-700 font-semibold"><i class="fa-brands fa-facebook text-emerald-500 w-6 text-base animate-pulse"></i> ফেসবুক প্রোফাইল</a>
+        </div>
+      </div>
+
+      <!-- ডান পাশের বাণী বার্তা -->
+      <div class="lg:w-2/3 flex flex-col justify-between">
+        <div class="text-gray-600 text-sm leading-relaxed space-y-4 italic py-4">
+          <p id="advisor-msg" class="text-sm sm:text-base text-gray-700 mb-2 leading-relaxed font-semibold">...</p>
+        </div>
+        <div class="mt-8 flex justify-end border-t border-gray-50 pt-4">
+          <div class="text-right">
+            <span id="advisor-sign" class="font-extrabold text-gray-800 text-base">...</span>
+            <p class="text-xs text-gray-400">প্রধান উপদেষ্টা</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ৫. সভাপতি ও সাধারণ সম্পাদকের বাণী প্যানেল -->
+  <section class="bg-slate-50 py-16 rounded-3xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-[32px] shadow-xl border border-gray-100 p-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- বাম পাশের বায়ো ডাটা -->
+        <div class="lg:w-1/2 space-y-6 border-r border-gray-100 pr-0 lg:pr-8 select-none">
+          <h4 class="text-xl font-bold text-gray-800 border-b pb-2 flex items-center"><i class="fa-solid fa-people-carry-box text-emerald-500 mr-2"></i> কার্যনির্বাহী পর্ষদ</h4>
+          
+          <!-- সভাপতি স্লিপ -->
+          <div class="flex items-center space-x-4 bg-emerald-50/40 p-5 rounded-3xl hover:scale-102 hover:shadow transition duration-300"> 
+            <div class="relative shrink-0 select-none">
+              <img id="pres-photo" class="w-24 h-28 rounded-2xl border-2 border-emerald-100 object-cover object-top shadow-md" src="" alt="President" style="display: none;">
+              <div id="pres-letter" style="display: none;" class="w-24 h-28 rounded-2xl border-2 border-emerald-100 bg-gradient-to-br from-emerald-600 to-teal-600 text-white font-black text-3xl flex items-center justify-center shadow-md">
+                <!-- ১ম অক্ষর -->
+              </div>
+            </div>
+            <div class="space-y-1">
+              <h5 id="pres-name" class="font-extrabold text-gray-800 text-base">...</h5>
+              <span class="text-xs text-emerald-700 font-bold block">প্রতিষ্ঠাতা সভাপতি, আউলিয়াপুর অগ্রযাত্রা পরিষদ</span>
+              <div class="text-[10px] text-gray-500 space-y-0.5 font-semibold">
+                <p><i class="fa-solid fa-briefcase text-emerald-500 mr-1 text-[9px]"></i>  পেশা: <span id="pres-profession" class="font-bold text-gray-700">...</span></p>
+                <p><i class="fa-solid fa-user-graduate text-emerald-500 mr-1 text-[9px]"></i>  শিক্ষা: <span id="pres-education" class="font-bold text-gray-700">...</span></p>
+                <p><i class="fa-solid fa-building text-emerald-500 mr-1 text-[9px]"></i>  কর্মস্থল: <span id="pres-org" class="font-bold text-gray-700">...</span></p>
+              </div>
+              <a id="pres-fb" href="#" target="_blank" class="text-[10px] text-blue-500 hover:text-blue-600 hover:underline mt-1 inline-block"><i class="fa-brands fa-facebook mr-1"></i> ফেসবুক কানেক্ট</a>
+            </div>
+          </div>
+
+          <!-- সাধারণ সম্পাদক স্লিপ -->
+          <div class="flex items-center space-x-4 bg-emerald-50/40 p-5 rounded-3xl hover:scale-102 hover:shadow transition duration-300">
+            <div class="relative shrink-0 select-none">
+              <img id="sec-photo" class="w-24 h-28 rounded-2xl border-2 border-emerald-100 object-cover object-top shadow-md" src="" alt="Secretary" style="display: none;">
+              <div id="sec-letter" style="display: none;" class="w-24 h-28 rounded-2xl border-2 border-emerald-100 bg-gradient-to-br from-emerald-600 to-teal-600 text-white font-black text-3xl flex items-center justify-center shadow-md">
+                <!-- ১ম অক্ষর -->
+              </div>
+            </div>
+            <div class="space-y-1">
+              <h5 id="sec-name" class="font-extrabold text-gray-800 text-base">...</h5>
+              <span class="text-xs text-emerald-700 font-bold block">সাধারণ সম্পাদক, আউলিয়াপুর অগ্রযাত্রা পরিষদ</span>
+              <div class="text-[10px] text-gray-500 space-y-0.5 font-semibold">
+                <p><i class="fa-solid fa-briefcase text-emerald-500 mr-1 text-[9px]"></i>  পেশা: <span id="sec-profession" class="font-bold text-gray-700">...</span></p>
+                <p><i class="fa-solid fa-user-graduate text-emerald-500 mr-1 text-[9px]"></i>  শিক্ষা: <span id="sec-education" class="font-bold text-gray-700">...</span></p>
+                <p><i class="fa-solid fa-building text-emerald-500 mr-1 text-[9px]"></i>  কর্মস্থল: <span id="sec-org" class="font-bold text-gray-700">...</span></p>
+              </div>
+              <a id="sec-fb" href="#" target="_blank" class="text-[10px] text-blue-500 hover:text-blue-600 hover:underline mt-1 inline-block"><i class="fa-brands fa-facebook mr-1"></i> ফেসবুক কানেক্ট</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ডান পাশের বাণী কন্টেন্ট -->
+        <div class="lg:w-1/2 flex flex-col justify-between pl-0 lg:pl-4 mt-6 lg:mt-0">
+          <div>
+            <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-quote-left text-emerald-500 mr-2"></i> আমাদের উদ্দেশ্য ও বাণী</h4>
+            <div class="text-gray-600 text-xs sm:text-sm italic leading-relaxed space-y-4">
+              <p id="pres-msg" class="font-semibold text-emerald-800 leading-relaxed">...</p>
+              <p id="sec-msg" class="leading-relaxed">...</p>
+            </div>
+          </div>
+          <div class="mt-8 flex justify-end">
+            <div class="text-right font-extrabold text-emerald-600 text-xs tracking-wider">
+              আউলিয়াপুর অগ্রযাত্রা পরিষদ কার্যনির্বাহী কমিটি
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ৬. ডোনার ও পার্টনার সেকশন (ডাইনামিক রেসপন্সিভ স্লাইডার) -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12 select-none">
+      <span class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1 rounded-full font-extrabold uppercase">আমাদের সহযোগীরা</span>
+      <h3 class="text-3xl font-extrabold text-gray-800 mt-2">ডোনার ও পার্টনার</h3>
+      <div class="w-16 h-1 bg-emerald-500 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <!-- স্লাইডার কন্টেইনার এবং নেভিগেশন -->
+    <div class="relative overflow-hidden w-full py-4 select-none" id="donors-carousel-wrapper" onmouseenter="pauseDonorSlider()" onmouseleave="startDonorSlider()">
+      <!-- স্লাইড ট্র্যাক -->
+      <div class="flex transition-transform duration-500 ease-in-out -mx-3" id="donors-container">
+        <!-- সব ডোনার ও পার্টনারদের লাইভ কার্ড ডাইনামিকভাবে রেন্ডার হবে -->
+      </div>
+      
+      <!-- নেভিগেশন বাটনসমূহ -->
+      <button onclick="slideDonors('prev')" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 hover:bg-emerald-50 hover:text-emerald-600 shadow border border-slate-100 flex items-center justify-center text-slate-500 transition">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button onclick="slideDonors('next')" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 hover:bg-emerald-50 hover:text-emerald-600 shadow border border-slate-100 flex items-center justify-center text-slate-500 transition">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- ৭. আমাদের কার্যক্রমে যুক্ত হোন অ্যাকশন এরিয়া -->
+  <section class="bg-emerald-700 text-white py-16 px-4 sm:px-6 lg:px-8 select-none rounded-3xl">
+    <div class="max-w-7xl mx-auto text-center">
+      <h3 class="text-3xl font-extrabold mb-4">আমাদের কার্যক্রমে যুক্ত হোন</h3>
+      <div class="w-16 h-1 bg-white/40 mx-auto mt-3 mb-10 rounded-full"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white/10 border border-white/20 p-8 rounded-3xl flex flex-col items-center hover:scale-105 hover:bg-white/15 transition-all duration-300">
+          <i class="fa-solid fa-circle-plus text-3xl mb-4 text-emerald-300"></i>
+          <h4 class="text-xl font-bold mb-2">দান করুন</h4>
+          <p class="text-emerald-100 text-xs leading-relaxed">আপনার সামান্য দানও পারে কোনো দরিদ্রের দুঃখ দূর করতে। আমাদের ফান্ডের স্বচ্ছতার নিশ্চয়তা সম্পূর্ণ ডাইনামিক।</p>
+        </div>
+        <div class="bg-white/10 border border-white/20 p-8 rounded-3xl flex flex-col items-center hover:scale-105 hover:bg-white/15 transition-all duration-300">
+          <i class="fa-solid fa-user-plus text-3xl mb-4 text-emerald-300"></i>
+          <h4 class="text-xl font-bold mb-2">স্বেচ্ছাসেবক</h4>
+          <p class="text-emerald-100 text-xs leading-relaxed">তরুণ ও যুব সমাজের সমাজসেবামূলক উদ্যোগে যুক্ত হয়ে নিজেকে আউলিয়াপুরের অগ্রযাত্রী হিসেবে গড়ুন।</p>
+        </div>
+        <div class="bg-white/10 border border-white/20 p-8 rounded-3xl flex flex-col items-center hover:scale-105 hover:bg-white/15 transition-all duration-300">
+          <i class="fa-solid fa-hand-holding-heart text-3xl mb-4 text-emerald-300"></i>
+          <h4 class="text-xl font-bold mb-2">পৃষ্ঠপোষকতা</h4>
+          <p class="text-emerald-100 text-xs leading-relaxed">কর্বোরেট প্রতিষ্ঠান বা সুপ্রতিষ্ঠিত ব্যক্তি হিসেবে সংগঠনের দীর্ঘস্থায়ী প্রজেক্ট সমূহের স্পন্সর বা পার্টনার হোন।</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ৮. কাস্টম নান্দনিক ডোনার মডাল (Popup Modal) -->
+<div id="donor-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+  <div class="bg-white rounded-[32px] max-w-md w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300" id="modal-card">
+    <!-- হেডার ও ক্লোজ বাটন -->
+    <div class="relative p-6 pb-0 flex justify-end">
+      <button type="button" onclick="closeDonorModal()" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200/50 text-slate-500 hover:text-slate-700 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+    <!-- কনটেন্ট -->
+    <div class="p-8 pt-2 text-center flex flex-col items-center">
+      <!-- প্রোফাইল পিকচার বা লেটার লোগো -->
+      <div class="relative w-32 h-32 select-none mb-4 shrink-0">
+        <img id="modal-donor-img" class="w-full h-full object-cover object-top rounded-3xl border-4 border-emerald-50 shadow-md" src="" alt="Donor" style="display: none;">
+        <div id="modal-donor-letter" style="display: none;" class="w-full h-full text-white font-black text-5xl flex items-center justify-center rounded-3xl shadow-inner select-none bg-gradient-to-br from-emerald-500 to-teal-600">
+          <!-- ১ম অক্ষর ডাইনামিক আসবে -->
+        </div>
+      </div>
+      <!-- নাম ও টাইটেল -->
+      <h4 id="modal-donor-name" class="text-xl font-black text-slate-800 leading-snug">...</h4>
+      <span id="modal-donor-desig" class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full font-extrabold mt-2 mb-6 block shrink-0">...</span>
+      
+      <!-- তথ্য তালিকা -->
+      <div class="w-full space-y-3.5 text-xs text-slate-500 font-semibold border-t border-b border-slate-50 py-5 my-2">
+        <p class="flex items-center justify-between hover:text-emerald-600 transition">
+          <span class="flex items-center"><i class="fa-solid fa-briefcase text-emerald-500 w-5 text-left text-sm"></i>  পেশা:</span>
+          <span id="modal-donor-profession" class="font-bold text-slate-700 text-right">...</span>
+        </p>
+        <p class="flex items-center justify-between hover:text-emerald-600 transition">
+          <span class="flex items-center"><i class="fa-solid fa-user-graduate text-emerald-500 w-5 text-left text-sm"></i>  শিক্ষা:</span>
+          <span id="modal-donor-education" class="font-bold text-slate-700 text-right">...</span>
+        </p>
+        <p class="flex items-center justify-between hover:text-emerald-600 transition">
+          <span class="flex items-center"><i class="fa-solid fa-building text-emerald-500 w-5 text-left text-sm"></i>  কর্মস্থল:</span>
+          <span id="modal-donor-org" class="font-bold text-slate-700 text-right">...</span>
+        </p>
+        <p class="flex items-center justify-between hover:text-emerald-600 transition">
+          <span class="flex items-center"><i class="fa-solid fa-phone text-emerald-500 w-5 text-left text-sm"></i>  ফোন নম্বর:</span>
+          <span id="modal-donor-phone" class="font-bold text-slate-700 text-right">...</span>
+        </p>
+      </div>
+
+      <!-- সোশ্যাল বাটনসমূহ ও অ্যাকশন কল -->
+      <div class="flex gap-4 w-full mt-6 shrink-0">
+        <button type="button" id="modal-donor-call-btn" onclick="openPhoneActionModalFromDetail()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-3 px-4 rounded-2xl shadow-md shadow-emerald-50 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-phone-volume"></i> কল করুন
+        </button>
+        <a id="modal-donor-fb" href="#" target="_blank" class="w-12 h-12 bg-blue-50 hover:bg-blue-100 border border-blue-200/40 text-blue-500 rounded-2xl flex items-center justify-center transition shrink-0" title="ফেসবুক কানেক্ট">
+          <i class="fa-brands fa-facebook-f text-lg"></i>
+        </a>
+        <a id="modal-donor-email" href="#" class="w-12 h-12 bg-amber-50 hover:bg-amber-100 border border-amber-200/40 text-amber-500 rounded-2xl flex items-center justify-center transition shrink-0" title="ইমেইল করুন">
+          <i class="fa-solid fa-envelope text-lg"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ৯. কাস্টম কল ও কপি পপআপ মডাল (Phone Call & Copy Popup) -->
+<div id="phone-action-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+  <div class="bg-white rounded-[28px] max-w-sm w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 p-6 text-center" id="phone-modal-card">
+    <div class="flex justify-between items-center mb-4">
+      <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-phone-flip text-emerald-500"></i> যোগাযোগ করুন</h5>
+      <button type="button" onclick="closePhoneModal()" class="w-7 h-7 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-xs"></i>
+      </button>
+    </div>
+    
+    <p id="phone-modal-donor-name" class="font-extrabold text-slate-800 text-base mb-1">...</p>
+    <p id="phone-modal-donor-desig" class="text-xs text-emerald-600 font-bold mb-4">...</p>
+    
+    <!-- ফোন নম্বর প্রদর্শনী বক্স -->
+    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-between gap-3 mb-6">
+      <span id="phone-modal-number" class="font-black text-slate-700 text-base tracking-wider select-text">...</span>
+      <button type="button" onclick="copyPhoneNumber()" class="bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 text-slate-500 hover:text-emerald-600 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 shrink-0 shadow-sm" id="copy-btn">
+        <i class="fa-regular fa-copy"></i> কপি করুন
+      </button>
+    </div>
+    
+    <!-- অ্যাকশন বাটনসমূহ -->
+    <div class="flex gap-3">
+      <button type="button" onclick="closePhoneModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold py-3.5 px-4 rounded-xl transition">
+        ফিরে যান
+      </button>
+      <a id="phone-modal-dial-btn" href="tel:" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl shadow-md shadow-emerald-50 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-phone-volume"></i> সরাসরি কল দিন
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // গ্লোবাল ভেরিয়েবলসমূহ
+  var rawDonorsGlobal = [];
+  var cachedCommitteeList = null; // কমিটি ডাটাবেজ ক্যাশ মেমোরি
+  var currentDonorIndex = 0;
+  var lastSelectedDonorIndex = 0;
+  var donorSlideInterval = null;
+
+  // =========================================================================
+  // ১. ডিজিট রূপান্তর ও স্মুথ কাউন্ট-আপ অ্যানিমেশন ইঞ্জিনের নিরাপদ লজিক
+  // =========================================================================
+  function convertToBanglaDigits(str) {
+    if (str === undefined || str === null || str === "") return "০";
+    var bnDigits = { "0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪", "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯" };
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[w]; });
+  }
+
+  function convertToEnglishDigits(str) {
+    if (str === undefined || str === null || str === "") return "0";
+    var enDigits = { "০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9" };
+    return str.toString().replace(/[০-৯]/g, function(w) { return enDigits[w]; });
+  }
+
+  function animateCounter(elementId, rawValue, duration) {
+    duration = duration || 1800;
+    var el = document.getElementById(elementId);
+    if (!el) return;
+
+    if (!rawValue) {
+      el.innerText = "০";
+      return;
+    }
+
+    var strVal = rawValue.toString().trim();
+    var enStr = convertToEnglishDigits(strVal);
+    var numMatch = enStr.match(/\d+/);
+
+    if (!numMatch) {
+      el.innerText = strVal;
+      return;
+    }
+
+    var targetNum = parseInt(numMatch[0], 10);
+    if (isNaN(targetNum) || targetNum <= 0) {
+      el.innerText = strVal;
+      return;
+    }
+
+    var firstDigitIdx = strVal.search(/[0-9০-৯]/);
+    var lastDigitIdx = -1;
+    for (var i = 0; i < strVal.length; i++) {
+      if (/[0-9০-৯]/.test(strVal[i])) {
+        lastDigitIdx = i;
+      }
+    }
+
+    var prefix = "";
+    var suffix = "";
+    if (firstDigitIdx !== -1) {
+      prefix = strVal.substring(0, firstDigitIdx);
+      suffix = strVal.substring(lastDigitIdx + 1);
+    }
+
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      var easeProgress = 1 - Math.pow(1 - progress, 3); // Ease-OutCubic
+      var currentNum = Math.floor(easeProgress * targetNum);
+      
+      var formattedBnNum = convertToBanglaDigits(currentNum.toLocaleString('en-US'));
+      el.innerText = prefix + formattedBnNum + suffix;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        var finalBnNum = convertToBanglaDigits(targetNum.toLocaleString('en-US'));
+        el.innerText = prefix + finalBnNum + suffix;
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
+  // স্প্রেডশিটের ত্রুটিপূর্ণ ভ্যালু স্যানিটাইজার ফাংশন
+  function sanitizeVal(val, fallback) {
+    if (val === undefined || val === null) return fallback;
+    var str = val.toString().trim();
+    if (str === "" || str.startsWith("#") || str.toUpperCase() === "N/A" || str === "-" || str === "N/A") {
+      return fallback;
+    }
+    return str;
+  }
+
+  function getSafeImgSrc(url, fallbackUrl) {
+    if (!url || url.trim() === "" || url.trim() === "N/A" || url.trim() === "-") {
+      return fallbackUrl;
+    }
+    var match = url.match(/(?:id=|folders\/|d\/|uc\?id=)([a-zA-Z0-9-_]{25,})/);
+    if (match && match[1]) {
+      return "https://lh3.googleusercontent.com/d/" + match[1];
+    }
+    return url;
+  }
+
+  // বৃত্তে নামের প্রথম অক্ষর নিয়ে আসার লজিক
+  function getBengaliInitials(name) {
+    if (!name) return "স";
+    var cleanName = name.toString().replace(/^(মোঃ|মো:|মোহাম্মদ|শ্রী|এম.ডি.|md\.|md)/i, '').trim();
+    return cleanName ? cleanName.substring(0, 1) : name.toString().substring(0, 1);
+  }
+
+  // ডাইনামিক লাইভ লেটার-লোগো ফলব্যাক হ্যান্ডলার
+  function setPhotoWithFallback(imgId, letterId, photoUrl, name, index) {
+    var img = document.getElementById(imgId);
+    var letter = document.getElementById(letterId);
+    if (!img || !letter) return;
+
+    var safeUrl = "";
+    if (photoUrl && photoUrl.trim() !== "" && photoUrl.trim() !== "N/A" && photoUrl.trim() !== "-") {
+      var match = photoUrl.match(/(?:id=|folders\/|d\/|uc\?id=)([a-zA-Z0-9-_]{25,})/);
+      if (match && match[1]) {
+        safeUrl = "https://lh3.googleusercontent.com/d/" + match[1];
+      } else {
+        safeUrl = photoUrl;
+      }
+    }
+
+    var colors = [
+      'from-emerald-500 to-teal-600',
+      'from-orange-500 to-amber-500',
+      'from-sky-500 to-blue-600',
+      'from-rose-500 to-pink-600'
+    ];
+    var selectedColor = colors[index % colors.length];
+
+    if (safeUrl !== "") {
+      img.src = safeUrl;
+      img.style.display = "block";
+      letter.style.display = "none";
+      img.onerror = function() {
+        img.style.display = "none";
+        letter.style.display = "flex";
+        letter.className = "w-full h-full text-white font-black text-4xl flex items-center justify-center rounded-2xl bg-gradient-to-br " + selectedColor;
+        letter.innerText = getBengaliInitials(name);
+      };
+    } else {
+      img.style.display = "none";
+      letter.style.display = "flex";
+      letter.className = "w-full h-full text-white font-black text-4xl flex items-center justify-center rounded-2xl bg-gradient-to-br " + selectedColor;
+      letter.innerText = getBengaliInitials(name);
+    }
+  }
+
+  // =========================================================================
+  // ২. ডোনার ও কমিটি ডাটা ইন্টেলিজেন্ট মার্জিং মেথড (সব ডোনার লোড লজিক)
+  // =========================================================================
+  function mergeAndRenderDonors() {
+    if (!rawDonorsGlobal) rawDonorsGlobal = [];
+
+    // কমিটি ডাটাবেজ থেকে সব ডোনার, পার্টনার, আজীবন সদস্য ডাটা মার্জিং
+    if (cachedCommitteeList && cachedCommitteeList.length > 0) {
+      var committeeDonors = cachedCommitteeList.filter(function(m) {
+        if (!m) return false;
+        var t = m.type ? m.type.toString().trim() : "";
+        return t.includes("ডোনার") || t.includes("শুভাকাঙ্ক্ষী") || t.includes("পার্টনার") || t.includes("আজীবন") || t.includes("দাতা");
+      });
+
+      // ডাটাবেজের সব ডোনারদের গ্লোবাল লিস্টে সংযুক্ত করা
+      committeeDonors.forEach(function(cDonor) {
+        var cPhone = cDonor.phone ? cDonor.phone.toString().replace(/[^0-9]/g, '') : '';
+        var cName = cDonor.name ? cDonor.name.toString().trim().toLowerCase() : '';
+
+        var exists = rawDonorsGlobal.some(function(d) {
+          var dPhone = d.phone ? d.phone.toString().replace(/[^0-9]/g, '') : '';
+          var dName = d.name ? d.name.toString().trim().toLowerCase() : '';
+          return (dPhone !== '' && cPhone !== '' && dPhone === cPhone) || (dName !== '' && cName !== '' && dName === cName);
+        });
+
+        if (!exists) {
+          rawDonorsGlobal.push({
+            name: cDonor.name,
+            designation: cDonor.designation || cDonor.type || "দাতা সদস্য",
+            phone: cDonor.phone,
+            profession: cDonor.profession || cDonor.occupation || cDonor.pese,
+            education: cDonor.education || cDonor.qualification || cDonor.edu,
+            org: cDonor.org || cDonor.workplace || cDonor.office,
+            fbLink: cDonor.fbLink,
+            email: cDonor.email,
+            photo: cDonor.photo
+          });
+        }
+      });
+
+      // বিদ্যমান ডোনারদের তথ্য সমৃদ্ধকরণ
+      rawDonorsGlobal.forEach(function(donor) {
+        if (!donor) return;
+        var dPhone = donor.phone ? donor.phone.toString().replace(/[^0-9]/g, '') : '';
+        var dName = donor.name ? donor.name.toString().trim().toLowerCase() : '';
+
+        var match = cachedCommitteeList.find(function(m) {
+          if (!m) return false;
+          var mPhone = m.phone ? m.phone.toString().replace(/[^0-9]/g, '') : '';
+          var mName = m.name ? m.name.toString().trim().toLowerCase() : '';
+          return (dPhone !== '' && mPhone !== '' && dPhone === mPhone) || (dName !== '' && mName !== '' && dName === mName);
+        });
+
+        if (match) {
+          donor.profession = donor.profession || match.profession || match.occupation || match.job || match.pese;
+          donor.education = donor.education || match.education || match.qualification || match.degree || match.educationalQualification || match.edu;
+          donor.org = donor.org || match.org || match.workplace || match.organization || match.office || match.workPlace;
+          if (match.fbLink) donor.fbLink = donor.fbLink || match.fbLink;
+          if (match.email) donor.email = donor.email || match.email;
+          if (match.photo && (!donor.photo || donor.photo.trim() === "" || donor.photo === "N/A")) {
+            donor.photo = match.photo;
+          }
+        }
+      });
+    }
+
+    renderDonorsList();
+    startDonorSlider();
+  }
+
+  // ডোনারদের ডাইনামিক স্লাইডার রেন্ডারিং লিস্ট (স্ক্রিন অনুযায়ী ১ থেকে ৪ টি)
+  function renderDonorsList() {
+    var donorsContainer = document.getElementById('donors-container');
+    if (!donorsContainer) return;
+    donorsContainer.innerHTML = '';
+    
+    if (!rawDonorsGlobal || rawDonorsGlobal.length === 0) return;
+
+    rawDonorsGlobal.forEach(function(donor, index) {
+      if (!donor) return;
+
+      var donorName = sanitizeVal(donor.name, "অজানা ডোনার");
+      var donorDesig = sanitizeVal(donor.designation, "দাতা সদস্য");
+      var donorImg = getSafeImgSrc(donor.photo, "");
+      var donorPhone = sanitizeVal(donor.phone, "যোগাযোগ করা সম্ভব নয়");
+      
+      var fbURL = sanitizeVal(donor.fbLink, "https://facebook.com/auliyapuragrojatrapb");
+      var emailVal = sanitizeVal(donor.email, "info@auliyapuragrojatrapb.org");
+      var emailURL = emailVal !== "info@auliyapuragrojatrapb.org" ? `mailto:${emailVal}` : "mailto:info@auliyapuragrojatrapb.org";
+
+      var firstLetter = getBengaliInitials(donorName);
+      var colors = ['from-emerald-500 to-teal-600', 'from-orange-500 to-amber-500', 'from-sky-500 to-blue-600', 'from-rose-500 to-pink-600'];
+      var selectedColor = colors[index % colors.length];
+
+      var imageOrLetterHTML = '';
+      if (donorImg !== "") {
+        var fallbackId = "fallback-img-" + index;
+        var letterId = "fallback-let-" + index;
+        imageOrLetterHTML = `
+          <div class="relative w-full aspect-square mb-4 select-none">
+            <img id="${fallbackId}" class="w-full h-full object-cover object-top rounded-2xl transition-transform duration-300 group-hover:scale-[1.01]" src="${donorImg}" alt="${donorName}" onerror="document.getElementById('${fallbackId}').style.display='none'; document.getElementById('${letterId}').style.display='flex';">
+            <div id="${letterId}" style="display: none;" class="w-full h-full bg-gradient-to-br ${selectedColor} text-white font-black text-5xl items-center justify-center rounded-2xl shadow-inner select-none">
+              ${firstLetter}
+            </div>
+          </div>`;
+      } else {
+        imageOrLetterHTML = `
+          <div class="w-full aspect-square bg-gradient-to-br ${selectedColor} text-white font-black text-5xl flex items-center justify-center rounded-2xl shadow-inner select-none mb-4">
+            ${firstLetter}
+          </div>`;
+      }
+
+      var donorProfession = sanitizeVal(donor.profession || donor.occupation || donor.job || donor.pese, "ব্যবসায় ও সমাজসেবা");
+      var donorEducation = sanitizeVal(donor.education || donor.qualification || donor.degree || donor.educationalQualification || donor.edu, "স্নাতক (ডিগ্রি)");
+      var donorOrg = sanitizeVal(donor.org || donor.workplace || donor.organization || donor.office || donor.institution, "পটুয়াখালী সদর");
+
+      donorsContainer.innerHTML += `
+        <div class="w-full sm:w-1/2 lg:w-1/4 shrink-0 px-3 select-none flex flex-col justify-between">
+          <div class="bg-white rounded-[32px] p-6 shadow-sm border border-gray-100 flex flex-col justify-between hover:border-emerald-400 hover:shadow-md transition duration-300 group h-full">
+            <div>
+              ${imageOrLetterHTML}
+              <h4 class="font-extrabold text-gray-800 text-base">${donorName}</h4>
+              <p class="text-xs text-emerald-600 font-semibold mt-1"><i class="fa-solid fa-briefcase mr-1 text-[10px]"></i> ${donorDesig}</p>
+              
+              <div class="text-[10px] text-gray-500 space-y-1.5 mt-3 border-t border-slate-50 pt-3 font-semibold">
+                <p><i class="fa-solid fa-briefcase text-emerald-500 mr-1.5 text-[9px]"></i>  পেশা: <span class="font-bold text-gray-700">${donorProfession}</span></p>
+                <p><i class="fa-solid fa-user-graduate text-emerald-500 mr-1.5 text-[9px]"></i>  শিক্ষা: <span class="font-bold text-gray-700">${donorEducation}</span></p>
+                <p><i class="fa-solid fa-building text-emerald-500 mr-1.5 text-[9px]"></i>  কর্মস্থল: <span class="font-bold text-gray-700">${donorOrg}</span></p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 mt-5 flex justify-between items-center select-none shrink-0">
+              <button type="button" onclick="openPhoneActionModal(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2.5 py-2 rounded-xl transition flex items-center shrink-0 shadow-sm shadow-emerald-50">
+                <i class="fa-solid fa-phone-volume mr-1"></i> কল করুন
+              </button>
+              
+              <div class="flex space-x-2.5 text-gray-400 items-center">
+                <button type="button" onclick="openPhoneActionModal(${index})" class="hover:text-emerald-600 transition text-sm" title="কল করুন"><i class="fa-solid fa-phone"></i></button>
+                <a href="${fbURL}" target="_blank" class="hover:text-blue-500 transition text-sm" title="ফেসবুক প্রোফাইল"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="${emailURL}" class="hover:text-amber-500 transition text-sm" title="ইমেইল করুন"><i class="fa-solid fa-envelope"></i></a>
+                <button type="button" onclick="openDonorDetailModalDirect(${index})" class="bg-slate-50 hover:bg-slate-100 border border-slate-200/50 text-gray-500 px-1.5 py-1 rounded-lg text-[9px] font-bold transition shadow-sm">বিস্তারিত</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // অটো-স্লাইডশো স্লাইডার লজিক (সব ডোনার বাম থেকে ডানে ঘুরবে)
+  function startDonorSlider() {
+    if (donorSlideInterval) clearInterval(donorSlideInterval);
+    donorSlideInterval = setInterval(function() {
+      slideDonors('next');
+    }, 4000); // প্রতি ৪ সেকেন্ড পর পর অটো স্লাইড হবে
+  }
+
+  function pauseDonorSlider() {
+    if (donorSlideInterval) {
+      clearInterval(donorSlideInterval);
+      donorSlideInterval = null;
+    }
+  }
+
+  function slideDonors(direction) {
+    var container = document.getElementById('donors-container');
+    if (!container) return;
+    
+    var totalDonors = rawDonorsGlobal.length;
+    if (totalDonors <= 0) return;
+
+    var itemsVisible = 1;
+    if (window.innerWidth >= 1024) {
+      itemsVisible = 4; // ডেক্সটপে ৪ টি
+    } else if (window.innerWidth >= 640) {
+      itemsVisible = 2; // ট্যাবলেটে ২ টি
+    }
+
+    var maxIndex = totalDonors - itemsVisible;
+    if (maxIndex < 0) maxIndex = 0;
+
+    if (direction === 'next' || !direction) {
+      currentDonorIndex++;
+      if (currentDonorIndex > maxIndex) {
+        currentDonorIndex = 0; // স্লাইড শেষ হলে পুনরায় শুরু থেকে চালু হবে
+      }
+    } else if (direction === 'prev') {
+      currentDonorIndex--;
+      if (currentDonorIndex < 0) {
+        currentDonorIndex = maxIndex;
+      }
+    }
+
+    var slideWidth = 100 / itemsVisible;
+    container.style.transform = `translateX(-${currentDonorIndex * slideWidth}%)`;
+  }
+
+  window.addEventListener('resize', function() {
+    slideDonors('current');
+  });
+
+  (function() {
+    var currentSlide = 1;
+    setInterval(function() {
+      var nextSlide = currentSlide === 3 ? 1 : currentSlide + 1;
+      var curEl = document.getElementById('slide-' + currentSlide);
+      var nextEl = document.getElementById('slide-' + nextSlide);
+      if (curEl && nextEl) {
+        curEl.classList.replace('opacity-100', 'opacity-0');
+        nextEl.classList.replace('opacity-0', 'opacity-100');
+      }
+      currentSlide = nextSlide;
+    }, 4500);
+
+    // ১. প্রথমে হোমপেইজের বেসিক ইনফো ও কার্যক্রমসমূহ এপিআই থেকে লোড হবে
+    google.script.run
+      .withSuccessHandler(function(data) {
+        if (!data || data.error) return;
+        
+        // ক) লাইভ কাউন্টার (মসৃণ ১ থেকে টার্গেট সংখ্যা পর্যন্ত কাউন্টিং অ্যানিমেশন)
+        animateCounter('live-planted', data.summary.totalPlanted, 2000);
+        animateCounter('live-members', data.summary.totalMembers, 1800);
+        animateCounter('live-blood', data.summary.totalDonations, 1500);
+        
+        // খ) সাম্প্রতিক কার্যক্রম
+        var actContainer = document.getElementById('recent-activities-container');
+        if (actContainer) {
+          actContainer.innerHTML = '';
+          data.recentActivities.forEach(function(act, index) {
+            var icon = "fa-seedling";
+            var color = "text-emerald-500 bg-emerald-50";
+            if (index === 1) { icon = "fa-book-open"; color = "text-amber-500 bg-amber-50"; }
+            if (index === 2) { icon = "fa-snowflake"; color = "text-blue-500 bg-blue-50"; }
+            
+            actContainer.innerHTML += `
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-emerald-400 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                  <div class="${color} p-3 rounded-xl inline-block mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all"><i class="fa-solid ${icon} text-xl"></i></div>
+                  <span class="block text-xs text-gray-400 font-bold mb-1"><i class="fa-regular fa-calendar-check mr-1.5"></i> ${act.date}</span>
+                  <h4 class="text-lg font-extrabold text-gray-800 mb-2 group-hover:text-emerald-600 transition">${act.title}</h4>
+                  <p class="text-gray-500 text-xs leading-relaxed mb-4">${act.desc}</p>
+                </div>
+                <a href="#" class="text-emerald-600 hover:text-emerald-700 text-xs font-bold flex items-center transition">বিস্তারিত পড়ুন <i class="fa-solid fa-arrow-right-long ml-1.5 text-xs"></i></a>
+              </div>
+            `;
+          });
+        }
+        
+        // গ) আসন্ন কর্মসূচি
+        var upcomingContainer = document.getElementById('upcoming-events-container');
+        if (upcomingContainer) {
+          upcomingContainer.innerHTML = '';
+          data.upcomingProjects.forEach(function(proj) {
+            upcomingContainer.innerHTML += `
+              <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4 hover:border-emerald-400 hover:scale-102 transition duration-200 group">
+                <div class="bg-emerald-50 text-emerald-700 p-3 rounded-lg flex flex-col items-center justify-center w-16 h-16 shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition">
+                  <span class="text-lg font-black leading-none">${proj.day}</span>
+                  <span class="text-[10px] font-bold uppercase mt-1 tracking-wider">${proj.month}</span>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-gray-800 text-sm group-hover:text-emerald-600 transition">${proj.title}</h4>
+                  <p class="text-gray-400 text-xs flex items-center mt-1"><i class="fa-solid fa-location-dot text-emerald-400 mr-1.5 text-xs"></i> ${proj.location}</p>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        // ঘ) ডোনার ও পার্টনার ডাটা লোড
+        if (data.donors) {
+          rawDonorsGlobal = data.donors;
+          mergeAndRenderDonors();
+        }
+      })
+      .getAuliyapurHomeData();
+
+    // ২. ২য় কোয়েরি: কমিটি ডাটাবেজ এপিআই (`getCommitteeData()`) থেকে আসল ডাটা লোড
+    google.script.run
+      .withSuccessHandler(function(committeeList) {
+        if (!committeeList || committeeList.length === 0) return;
+
+        // কমিটি ডাটা সেভ করে স্মার্ট মার্জিং কল
+        cachedCommitteeList = committeeList;
+        mergeAndRenderDonors();
+
+        // ক) প্রধান উপদেষ্টা ডাটা লোড
+        var adv = committeeList.find(m => {
+          var t = m.type ? m.type.toString().trim() : "";
+          return t.includes("উপদেষ্টা");
+        });
+        if (adv) {
+          document.getElementById('advisor-name').innerText = adv.name || "...";
+          document.getElementById('advisor-desig').innerText = adv.designation || "প্রধান উপদেষ্টা";
+          document.getElementById('advisor-profession').innerText = adv.profession || adv.occupation || adv.job || adv.pese || "সমাজসেবক ও গবেষক";
+          document.getElementById('advisor-education').innerText = adv.education || adv.qualification || adv.degree || adv.educationalQualification || adv.edu || "এম.এ (মাস্টার্স)";
+          document.getElementById('advisor-org').innerText = adv.org || adv.workplace || adv.organization || adv.institution || adv.office || adv.workPlace || "পটুয়াখালী সদর";
+          document.getElementById('advisor-phone').innerText = adv.phone || "...";
+          document.getElementById('advisor-fb').href = adv.fbLink || "#";
+          document.getElementById('advisor-msg').innerText = '"' + (adv.message || 'অগ্রযাত্রা এগিয়ে যাক...') + '"';
+          document.getElementById('advisor-sign').innerText = adv.name;
+          setPhotoWithFallback('advisor-photo', 'advisor-letter', adv.photo, adv.name, 1);
+        }
+
+        // খ) সভাপতি ও সাধারণ সম্পাদক ফিল্টারিং
+        var execList = committeeList.filter(m => {
+          var t = m.type ? m.type.toString().trim() : "";
+          return t.includes("কার্যনির্বাহী") || t.includes("কমিটি") || t.includes("পর্ষদ") || t.includes("পরিষদ");
+        });
+        
+        // সভাপতি ডাটা লোড
+        var president = execList.find(m => {
+          var des = m.designation ? m.designation.toString().trim() : "";
+          return des.includes("সভাপতি") && !des.includes("সহ") && !des.includes("সহ-সভাপতি");
+        });
+        if (president) {
+          document.getElementById('pres-name').innerText = president.name || "...";
+          document.getElementById('pres-profession').innerText = president.profession || president.occupation || president.job || president.pese || "ব্যবসায়ী ও সমাজকর্মী";
+          document.getElementById('pres-education').innerText = president.education || president.qualification || president.degree || president.educationalQualification || president.edu || "স্নাতক (পাস)";
+          document.getElementById('pres-org').innerText = president.org || president.workplace || president.organization || president.institution || president.office || president.workPlace || "পটুয়াখালী সদর";
+          document.getElementById('pres-fb').href = president.fbLink || "#";
+          document.getElementById('pres-msg').innerText = '"' + (president.message || 'অগ্রযাত্রা এগিয়ে যাক...') + '"';
+          setPhotoWithFallback('pres-photo', 'pres-letter', president.photo, president.name, 2);
+        }
+
+        // সাধারণ সম্পাদক ডাটা লোড
+        var secretary = execList.find(m => {
+          var des = m.designation ? m.designation.toString().trim() : "";
+          return des.includes("সম্পাদক") && (des.includes("সাধারণ") || des.includes("সাধারন") || des.includes("সেক্রেটারি"));
+        });
+        if (secretary) {
+          document.getElementById('sec-name').innerText = secretary.name || "...";
+          document.getElementById('sec-profession').innerText = secretary.profession || secretary.occupation || secretary.job || secretary.pese || "চাকুরীজীবী ও সংগঠক";
+          document.getElementById('sec-education').innerText = secretary.education || secretary.qualification || secretary.degree || president.educationalQualification || secretary.edu || "উচ্চ মাধ্যমিক (HSC)";
+          document.getElementById('sec-org').innerText = secretary.org || secretary.workplace || secretary.organization || secretary.institution || secretary.office || secretary.workPlace || "বরিশাল বিভাগ";
+          document.getElementById('sec-fb').href = secretary.fbLink || "#";
+          document.getElementById('sec-msg').innerText = '"' + (secretary.message || 'অগ্রযাত্রা এগিয়ে যাক...') + '"';
+          setPhotoWithFallback('sec-photo', 'sec-letter', secretary.photo, secretary.name, 3);
+        }
+      })
+      .getCommitteeData();
+  })();
+
+  // ডোনার বিস্তারিত কাস্টম পপআপ মডাল সার্ভিস
+  function openDonorDetailModalDirect(index) {
+    var d = rawDonorsGlobal[index];
+    if (!d) return;
+    
+    lastSelectedDonorIndex = index;
+
+    var dName = sanitizeVal(d.name, "অজানা ডোনার");
+    var dDesig = sanitizeVal(d.designation, "দাতা সদস্য");
+    var dProfession = sanitizeVal(d.profession, "ব্যবসায় ও সমাজসেবা");
+    var dEducation = sanitizeVal(d.education, "স্নাতক (ডিগ্রি)");
+    var dOrg = sanitizeVal(d.org, "পটুয়াখালী সদর");
+    var dPhone = sanitizeVal(d.phone, "যোগাযোগ করা সম্ভব নয়");
+    
+    var dFb = sanitizeVal(d.fbLink, "https://facebook.com/auliyapuragrojatrapb");
+    var dEmailVal = sanitizeVal(d.email, "info@auliyapuragrojatrapb.org");
+    var dEmailURL = dEmailVal !== "info@auliyapuragrojatrapb.org" ? "mailto:" + dEmailVal : "mailto:info@auliyapuragrojatrapb.org";
+
+    document.getElementById('modal-donor-name').innerText = dName;
+    document.getElementById('modal-donor-desig').innerText = dDesig;
+    document.getElementById('modal-donor-profession').innerText = dProfession;
+    document.getElementById('modal-donor-education').innerText = dEducation;
+    document.getElementById('modal-donor-org').innerText = dOrg;
+    document.getElementById('modal-donor-phone').innerText = dPhone;
+
+    document.getElementById('modal-donor-fb').href = dFb;
+    document.getElementById('modal-donor-email').href = dEmailURL;
+
+    var img = document.getElementById('modal-donor-img');
+    var letter = document.getElementById('modal-donor-letter');
+    var donorImg = getSafeImgSrc(d.photo, "");
+
+    if (donorImg !== "") {
+      img.src = donorImg;
+      img.style.display = "block";
+      letter.style.display = "none";
+      img.onerror = function() {
+        img.style.display = "none";
+        letter.style.display = "flex";
+        letter.innerText = getBengaliInitials(dName);
+      };
+    } else {
+      img.style.display = "none";
+      letter.style.display = "flex";
+      letter.innerText = getBengaliInitials(dName);
+    }
+
+    var modal = document.getElementById('donor-detail-modal');
+    var card = document.getElementById('modal-card');
+    modal.classList.remove('hidden');
+    setTimeout(function() {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+    }, 50);
+  }
+
+  function closeDonorModal() {
+    var modal = document.getElementById('donor-detail-modal');
+    var card = document.getElementById('modal-card');
+    modal.classList.add('opacity-0');
+    card.classList.add('scale-95');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  function openPhoneActionModalFromDetail() {
+    openPhoneActionModal(lastSelectedDonorIndex);
+  }
+
+  function openPhoneActionModal(index) {
+    closeDonorModal();
+    
+    var d = rawDonorsGlobal[index];
+    if (!d) return;
+
+    var name = sanitizeVal(d.name, "অজানা ডোনার");
+    var desig = sanitizeVal(d.designation, "দাতা সদস্য");
+    var phone = sanitizeVal(d.phone, "যোগাযোগ করা সম্ভব নয়");
+    var cleanPhoneNo = phone ? phone.replace(/[^0-9+]/g, '') : '';
+
+    document.getElementById('phone-modal-donor-name').innerText = name;
+    document.getElementById('phone-modal-donor-desig').innerText = desig;
+    document.getElementById('phone-modal-number').innerText = phone;
+
+    var dialBtn = document.getElementById('phone-modal-dial-btn');
+    if (cleanPhoneNo && phone !== "যোগাযোগ করা সম্ভব নয়") {
+      dialBtn.href = "tel:" + cleanPhoneNo;
+      dialBtn.style.display = "flex";
+    } else {
+      dialBtn.style.display = "none";
+    }
+
+    var copyBtn = document.getElementById('copy-btn');
+    copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> কপি করুন`;
+    copyBtn.classList.remove('bg-emerald-50', 'text-emerald-600', 'border-emerald-200');
+
+    var modal = document.getElementById('phone-action-modal');
+    var card = document.getElementById('phone-modal-card');
+    modal.classList.remove('hidden');
+    setTimeout(function() {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+    }, 50);
+  }
+
+  function closePhoneModal() {
+    var modal = document.getElementById('phone-action-modal');
+    var card = document.getElementById('phone-modal-card');
+    modal.classList.add('opacity-0');
+    card.classList.add('scale-95');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  function copyPhoneNumber() {
+    var numText = document.getElementById('phone-modal-number').innerText;
+    if (numText === "যোগাযোগ করা সম্ভব নয়") return;
+
+    navigator.clipboard.writeText(numText).then(function() {
+      var copyBtn = document.getElementById('copy-btn');
+      copyBtn.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> কপিড!`;
+      copyBtn.classList.add('bg-emerald-50', 'text-emerald-600', 'border-emerald-200');
+    }).catch(function(err) {
+      console.error("কপি করতে সমস্যা হয়েছে: ", err);
+    });
+  }
+
+  window.onclick = function(event) {
+    var donorModal = document.getElementById('donor-detail-modal');
+    var phoneModal = document.getElementById('phone-action-modal');
+    if (event.target == donorModal) {
+      closeDonorModal();
+    }
+    if (event.target == phoneModal) {
+      closePhoneModal();
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      var elements = document.getElementsByTagName('*');
+      for (var i = 0; i < elements.length; i++) {
+        var el = elements[i];
+        if (el.children.length === 0 && el.innerText && el.innerText.includes('অগ্রযাত্রার তথ্য লোড হচ্ছে')) {
+          el.innerHTML = `
+            <div class="flex flex-col items-center gap-2.5">
+              <span class="text-emerald-600 font-extrabold text-lg tracking-wider animate-pulse block">অগ্রযাত্রার তথ্য লোড হচ্ছে</span>
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest block">অনুগ্রহ করে একটু অপেক্ষা করুন...</span>
+            </div>
+          `;
+          break;
+        }
+      }
+    }, 120);
+  });
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var mainContent = document.getElementById('admin-navbar') || document.getElementById('main-content-layout') || document.getElementById('ledger-slip-card') || document.getElementById('blood-form');
+      if (!mainContent || mainContent.offsetHeight === 0) {
+        console.log("গুগল রিডাইরেক্ট এরর সনাক্ত হয়েছে! স্বয়ংক্রিয়ভাবে রিলোড হচ্ছে...");
+        window.location.reload();
+      }
+    }, 4000);
+  });
+</script>
+</body>
+</html>

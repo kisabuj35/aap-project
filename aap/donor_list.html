@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- প্রফেশনাল ফন্ট ও আইকন লাইব্রেরি লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body>
+    
+<!-- donor_list.html -->
+<div class="max-w-7xl mx-auto px-4 py-12 select-none">
+  
+  <!-- টপ ব্যানার (অগ্রযাত্রা গ্রিন থিম) -->
+  <div class="bg-gradient-to-r from-emerald-800 to-teal-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">রক্ত ডোনার তালিকা</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">রক্তদাতাদের তালিকা — জরুরি মুহূর্তে সরাসরি যোগাযোগ করুন</p>
+  </div>
+
+  <!-- ৪টি ডাইনামিক সামারি উইজেট কার্ড সমূহ -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition duration-300">
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">নিবন্ধিত ডোনার</span>
+        <span id="tot-donors" class="text-xl sm:text-2xl font-black text-slate-800">...</span>
+      </div>
+      <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl"><i class="fa-solid fa-users text-lg"></i></div>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition duration-300">
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">রক্তের গ্রুপ</span>
+        <span id="tot-blood-groups" class="text-xl sm:text-2xl font-black text-red-500">...</span>
+      </div>
+      <div class="p-3 bg-red-50 text-red-500 rounded-2xl"><i class="fa-solid fa-droplet text-lg"></i></div>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition duration-300">
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">উপলব্ধ ডোনার</span>
+        <span id="tot-available" class="text-xl sm:text-2xl font-black text-emerald-600">...</span>
+      </div>
+      <div class="p-3 bg-red-50/50 text-red-500 rounded-2xl"><i class="fa-solid fa-heart-pulse text-lg animate-pulse"></i></div>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition duration-300">
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold text-gray-400 block uppercase tracking-wider">২৪/৭ ইমার্জেন্সি</span>
+        <span class="text-xl sm:text-2xl font-black text-amber-500">অনলাইন</span>
+      </div>
+      <div class="p-3 bg-amber-50 text-amber-500 rounded-2xl"><i class="fa-solid fa-clock text-lg"></i></div>
+    </div>
+  </div>
+
+  <!-- লাইভ সার্চ বার ও ব্লাড গ্রুপ ফিল্টার বোতাম -->
+  <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-5 mb-8">
+    <div class="relative max-w-2xl mx-auto">
+      <input type="text" id="donor-search" oninput="resetPageAndFilter()" class="w-full pl-10 pr-4 py-3 border rounded-2xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400" placeholder="নাম, এলাকা, জেলা বা রক্তের গ্রুপ দিয়ে খুঁজুন...">
+      <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+    </div>
+
+    <!-- রক্তের গ্রুপ ফিল্টারিং বাটনস -->
+    <div class="flex flex-wrap justify-center gap-2 pt-1" id="blood-group-filters">
+      <button onclick="selectGroupFilter('ALL')" id="btn-group-all" class="px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300">সকল গ্রুপ</button>
+      <button onclick="selectGroupFilter('A+')" id="btn-group-a-plus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">A+</button>
+      <button onclick="selectGroupFilter('A-')" id="btn-group-a-minus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">A-</button>
+      <button onclick="selectGroupFilter('B+')" id="btn-group-b-plus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">B+</button>
+      <button onclick="selectGroupFilter('B-')" id="btn-group-b-minus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">B-</button>
+      <button onclick="selectGroupFilter('O+')" id="btn-group-o-plus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">O+</button>
+      <button onclick="selectGroupFilter('O-')" id="btn-group-o-minus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">O-</button>
+      <button onclick="selectGroupFilter('AB+')" id="btn-group-ab-plus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">AB+</button>
+      <button onclick="selectGroupFilter('AB-')" id="btn-group-ab-minus" class="px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300">AB-</button>
+    </div>
+  </div>
+
+  <!-- ডাইনামিক ফিল্টারকৃত ডোনার ফলাফল কাউন্টার ও প্রতি পেজ সাইজ বাটন -->
+  <div class="mb-4 px-2 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs font-bold text-gray-500">
+    <div>
+      <span>মোট <span id="tot-filtered-count" class="text-emerald-600 font-extrabold">০</span> জন ডোনার পাওয়া গেছে — পেজ <span id="current-page-num" class="text-gray-700 font-black">১</span> / <span id="total-pages-num" class="text-gray-700 font-black">১</span></span>
+    </div>
+    <div class="flex items-center gap-1">
+      <span class="mr-1.5 font-medium">প্রতি পেজে:</span>
+      <button onclick="changePageSize(6)" id="btn-size-6" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-extrabold transition">6</button>
+      <button onclick="changePageSize(12)" id="btn-size-12" class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 font-extrabold hover:bg-slate-200 transition">12</button>
+      <button onclick="changePageSize(24)" id="btn-size-24" class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 font-extrabold hover:bg-slate-200 transition">24</button>
+    </div>
+  </div>
+
+  <!-- ৩-কলামের ডোনার কার্ড গ্রিড -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="donor-cards-grid">
+    <!-- ডাটা জাভাস্ক্রিপ্ট দিয়ে কার্ড আকারে রেন্ডার হবে -->
+  </div>
+
+  <!-- ডাইনামিক পেজিনেশন কন্ট্রোল ফুটার -->
+  <div class="flex justify-between items-center text-xs font-bold text-gray-500 mt-8 border-t pt-6 border-slate-100">
+    <span id="pagination-record-info">রেকর্ড ১ - ৬</span>
+    <div class="flex items-center space-x-2" id="pagination-buttons-container"></div>
+    <span class="hidden sm:inline">পেইজ সংখ্যা: <span id="page-count-foot">১</span></span>
+  </div>
+
+  <!-- রক্তদানে আগ্রহী ফুটার ব্যানার (ডোনার নিবন্ধন লিংক সহ) -->
+  <div class="mt-12 bg-gradient-to-br from-emerald-950 to-emerald-900 border border-emerald-800 rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-md text-white">
+    <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto text-yellow-400 text-lg">
+      <i class="fa-solid fa-ribbon"></i>
+    </div>
+    <h4 class="text-base sm:text-lg font-black">রক্তদানে আগ্রহী?</h4>
+    <p class="text-xs text-emerald-200 max-w-xl mx-auto leading-relaxed font-medium">
+      অদীক্ষিত একজন রক্তদাতা হিসেবে নিবন্ধন করুন। আপনার এক ব্যাগ রক্ত হয়তো বাঁচাতে পারে একটি মূল্যবান জীবন। নিবন্ধন করতে নিচের বাটনে ক্লিক করুন।
+    </p>
+    <button onclick="navigateTo('donor_registration')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-3.5 rounded-2xl text-xs shadow-md transition duration-300">
+      <i class="fa-solid fa-user-plus mr-1.5"></i> ডোনার নিবন্ধন করুন
+    </button>
+  </div>
+
+</div>
+
+<!-- ডোনার বিস্তারিত ডিজিটাল বায়ো স্লিপ মডাল (Popup Details - ক্র্যাশ প্রটেক্টেড!) -->
+<div id="donor-detail-modal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-40 z-50 flex items-center justify-center px-4 select-none">
+  <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative transform scale-95 transition-all duration-300">
+    <button onclick="closeDonorDetailModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+    
+    <!-- ডাইনামিক ইমেজ বা ডামি লেটার লোডার -->
+    <img id="dp-photo" class="w-24 h-24 rounded-2xl border-4 border-emerald-50 object-cover object-top bg-slate-100 shadow-md mx-auto mb-3" src="" alt="Donor">
+    <div id="dp-letter" class="hidden w-24 h-24 rounded-2xl border-4 border-emerald-50 text-white font-black text-4xl flex items-center justify-center shadow-md mx-auto mb-3 select-none"></div>
+
+    <h4 id="dp-name" class="text-xl font-black text-gray-800 mb-1">...</h4>
+    <span id="dp-group" class="bg-red-500 text-white font-extrabold text-xs px-3.5 py-1 rounded-full inline-block mb-6 uppercase">...</span>
+    
+    <div class="text-left text-xs text-gray-500 space-y-3 divide-y divide-gray-100 max-h-[50vh] overflow-y-auto">
+      <p class="flex justify-between py-1.5"><span>ডোনার আইডি:</span> <span id="dp-id" class="font-bold text-gray-800">...</span></p>
+      <p class="flex justify-between py-1.5"><span>পিতার নাম:</span> <span id="dp-father" class="font-bold text-gray-800">...</span></p>
+      <p class="flex justify-between py-1.5"><span>ডোনার ধরণ:</span> <span id="dp-type" class="font-bold text-emerald-700">...</span></p>
+      <p class="flex justify-between py-1.5"><span>মোবাইল নম্বর:</span> <span id="dp-phone" class="font-bold text-gray-800">...</span></p>
+      <p class="flex justify-between py-1.5"><span>ঠিকানা/এলাকা:</span> <span id="dp-location" class="font-bold text-gray-800">...</span></p>
+      <p class="flex justify-between py-1.5"><span>শেষ রক্তদান:</span> <span id="dp-lastdonation" class="font-bold text-gray-800">...</span></p>
+      <p class="flex justify-between py-1.5"><span>মোট রক্তদান:</span> <span id="dp-totaldonation" class="font-bold text-rose-500">...</span></p>
+      <p class="flex justify-between py-1.5"><span>ইমেইল এড্রেস:</span> <span id="dp-email" class="font-bold text-gray-800 truncate max-w-[180px]">...</span></p>
+      <p class="flex justify-between py-1.5"><span>ফেসবুক প্রোফাইল:</span> <a id="dp-fb" href="#" target="_blank" class="font-bold text-blue-500 hover:underline">প্রোফাইল লিংক</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var rawDonorList = [];
+  var filteredList = [];
+  var selectedGroup = "ALL";
+  
+  var currentPage = 1;
+  var pageSize = 6;
+
+  // পেজ লোড হওয়ার সাথে সাথে ব্যাকএন্ড থেকে ডোনারদের ডাটা নিয়ে আসার লজিক
+  (function() {
+    var loader = document.getElementById('admin-loader') || document.getElementById('loading');
+    if (loader) loader.classList.remove('hidden');
+
+    google.script.run
+      .withSuccessHandler(function(data) {
+        if (loader) loader.classList.add('hidden');
+        rawDonorList = data || [];
+        filteredList = rawDonorList;
+        
+        // ওপরে ডাইনামিক উইজেট কার্ড আপডেট
+        safeSetText('tot-donors', toBnDigits(rawDonorList.length) + "+");
+        safeSetText('tot-available', toBnDigits(rawDonorList.length));
+        
+        var uniqueGroups = [...new Set(rawDonorList.map(item => item.bloodGroup))].filter(g => g !== "");
+        safeSetText('tot-blood-groups', toBnDigits(uniqueGroups.length));
+
+        currentPage = 1;
+        filterDonors(); // ডাইনামিক ফিল্টার সচলকরণ
+      })
+      .withFailureHandler(function(err) {
+        if (loader) loader.classList.add('hidden');
+        showCustomAlert("ত্রুটি!", "সার্ভার থেকে ডোনার ডাটা লোড করা যায়নি: " + err.message, "error");
+      })
+      .getDonorList();
+  })();
+
+  // বৃত্তে নামের প্রথম অক্ষর নিয়ে আসার লজিক
+  function getBengaliInitials(name) {
+    var cleanName = name.replace(/^(মোঃ|মো:|মোহাম্মদ|শ্রী|এম.ডি.|md\.|md)/i, '').trim();
+    return cleanName ? cleanName.substring(0, 1) : name.substring(0, 1);
+  }
+
+  // ইংরেজি তারিখকে বাংলা ফরম্যাটে রূপান্তর করার গ্লোবাল হেল্পার
+  function formatBengaliDate(dateStr) {
+    if (!dateStr || dateStr === "-" || dateStr === "N/A" || dateStr.trim() === "" || dateStr.trim() === "শেষ রক্তদান: -") {
+      return "শেষ রক্তদান: জানা নেই";
+    }
+    
+    var dateClean = dateStr.replace("শেষ রক্তদান:", "").trim();
+    var englishDate = toEnDigits(dateClean);
+    var parts = englishDate.split("-");
+    if (parts.length !== 3) return dateStr;
+    
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
+    var year = parseInt(parts[2], 10);
+    
+    var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    var monthBn = bnMonths[month - 1] || "";
+    
+    return "শেষ রক্তদান: " + toBnDigits(day) + " " + monthBn + " " + toBnDigits(year);
+  }
+
+  // রক্তের গ্রুপ অনুযায়ী ডাইনামিক ফ্রেম হেডার কালার নির্ধারক
+  function getDonorHeaderColor(bloodGroup, index) {
+    if (!bloodGroup) return 'from-emerald-600 to-teal-600';
+    var bg = bloodGroup.toUpperCase().trim();
+    if (bg.includes('A+')) return 'from-emerald-600 to-teal-600'; // সবুজ
+    if (bg.includes('B+')) return 'from-blue-600 to-sky-600'; // নীল
+    if (bg.includes('O+')) return 'from-rose-600 to-pink-600'; // লাল/গোলাপি
+    if (bg.includes('AB+')) return 'from-amber-500 to-orange-600'; // অরেঞ্জ
+
+    // মাইনাস বা অন্যান্য গ্রুপের জন্য মিক্সড ডাইনামিক থিম
+    var colors = [
+      'from-purple-600 to-indigo-600',
+      'from-cyan-600 to-teal-600',
+      'from-slate-700 to-slate-800',
+      'from-pink-600 to-rose-600'
+    ];
+    return colors[index % colors.length];
+  }
+
+  // ডোনার কার্ড ও পেজিনেশন রেন্ডারার
+  function renderDonors(list) {
+    var grid = document.getElementById('donor-cards-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    var totalFiltered = list.length;
+    safeSetText('tot-filtered-count', toBnDigits(totalFiltered));
+
+    if (totalFiltered === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-3xl border border-gray-100 p-6 font-bold">কোনো ডোনার পাওয়া যায়নি।</div>';
+      updatePaginationControls(0);
+      return;
+    }
+
+    var totalPages = Math.ceil(totalFiltered / pageSize);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    
+    var startIndex = (currentPage - 1) * pageSize;
+    var endIndex = Math.min(startIndex + pageSize, totalFiltered);
+    var paginatedList = list.slice(startIndex, endIndex);
+
+    paginatedList.forEach((item, idx) => {
+      var initial = getBengaliInitials(item.name);
+      var headerColorClass = getDonorHeaderColor(item.bloodGroup, startIndex + idx);
+      var formattedDate = formatBengaliDate(item.lastDonation);
+
+      // ৩টি ডাইনামিক লাইভ ফলব্যাক সোস্যাল আইকন লিংক
+      var callNo = item.phone ? item.phone.replace(/[^0-9]/g, '') : '';
+      var fbURL = item.fbLink && item.fbLink !== "#" && item.fbLink !== "" ? item.fbLink : "https://facebook.com/auliyapuragrojatrapb";
+      var emailURL = item.email && item.email !== "N/A" && item.email !== "" ? `mailto:${item.email}` : "mailto:info@auliyapuragrojatrapb.org";
+
+      // ছবি না থাকলে প্রথম অক্ষরের ডাইনামিক লেটার জেনারেশন
+      var photoHTML = '';
+      if (item.photo && item.photo !== "" && item.photo !== "N/A" && !item.photo.includes("placeholder")) {
+        // object-top ক্লাস ব্যবহারের ফলে ছবিতে মাথা বা মুখ কেটে যাবে না (No head cropping)
+        photoHTML = `<img class="w-20 h-20 rounded-2xl border-2 border-white/40 object-cover object-top shadow-md mx-auto mb-3 transition-transform duration-300 group-hover:scale-105" src="${item.photo}" alt="${item.name}">`;
+      } else {
+        photoHTML = `
+          <div class="w-20 h-20 rounded-2xl border-2 border-white/40 bg-black/20 text-white font-black text-3xl flex items-center justify-center shadow-md mx-auto mb-3 transition-transform duration-300 group-hover:scale-105 backdrop-blur-sm select-none">
+            ${initial}
+          </div>`;
+      }
+
+      // সম্পূর্ণ ৭নং ডিজাইনের মতন কোড সুবিন্যস্ত করা হয়েছে
+      grid.innerHTML += `
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col justify-between group">
+          
+          <!-- ১. উপরের রঙিন ফ্রেম সেকশন (মাঝের ছবিসহ) -->
+          <div class="bg-gradient-to-br ${headerColorClass} pt-7 pb-6 px-5 text-center relative select-none">
+            <!-- ডোনার আইডি/সিরিয়াল (টপ-লেফট) -->
+            <span class="absolute top-3.5 left-3.5 bg-white/20 text-white text-[10px] px-2.5 py-0.5 rounded-full font-black uppercase backdrop-blur-sm tracking-wider">
+              ${item.id || 'DONOR'}
+            </span>
+            <!-- ব্লাড গ্রুপ (টপ-রাইট) -->
+            <span class="absolute top-3.5 right-3.5 bg-rose-600 text-white font-extrabold px-2 py-0.5 rounded text-[10px] shadow-sm uppercase">
+              ${item.bloodGroup}
+            </span>
+
+            <!-- প্রোফাইল পিকচার বা লেটার বক্স -->
+            ${photoHTML}
+
+            <!-- নাম এবং জেন্ডার ট্যাগ -->
+            <h4 class="text-lg font-bold text-white mb-2 tracking-wide drop-shadow-sm">${item.name}</h4>
+            <span class="bg-white/20 text-white font-extrabold text-[10px] px-3.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+              ${item.type || 'সাধারণ ডোনার'}
+            </span>
+          </div>
+
+          <!-- ২. নিচের সাদা ইনফো সেকশন -->
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-2 text-xs text-gray-500">
+              <p class="flex justify-between items-center py-1.5 border-b border-gray-50">
+                <span>পিতার নাম:</span> 
+                <span class="font-bold text-gray-700">${item.fatherName || " Nasur Hawlader"}</span>
+              </p>
+              <p class="flex justify-between items-center py-1.5 border-b border-gray-50">
+                <span>ঠিকানা/এলাকা:</span> 
+                <span class="font-bold text-gray-700">${item.location}</span>
+              </p>
+              <p class="flex justify-between items-center py-1.5 border-b border-gray-50">
+                <span>শেষ রক্তদান:</span> 
+                <span class="font-bold text-gray-700">${formattedDate}</span>
+              </p>
+              <p class="flex justify-between items-center py-1.5">
+                <span>মোট রক্তদান:</span> 
+                <span class="font-bold text-rose-500">${toBnDigits(item.totalDonations || 1)} বার</span>
+              </p>
+            </div>
+            
+            <!-- ৩. কন্টাক্ট ও একশন বাটন প্যানেল (ফোন, ফেসবুক, মেইল এবং বিস্তারিত) -->
+            <div class="pt-4 border-t border-gray-100 mt-5 flex justify-between items-center select-none shrink-0">
+              <button onclick="handlePhoneClick('${item.phone}', '${item.name}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3 py-2 rounded-xl transition flex items-center shrink-0 shadow-sm shadow-emerald-600/10">
+                <i class="fa-solid fa-phone-volume mr-1.5"></i> কল করুন
+              </button>
+              
+              <div class="flex space-x-3 text-gray-400 items-center">
+                <a href="tel:${callNo}" class="hover:text-emerald-600 transition text-sm" title="কল করুন"><i class="fa-solid fa-phone"></i></a>
+                <a href="${fbURL}" target="_blank" class="hover:text-blue-500 transition text-sm" title="ফেসবুক প্রোফাইল"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="${emailURL}" class="hover:text-amber-500 transition text-sm" title="ইমেইল করুন"><i class="fa-solid fa-envelope"></i></a>
+                <button onclick="openDonorDetailModal('${item.id || item.phone}')" class="bg-slate-50 hover:bg-slate-100 border border-slate-200/50 text-gray-500 px-3 py-1.5 rounded-lg text-[10px] font-bold transition shadow-sm">বিস্তারিত</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `;
+    });
+
+    updatePaginationControls(totalFiltered);
+  }
+
+  // ডাইনামিক পেজিনেশন কন্ট্রোল বাটন রেন্ডারার
+  function updatePaginationControls(totalFiltered) {
+    var totalPages = Math.ceil(totalFiltered / pageSize);
+    if (totalPages === 0) totalPages = 1;
+
+    safeSetText('current-page-num', toBnDigits(currentPage));
+    safeSetText('total-pages-num', toBnDigits(totalPages));
+    safeSetText('page-count-foot', toBnDigits(totalPages));
+
+    var startRec = totalFiltered === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+    var endRec = Math.min(startRec + pageSize - 1, totalFiltered);
+    safeSetText('pagination-record-info', `রেকর্ড ${toBnDigits(startRec)} - ${toBnDigits(endRec)}`);
+
+    var container = document.getElementById('pagination-buttons-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var prevDisabled = currentPage === 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer";
+    container.innerHTML += `<button onclick="changePage(-1)" ${currentPage === 1 ? 'disabled' : ''} class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center bg-white text-gray-500 font-extrabold hover:bg-slate-50 transition ${prevDisabled}"><i class="fa-solid fa-angle-left"></i></button>`;
+
+    for (var i = 1; i <= totalPages; i++) {
+      var activeClass = i === currentPage ? "bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-100" : "bg-white text-gray-600 hover:bg-slate-50 border-gray-200";
+      container.innerHTML += `<button onclick="goToPage(${i})" class="w-8 h-8 rounded-full border flex items-center justify-center font-extrabold transition ${activeClass}">${toBnDigits(i)}</button>`;
+    }
+
+    var nextDisabled = currentPage === totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer";
+    container.innerHTML += `<button onclick="changePage(1)" ${currentPage === totalPages ? 'disabled' : ''} class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center bg-white text-gray-500 font-extrabold hover:bg-slate-50 transition ${nextDisabled}"><i class="fa-solid fa-angle-right"></i></button>`;
+  }
+
+  // ডোনার বিস্তারিত মডাল পপআপ ওপেন করার স্ক্রিপ্ট (১০০% ক্র্যাশ প্রটেক্টেড)
+  function openDonorDetailModal(idOrPhone) {
+    try {
+      var m = rawDonorList.find(x => x.id === idOrPhone || x.phone === idOrPhone);
+      if (!m) return;
+
+      setElementText('dp-name', m.name);
+      setElementText('dp-group', m.bloodGroup);
+      setElementText('dp-id', m.id || "N/A");
+      setElementText('dp-father', m.fatherName || "Nasur Hawlader");
+      setElementText('dp-type', m.type || "সাধারণ ডোনার");
+      setElementText('dp-phone', m.phone);
+      setElementText('dp-location', m.location);
+      setElementText('dp-lastdonation', formatBengaliDate(m.lastDonation));
+      setElementText('dp-totaldonation', toBnDigits(m.totalDonations || 1) + " বার");
+      setElementText('dp-email', m.email || "N/A");
+
+      var fb = document.getElementById('dp-fb');
+      if (fb) {
+        fb.href = m.fbLink && m.fbLink !== "#" && m.fbLink !== "" ? m.fbLink : "https://facebook.com/auliyapuragrojatrapb";
+      }
+
+      var photo = document.getElementById('dp-photo');
+      var letter = document.getElementById('dp-letter');
+      
+      if (photo && letter) {
+        if (m.photo && m.photo !== "" && m.photo !== "N/A" && !m.photo.includes("placeholder")) {
+          photo.src = m.photo;
+          photo.classList.remove('hidden');
+          letter.classList.add('hidden');
+        } else {
+          photo.classList.add('hidden');
+          letter.innerText = getBengaliInitials(m.name);
+          letter.className = `w-24 h-24 rounded-2xl border-4 border-emerald-50 text-white font-black text-4xl flex items-center justify-center shadow-md mx-auto mb-3 select-none bg-gradient-to-br ${getDonorHeaderColor(m.bloodGroup, 1)}`;
+          letter.classList.remove('hidden');
+        }
+      }
+
+      document.getElementById('donor-detail-modal').classList.remove('hidden');
+    } catch (err) {
+      showCustomAlert("ত্রুটি!", "বিস্তারিত দেখতে সাময়িক সমস্যা হচ্ছে: " + err.message, "error");
+    }
+  }
+
+  function closeDonorDetailModal() {
+    document.getElementById('donor-detail-modal').classList.add('hidden');
+  }
+
+  function setElementText(id, text) {
+    var el = document.getElementById(id);
+    if (el) { el.innerText = text; }
+  }
+
+  function safeSetText(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.innerText = text;
+  }
+
+  // পেজ সাইজ পরিবর্তন করা
+  function changePageSize(size) {
+    pageSize = size;
+    currentPage = 1;
+
+    document.querySelectorAll('[id^="btn-size-"]').forEach(btn => {
+      btn.className = "px-2.5 py-1 rounded bg-slate-100 text-slate-600 font-extrabold hover:bg-slate-200 transition";
+    });
+    
+    var activeBtn = document.getElementById('btn-size-' + size);
+    if (activeBtn) {
+      activeBtn.className = "px-2.5 py-1 rounded bg-emerald-600 text-white font-extrabold transition";
+    }
+
+    renderDonors(filteredList);
+  }
+
+  function changePage(direction) {
+    currentPage += direction;
+    renderDonors(filteredList);
+  }
+
+  function goToPage(pageNum) {
+    currentPage = pageNum;
+    renderDonors(filteredList);
+  }
+
+  // রক্তের গ্রুপ বাটন ফিল্টারিং লজিক (ওয়ান-ক্লিক)
+  function selectGroupFilter(group) {
+    selectedGroup = group;
+    
+    document.querySelectorAll('#blood-group-filters button').forEach(btn => {
+      btn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 transition duration-300";
+    });
+
+    var activeBtnMap = {
+      "ALL": "btn-group-all",
+      "A+": "btn-group-a-plus", "A-": "btn-group-a-minus",
+      "B+": "btn-group-b-plus", "B-": "btn-group-b-minus",
+      "O+": "btn-group-o-plus", "O-": "btn-group-o-minus",
+      "AB+": "btn-group-ab-plus", "AB-": "btn-group-ab-minus"
+    };
+
+    var activeBtn = document.getElementById(activeBtnMap[group]);
+    if (activeBtn) {
+      activeBtn.className = "px-4 py-1.5 rounded-full text-xs font-black bg-emerald-600 text-white shadow-md transition duration-300";
+    }
+
+    resetPageAndFilter();
+  }
+
+  // সার্চ এবং রক্তের গ্রুপ মেলানোর ফিল্টার ফাংশন
+  function resetPageAndFilter() {
+    currentPage = 1; 
+    filterDonors();
+  }
+
+  // সার্চ ও ব্লাড গ্রুপ মেলানোর মাস্টার ফিল্টার ফাংশন
+  function filterDonors() {
+    var q = document.getElementById('donor-search').value.toLowerCase().trim();
+    
+    filteredList = rawDonorList.filter(item => {
+      var matchSearch = item.name.toLowerCase().includes(q) || 
+                        item.location.toLowerCase().includes(q) || 
+                        item.bloodGroup.toLowerCase().includes(q);
+      
+      var matchGroup = (selectedGroup === "ALL" || item.bloodGroup === selectedGroup);
+      
+      return matchSearch && matchGroup;
+    });
+
+    renderDonors(filteredList);
+  }
+
+  function handlePhoneClick(phone, name) {
+    if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+      window.location.href = "tel:" + phone;
+    } else {
+      // যদি আপনার কাস্টম অ্যালার্ট লাইব্রেরি সচল থাকে
+      if (typeof showCustomAlert === 'function') {
+        showCustomAlert(name + "-এর মোবাইল নম্বর", "মোবাইল: " + phone + "\nনম্বরটি কপি করতে ডাবল ক্লিক বা মাউস দিয়ে সিলেক্ট করুন।", "success");
+      } else {
+        alert("ডোনারের নাম: " + name + "\nমোবাইল নম্বর: " + phone);
+      }
+    }
+  }
+
+  // বাংলা সংখ্যা রূপান্তরকারী (জাভাস্ক্রিপ্ট)
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  // বাংলা সংখ্যাকে ইংরেজি সংখ্যায় রূপান্তরকারী (তারিখ প্রসেসিং হেল্পার)
+  function toEnDigits(str) {
+    if (str === undefined || str === null || str === "") return "0";
+    var enDigits = { "০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9" };
+    return str.toString().replace(/[০-৯]/g, function(w) { return enDigits[w]; });
+  }
+</script>
+  </body>
+</html>

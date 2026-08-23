@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <!-- notices.html -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  
+  <!-- ১. টপ ব্যানার (১১ নং ছবির মতো রিয়েল টাইটেল ও সলিড কালার সমৃদ্ধ) -->
+  <div class="bg-emerald-800 p-8 rounded-3xl text-white text-center shadow-lg mb-8 relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <h3 class="text-3xl font-black">বিজ্ঞপ্তি</h3>
+    <p class="text-xs sm:text-sm text-emerald-100 mt-2 font-medium tracking-wide">সর্বশেষ বিজ্ঞপ্তি, ঘোষণা ও গুরুত্বপূর্ণ সিদ্ধান্ত</p>
+  </div>
+
+  <!-- নোটিশ লিস্ট কন্টেইনার (১১ নং ছবির মতো ফ্রেম) -->
+  <div id="notices-list" class="space-y-4 max-w-4xl mx-auto">
+    <!-- ডাইনামিক নোটিশ রেন্ডার হবে -->
+  </div>
+
+  <div id="notice-loader" class="text-center py-12">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 mx-auto mb-4"></div>
+  </div>
+
+  <!-- নোটিশ রিডার পপআপ মডাল -->
+  <div id="notice-reader-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/50 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-3xl p-6 max-w-lg w-full mx-4 shadow-2xl border border-gray-100 transform scale-95 transition-transform duration-300 relative">
+      <button onclick="closeNoticeReader()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div class="space-y-4">
+        <div class="border-b pb-3">
+          <span id="reader-notice-date" class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">তারিখ</span>
+          <h4 id="reader-notice-title" class="text-gray-800 font-black text-base sm:text-lg mt-2 leading-tight">নোটিশ টাইটেল</h4>
+        </div>
+        <p id="reader-notice-content" class="text-xs sm:text-sm text-gray-600 leading-relaxed whitespace-pre-wrap max-h-60 overflow-y-auto">নোটিশ বিস্তারিত...</p>
+        <div class="flex gap-2 border-t pt-4">
+          <button onclick="closeNoticeReader()" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">বন্ধ করুন</button>
+          <a href="" id="reader-download-link" target="_blank" class="flex-1 py-2.5 rounded-xl text-xs font-black bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center justify-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-download"></i> পিডিএফ ডাউনলোড
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var rawNoticeList = []; // গ্লোবাল ডেটা মেমোরি কন্টেইনার
+
+  // মডাল ক্লোজ হ্যান্ডলার
+  window.closeNoticeReader = function() {
+    document.getElementById('notice-reader-modal').classList.add('hidden');
+  }
+
+  // ইনডেক্স ভিত্তিক মডাল ওপেনার
+  window.openNoticeIndex = function(idx) {
+    var item = rawNoticeList[idx];
+    if (!item) return;
+
+    document.getElementById('reader-notice-title').innerText = item.title;
+    document.getElementById('reader-notice-content').innerText = item.content || 'কোনো বিস্তারিত কন্টেন্ট নেই।';
+    document.getElementById('reader-notice-date').innerText = "প্রকাশের তারিখ: " + formatBengaliDate(item.date);
+    
+    var downloadBtn = document.getElementById('reader-download-link');
+    if (item.pdfUrl && item.pdfUrl.trim() !== "") {
+      downloadBtn.href = item.pdfUrl;
+      downloadBtn.classList.remove('hidden');
+    } else {
+      downloadBtn.classList.add('hidden');
+    }
+
+    document.getElementById('notice-reader-modal').classList.remove('hidden');
+  }
+
+  // তারিখ দেখে স্বয়ংক্রিয়ভাবে LIVE, আজকের অথবা সম্পন্ন ব্যাজ নির্ধারণ করার মেথড
+  function getNoticeStatus(dateVal) {
+    if (!dateVal) return { text: "সম্পন্ন", classes: "bg-emerald-50 text-emerald-600 border border-emerald-100" };
+    
+    try {
+      var cleanDate = dateVal.toString().split("T")[0];
+      var parts = cleanDate.split("-");
+      if (parts.length !== 3) {
+        var slashParts = cleanDate.split("/");
+        if (slashParts.length === 3) parts = slashParts;
+      }
+      
+      if (parts.length === 3) {
+        var day, month, year;
+        if (parts[0].length === 4) { // YYYY-MM-DD
+          year = parseInt(parts[0], 10);
+          month = parseInt(parts[1], 10) - 1;
+          day = parseInt(parts[2], 10);
+        } else { // DD-MM-YYYY
+          day = parseInt(parts[0], 10);
+          month = parseInt(parts[1], 10) - 1;
+          year = parseInt(parts[2], 10);
+        }
+        
+        var noticeDate = new Date(year, month, day);
+        var currentDate = new Date(2026, 6, 20); // ২০ জুলাই ২০২৬ (চলতি প্রেক্ষাপট অনুযায়ী)
+        
+        noticeDate.setHours(0,0,0,0);
+        currentDate.setHours(0,0,0,0);
+        
+        if (noticeDate.getTime() === currentDate.getTime()) {
+          return { text: "আজকের", classes: "bg-blue-50 text-blue-600 border border-blue-100" };
+        } else if (noticeDate.getTime() > currentDate.getTime()) {
+          return { text: "LIVE", classes: "bg-red-50 text-red-600 border border-red-100" };
+        } else {
+          return { text: "সম্পন্ন", classes: "bg-emerald-50 text-emerald-600 border border-emerald-100" };
+        }
+      }
+    } catch(e) {
+      // ইগনোর এরর
+    }
+    return { text: "সম্পন্ন", classes: "bg-emerald-50 text-emerald-600 border border-emerald-100" };
+  }
+
+  // ইংরেজি তারিখকে চমৎকার বাংলা তারিখ ফরম্যাটে রূপান্তর করার বিশ্বস্ত হেল্পার (NaN ও ব্রাউজার ডেট অবজেক্ট এরর মুক্ত)
+  function formatBengaliDate(dateVal) {
+    if (!dateVal || dateVal.toString().toLowerCase().includes("nan") || dateVal.toString().trim() === "") {
+      return "২০ জুলাই ২০২৬"; // ফলব্যাক সুরক্ষিত বাংলা ডেট
+    }
+    
+    var dateStr = dateVal.toString().trim();
+    var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    
+    // ১. ইতিমধ্যে বাংলায় নাম থাকলে সরাসরি সংখ্যা পরিবর্তন
+    var containsBnMonths = bnMonths.some(m => dateStr.includes(m)) || ["জানু", "ফেব্রু", "মার্চ", "এপ্রি", "মে", "জুন", "জুলা", "আগস্ট", "সেপ্টে", "অক্টো", "নভে", "ডিসে"].some(m => dateStr.includes(m));
+    if (containsBnMonths) {
+      return toBnDigits(dateStr);
+    }
+    
+    // ২. ব্রাউজার ডেট অবজেক্ট পার্সিং মেথড (যেমন: Fri Jun 12 2026... থাকলে)
+    var parsedDate = new Date(dateStr);
+    if (!isNaN(parsedDate.getTime())) {
+      var day = parsedDate.getDate();
+      var month = parsedDate.getMonth(); // 0-11
+      var year = parsedDate.getFullYear();
+      return toBnDigits(day) + " " + bnMonths[month] + " " + toBnDigits(year);
+    }
+    
+    // ৩. ম্যানুয়াল স্ল্যাশ/ড্যাশ কাস্টম পার্সার ফলব্যাক (DD-MM-YYYY বা YYYY-MM-DD)
+    var cleanDate = dateStr.split("T")[0];
+    var parts = cleanDate.split(/[-/]/);
+    if (parts.length === 3) {
+      var day, month, year;
+      if (parts[0].length === 4) { // YYYY-MM-DD
+        year = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        day = parseInt(parts[2], 10);
+      } else { // DD-MM-YYYY
+        day = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10);
+        year = parseInt(parts[2], 10);
+      }
+      if (!isNaN(day) && !isNaN(month) && !isNaN(year) && month >= 1 && month <= 12) {
+        if (year < 100) year += 2000;
+        return toBnDigits(day) + " " + bnMonths[month - 1] + " " + toBnDigits(year);
+      }
+    }
+    
+    return toBnDigits(dateStr);
+  }
+
+  // সংখ্যা রূপান্তরকারী ফাংশন
+  function toBnDigits(str) {
+    if (str === undefined || str === null) return "০";
+    var bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.toString().replace(/[0-9]/g, function(w) { return bnDigits[+w]; });
+  }
+
+  // অ্যাপস স্ক্রিপ্ট ডেটা ইনিশিয়ালাইজার
+  (function() {
+    google.script.run
+      .withSuccessHandler(function(data) {
+        document.getElementById('notice-loader').classList.add('hidden');
+        rawNoticeList = data || [];
+        
+        var container = document.getElementById('notices-list');
+        container.innerHTML = '';
+
+        if (rawNoticeList.length === 0) {
+          container.innerHTML = '<div class="text-center py-12 text-gray-400 bg-white border rounded-3xl p-6 font-bold">কোনো বিজ্ঞপ্তি পাওয়া যায়নি।</div>';
+          return;
+        }
+
+        rawNoticeList.forEach((item, idx) => {
+          var status = getNoticeStatus(item.date); // ডাইনামিক স্ট্যাটাস নির্ধারণ
+          var showBnDate = formatBengaliDate(item.date); // বাংলা তারিখ জেনারেটর
+          var safeExcerpt = item.content ? item.content.substring(0, 150) + "..." : "বিস্তারিত জানতে নিচে ক্লিক করুন।";
+
+          // ১১ নং ছবির ডিজাইন অনুযায়ী রি-ডিজাইনকৃত কার্ড স্ট্রাকচার
+          container.innerHTML += `
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition duration-300 flex items-start gap-4">
+              <!-- বামপাশের সবুজ ঘণ্টা (Bell) আইকন ব্যাজ -->
+              <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center flex-shrink-0 shadow-inner">
+                <i class="fa-regular fa-bell text-sm animate-pulse"></i>
+              </div>
+              
+              <!-- ডানপাশের টেক্সট এরিয়া -->
+              <div class="flex-grow min-w-0">
+                <!-- ওপরে স্ট্যাটাস ব্যাজ এবং বাংলায় প্রকাশের তারিখ -->
+                <div class="flex flex-wrap items-center gap-2 text-[10px] font-bold text-gray-400">
+                  <span class="px-2 py-0.5 rounded-md font-extrabold text-[9px] uppercase tracking-wider ${status.classes}">
+                    ${status.text}
+                  </span>
+                  <span class="flex items-center gap-1 text-gray-400">
+                    <i class="fa-regular fa-calendar-days text-[11px] text-emerald-500"></i> ${showBnDate}
+                  </span>
+                </div>
+                
+                <!-- সংবাদের মূল টাইটেল (ক্লিক ইভেন্টসহ) -->
+                <h4 onclick="openNoticeIndex(${idx})" class="text-sm sm:text-base font-black text-gray-800 leading-tight mt-2 hover:text-emerald-600 transition cursor-pointer">${item.title}</h4>
+                
+                <!-- বিবরণীর অংশবিশেষ -->
+                <p class="text-xs sm:text-sm text-gray-500 font-medium leading-relaxed mt-1.5">${safeExcerpt}</p>
+                
+                <!-- নিচের সবুজ বিস্তারিত দেখুন ড্রপডাউন বাটন -->
+                <div class="mt-3.5">
+                  <button onclick="openNoticeIndex(${idx})" class="text-[11px] font-black text-emerald-600 hover:text-emerald-700 transition flex items-center gap-1 cursor-pointer">
+                    ▼ বিস্তারিত দেখুন
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('notice-loader').classList.add('hidden');
+        console.error("ডাটা লোড ত্রুটি: " + err.message);
+      })
+      .getNoticeBoardData();
+  })();
+</script>
+  </body>
+</html>
