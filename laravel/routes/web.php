@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BloodDonationController;
 use App\Http\Controllers\BloodDonorController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
@@ -27,3 +28,9 @@ Route::get('/payments/register', [PaymentController::class, 'create'])->name('pa
 Route::post('/payments', [PaymentController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('payments.store');
+
+Route::get('/blood-donation-logs', [BloodDonationController::class, 'index'])->name('blood-donation-logs.index');
+Route::get('/blood-donation-logs/report', [BloodDonationController::class, 'create'])->name('blood-donation-logs.create');
+Route::post('/blood-donation-logs', [BloodDonationController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('blood-donation-logs.store');

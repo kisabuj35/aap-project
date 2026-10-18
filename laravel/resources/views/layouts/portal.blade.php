@@ -108,6 +108,7 @@
                 <a href="{{ route('blood-donors.index') }}" @if(request()->routeIs('blood-donors.index')) aria-current="page" @endif>রক্তদাতা</a>
                 <a href="{{ route('blood-donors.create') }}" @if(request()->routeIs('blood-donors.create')) aria-current="page" @endif>ডোনার নিবন্ধন</a>
                 <a href="{{ route('payments.create') }}" @if(request()->routeIs('payments.create')) aria-current="page" @endif>চাঁদা / অনুদান</a>
+                <a href="{{ route('blood-donation-logs.index') }}" @if(request()->routeIs('blood-donation-logs.index')) aria-current="page" @endif>রক্তদান খতিয়ান</a>
             </nav>
         </div>
     </header>
