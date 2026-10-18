@@ -1,15 +1,21 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
 
+# Install system dependencies & PHP extensions
 RUN apk add --no-cache nginx ca-certificates \
     && docker-php-ext-install pdo pdo_mysql
 
+# Get Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+# Copy project files
 COPY laravel/ .
 
-RUN composer install --no-dev --optimize-autoloader
+# Install dependencies (ignoring strict php platform mismatch if any)
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=php+
 
+# Nginx configuration
 RUN echo 'server { \
     listen 80; \
     server_name localhost; \
@@ -25,6 +31,7 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/http.d/default.conf
 
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80
